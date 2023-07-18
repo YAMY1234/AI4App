@@ -2,7 +2,7 @@ import json
 from openpyxl import Workbook, load_workbook
 
 # 读取program-wordBank.xlsx文件中的程序单词
-word_bank_file = './data/program-wordBank.xlsx'
+word_bank_file = './data/program_word_bank.xlsx'
 word_bank_workbook = load_workbook(word_bank_file)
 word_bank_sheet = word_bank_workbook.active
 
