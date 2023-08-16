@@ -1,8 +1,4 @@
-from openpyxl import load_workbook, Workbook
-from bs4 import BeautifulSoup
 from spiders import UCL
-from tools.regex_parser import extract_gpa
-# ...其他需要的导入...
 
 
 
