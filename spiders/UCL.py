@@ -166,26 +166,6 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
         else:
             program_details[f"课程时长1(学制）"] = "未找到"
 
-    def get_interview_requirements(self, soup, program_details, extra_data=None):
-        # 定义关键词列表
-        keywords = ['interview', 'qualifying examination', 'qualifying essay',
-                    'qualifying assessment', 'written examination', 'oral examination', 'oral test']
-
-        # 搜索包含这些关键词的<p>标签
-        matching_paragraphs = []
-        for keyword in keywords:
-            # matching_paragraphs.extend(soup.find_all('p', string=lambda text: keyword in text.lower()))
-            matching_paragraphs.extend(soup.find_all(string=lambda text: keyword in text.lower()))
-
-        # 合并所有匹配的段落的文本内容
-        combined_text = ' '.join([p.get_text(strip=True) for p in matching_paragraphs])
-
-        # 将合并后的文本添加到program_details字典中
-        if combined_text:
-            program_details["面/笔试要求"] = combined_text
-        else:
-            program_details["面/笔试要求"] = "未要求"
-
     def get_language_requirements(self, soup, program_details, extra_data=None):
         # 定义雅思得分级别的字典
         ielts_scores = {

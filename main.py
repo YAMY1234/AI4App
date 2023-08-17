@@ -1,7 +1,5 @@
 from spiders import UCL
 
-
-
 def main():
     print("crawling program details...")
     ucl_program_crawler = UCL.UCLProgramURLCrawler()

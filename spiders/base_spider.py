@@ -1,5 +1,7 @@
 import json
 import os
+import threading
+
 import requests
 from bs4 import BeautifulSoup
 from openpyxl import load_workbook, Workbook
@@ -106,6 +108,50 @@ class BaseProgramDetailsCrawler:
 
         return [program_name, url, intro_text] + useful_links
 
+    # def scrape_program_details(self):
+    #     # 从 program_detail_headers.txt 读取标题
+    #     with open('data/program_detail_headers.txt', 'r', encoding='utf-8') as file:
+    #         headers = [line.strip() for line in file.readlines()]
+    #
+    #     wb = self.read_excel(f'./data/{self.school_name}/program_useful_link.xlsx')
+    #     sheet = wb.active
+    #
+    #     new_wb = Workbook()
+    #     new_sheet = new_wb.active
+    #     new_sheet.append(headers)
+    #
+    #     # one row is one program
+    #     for row in sheet.iter_rows(min_row=2, values_only=True):
+    #         program_name, program_url, intro_text, *useful_links = row
+    #         program_details = {}
+    #         program_details["项目名称"] = program_name
+    #         program_details["项目链接"] = program_url
+    #
+    #         self.get_data_from_main_url(program_url, program_details)
+    #         # self.get_data_from_url(useful_links, program_details)
+    #
+    #         # 根据 headers 生成要追加的行
+    #         data_row = [program_details.get(header, '') for header in headers]
+    #         print(json.dumps(program_details, indent=4, ensure_ascii=False))
+    #         new_sheet.append(data_row)
+    #
+    #     new_wb.save(f"./data/{self.school_name}/program_details.xlsx")
+    def thread_task(self, row, headers, new_sheet, lock):
+        program_name, program_url, intro_text, *useful_links = row
+        program_details = {}
+        program_details["专业"] = program_name
+        program_details["官网链接"] = program_url
+
+        self.get_data_from_main_url(program_url, program_details)
+        # self.get_data_from_url(useful_links, program_details)
+
+        # 根据 headers 生成要追加的行
+        data_row = [program_details.get(header, '') for header in headers]
+        print(json.dumps(program_details, indent=4, ensure_ascii=False))
+
+        with lock:  # 确保线程安全
+            new_sheet.append(data_row)
+
     def scrape_program_details(self):
         # 从 program_detail_headers.txt 读取标题
         with open('data/program_detail_headers.txt', 'r', encoding='utf-8') as file:
@@ -118,23 +164,17 @@ class BaseProgramDetailsCrawler:
         new_sheet = new_wb.active
         new_sheet.append(headers)
 
-        # one row is one program
+        lock = threading.Lock()
+        threads = []
         for row in sheet.iter_rows(min_row=2, values_only=True):
-            program_name, program_url, intro_text, *useful_links = row
-            program_details = {}
-            program_details["项目名称"] = program_name
-            program_details["项目链接"] = program_url
+            t = threading.Thread(target=self.thread_task, args=(row, headers, new_sheet, lock))
+            threads.append(t)
+            t.start()
 
-            self.get_data_from_main_url(program_url, program_details)
-            # self.get_data_from_url(useful_links, program_details)
+        for t in threads:
+            t.join()
 
-            # 根据 headers 生成要追加的行
-            data_row = [program_details.get(header, '') for header in headers]
-            print(json.dumps(program_details, indent=4, ensure_ascii=False))
-            new_sheet.append(data_row)
-
-        new_wb.save(f"./data/{self.school_name}_program_details.xlsx")
-
+        new_wb.save(f"./data/{self.school_name}/program_details.xlsx")
     def get_data_from_main_url(self, program_url, program_details):
         try:
             response = requests.get(program_url)
@@ -190,7 +230,24 @@ class BaseProgramDetailsCrawler:
         pass
 
     def get_interview_requirements(self, soup, program_details, extra_data=None):
-        pass
+        # 定义关键词列表
+        keywords = ['interview', 'qualifying examination', 'qualifying essay',
+                    'qualifying assessment', 'written examination', 'oral examination', 'oral test']
+
+        # 搜索包含这些关键词的<p>标签
+        matching_paragraphs = []
+        for keyword in keywords:
+            # matching_paragraphs.extend(soup.find_all('p', string=lambda text: keyword in text.lower()))
+            matching_paragraphs.extend(soup.find_all(string=lambda text: keyword in text.lower()))
+
+        # 合并所有匹配的段落的文本内容
+        combined_text = ' '.join([p.get_text(strip=True) for p in matching_paragraphs])
+
+        # 将合并后的文本添加到program_details字典中
+        if combined_text:
+            program_details["面/笔试要求"] = combined_text
+        else:
+            program_details["面/笔试要求"] = "未要求"
 
     def get_work_experience_requirements(self, soup, program_details, extra_data=None):
         pass
