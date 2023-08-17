@@ -1,3 +1,4 @@
+import json
 import os
 import requests
 from bs4 import BeautifulSoup
@@ -121,30 +122,39 @@ class BaseProgramDetailsCrawler:
         for row in sheet.iter_rows(min_row=2, values_only=True):
             program_name, program_url, intro_text, *useful_links = row
             program_details = {}
+            program_details["项目名称"] = program_name
+            program_details["项目链接"] = program_url
+
             self.get_data_from_main_url(program_url, program_details)
-            self.get_data_from_url(useful_links, program_details)
+            # self.get_data_from_url(useful_links, program_details)
 
             # 根据 headers 生成要追加的行
             data_row = [program_details.get(header, '') for header in headers]
+            print(json.dumps(program_details, indent=4, ensure_ascii=False))
             new_sheet.append(data_row)
 
         new_wb.save(f"./data/{self.school_name}_program_details.xlsx")
 
     def get_data_from_main_url(self, program_url, program_details):
-        response = requests.get(program_url)
+        try:
+            response = requests.get(program_url)
+        except requests.ConnectionError as e:
+            print(f"ConnectionError for URL {program_url}: {e}")
+            return
         response.raise_for_status()
         soup = BeautifulSoup(response.text, 'html.parser')
-        self.get_deadlines(soup, program_details)
-        self.get_deadlines(soup, program_details)
-        self.get_deadlines(soup, program_details)
-        self.get_deadlines(soup, program_details)
-        self.get_deadlines(soup, program_details)
-        self.get_deadlines(soup, program_details)
-        self.get_deadlines(soup, program_details)
-        self.get_deadlines(soup, program_details)
-        self.get_deadlines(soup, program_details)
+        self.get_backgroud_requirements(soup, program_details)
+        self.get_course_intro_and_details(soup, program_details)
+        self.get_enrollment_deadlines(soup, program_details)
+        self.get_tuition(soup, program_details)
+        self.get_period(soup, program_details)
+        self.get_language_requirements(soup, program_details)
+        self.get_interview_requirements(soup, program_details)
+        self.get_work_experience_requirements(soup, program_details)
+        self.get_portfolio_requirements(soup, program_details)
+        self.get_GRE_GMAT_requirements(soup, program_details)
+        self.get_major_requirements_for_local_students(soup, program_details)
 
-        pass
 
     def get_data_from_url(self, useful_links, program_details):
         # Here you can add more methods to process the soup based on the type of link_name.
@@ -154,48 +164,57 @@ class BaseProgramDetailsCrawler:
             response = requests.get(url)
             response.raise_for_status()
             soup = BeautifulSoup(response.text, 'html.parser')
-
             # Assuming you will have methods like 'get_deadlines' to process the soup.
             # For example:
             # if "deadline" in link_name.lower():
             #     self.get_deadlines(soup, program_details)
 
     # Add your methods like get_deadlines, get_language_requirements, etc...
-    def get_application_deadlines(self, soup, program_details):
+
+    def get_backgroud_requirements(self, soup, program_details, extra_data=None):
         pass
 
-    def get_backgroud_requirements(self):
+    def get_course_intro_and_details(self, soup, program_details, extra_data=None):
         pass
 
-    def get_course_intro_and_details(self):
+    def get_enrollment_deadlines(self, soup, program_details, extra_data=None):
         pass
 
-    def get_enrollment_deadlines(self):
+    def get_tuition(self, soup, program_details, extra_data=None):
         pass
 
-    def get_tuition(self):
+    def get_period(self, soup, program_details, extra_data=None):
         pass
 
-    def get_campus(self):
+    def get_language_requirements(self, soup, program_details, extra_data=None):
         pass
 
-    def get_language_requirements(self):
+    def get_interview_requirements(self, soup, program_details, extra_data=None):
         pass
 
-    def get_work_experience_requirements(self):
+    def get_work_experience_requirements(self, soup, program_details, extra_data=None):
         pass
 
-    def get_portfolio_requirements(self):
+    def get_portfolio_requirements(self, soup, program_details, extra_data=None):
         pass
 
-    def get_GRE_GMAT_requirements(self):
+    def get_GRE_GMAT_requirements(self, soup, program_details, extra_data=None):
         pass
 
-    def get_major_requirements_for_local_students(self):
+    def get_major_requirements_for_local_students(self, soup, program_details, extra_data=None):
         pass
 
-    def British_local_requirements_for_display(self):
+    def get_major_specifications(self, soup, program_details, extra_data=None):
         pass
 
-    def get_major_specifications(self):
-        pass
+    # def get_campus(self, soup, program_details):
+    #     pass
+
+    # def British_local_requirements_for_display(self, soup, program_details):
+    #     pass
+
+    # def get_application_deadlines(self, soup, program_details):
+    #     pass
+
+
+
