@@ -13,16 +13,18 @@ class UCLProgramURLCrawler(BaseProgramURLCrawler):
         super().__init__(base_url=UCL_BASE_URL, school_name="UCL")
 
     # Override any method if UCL's site has a different structure or logic
-    def _parse_programs(self, soup, program_words):
+    def _parse_programs(self, soup, _):
         program_url_pairs = {}
-        for link in soup.find_all('a'):
-            link_name = link.get_text().strip().lower()
+        base_url = "https://www.ucl.ac.uk/prospective-students/graduate/taught-degrees/"
+
+        # 寻找所有<a>标签，其href属性以指定的base_url开始
+        for link in soup.find_all('a', href=True):
             link_url = link.get('href')
-            if "https://www.ucl.ac.uk/prospective-students/graduate/taught-degrees/" not in link_url:
-                continue
-            for word in program_words:
-                if word in link_name:
-                    program_url_pairs[link_name] = link_url
+            link_name = link.get_text().strip().lower()
+
+            if link_url.startswith(base_url):
+                program_url_pairs[link_name] = link_url
+
         return program_url_pairs
 
 
