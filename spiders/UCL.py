@@ -1,5 +1,5 @@
 import re
-
+import time
 import requests
 from bs4 import BeautifulSoup
 
@@ -364,11 +364,21 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
             return
         # response = requests.post(url, headers=headers, data=data)
         print(f"response.status_code: {response.status_code}")
-        try:
-            json_data = response.json()
-        except:
-            program_details["该专业对本地学生要求"] = "未找到, 项目页面不可用或者正在更新"
-            return
+        
+        # Try maxium X times. Wait Y seconds between each try.
+        max_retries = 10
+        retry_delay = 3
+
+        for attempt in range(max_retries):
+            try:
+                json_data = response.json()
+                break  # Break out of the loop if successful
+            except Exception as e:
+                if attempt < max_retries - 1:
+                    time.sleep(retry_delay)
+                else:
+                    program_details["该专业对本地学生要求"] = "未找到，项目页面不可用或者正在更新"
+                    return
 
         # print(json_data)
 
