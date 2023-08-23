@@ -136,6 +136,20 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
         if len(courses) == 0:
             program_details[f"课程列表英"] = "未找到"
 
+    def extract_relevant_text(self, text, keywords):
+        # Extract sentences containing the phrase from the entry requirements section
+        sentences = []
+        line_sentences = re.split(r'(?<=[.!?])\s+', text)
+        for keyword in keywords:
+            for sentence in line_sentences:
+                if keyword in sentence:
+                    sentences.append(sentence)
+
+        # Combine the extracted sentences into one
+        combined_text = ' '.join(sentences)
+
+        return combined_text
+
     def get_work_experience_requirements(self, soup, program_details, extra_data=None):
         phrases = ['work experience', 'professional experience', 'industrial experience',
                    'existing engineering and design skills', 'practical experience',
@@ -218,19 +232,43 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
     def get_period(self, soup, program_details, extra_data=None):
         period_tag = soup.find('h5', string=lambda text: 'Duration' in text)
         if period_tag:
-            # 从该标签开始，查找具有class属性值为"study-mode fulltime"的<div>标签
-            fulltime_fee_div = period_tag.find_next(
+            headers = ["课程时长1(学制)", "课程时长2(学制)", "课程时长3(学制)"]
+            index = 0
+            
+            # 从该标签开始，查找具有class属性值为"study-mode ...time"的<div>标签
+            fulltime_div = period_tag.find_next(
                 'div', {'class': 'study-mode fulltime'})
-            if fulltime_fee_div:
-                # 提取文本内容并去除多余的空白字符
-                study_period = fulltime_fee_div.get_text(
-                    strip=True)
-                program_details["课程时长1(学制)"] = study_period
-            else:
+            parttime_div = period_tag.find_next(
+                'div', {'class': 'study-mode parttime'})
+            flexible_div = period_tag.find_next(
+                'div', {'class': 'study-mode flexible'})
+            
+            # 提取文本内容并去除多余的空白字符
+            if fulltime_div:
+                fulltime_period = fulltime_div.get_text(
+                strip=True)
+                if fulltime_period != "Not applicable":
+                    program_details[headers[index]] = fulltime_period + \
+                        " (full-time)"
+                    index += 1
+            if parttime_div:
+                parttime_period = parttime_div.get_text(
+                strip=True)
+                if parttime_period != "Not applicable":
+                    program_details[headers[index]] = parttime_period + \
+                        " (part-time)"
+                    index += 1
+            if flexible_div:
+                flexible_period = flexible_div.get_text(
+                strip=True)
+                if flexible_period != "Not applicable":
+                    program_details[headers[index]] = flexible_period + \
+                        " (flexible)"
+                    index += 1
+            
+            if index == 0:
                 program_details[f"课程时长1(学制)"] = "未找到"
-        else:
-            program_details[f"课程时长1(学制)"] = "未找到"
-
+        
     def get_language_requirements(self, soup, program_details, extra_data=None):
         # 定义雅思得分级别的字典
         ielts_scores = {
@@ -359,11 +397,13 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
             return
         else:
             # Find the h4 element with the text 'Equivalent qualifications for China'
-            h4_tag = soup.find('h4', text='Equivalent qualifications for China')
+            h4_tag = soup.find(
+                'h4', text='Equivalent qualifications for China')
 
             if h4_tag:
                 # Find the next sibling <p> element after the h4 tag
-                program_details["该专业对本地学生要求"] = h4_tag.find_next_sibling('p').get_text()
+                program_details["该专业对本地学生要求"] = h4_tag.find_next_sibling(
+                    'p').get_text()
             else:
                 program_details["该专业对本地学生要求"] = "未找到"
 
@@ -384,20 +424,6 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
                 program_details["英国本地要求展示用"] = "未要求"
         else:
             program_details["英国本地要求展示用"] = "未找到Entry requirements标签"
-
-    def extract_relevant_text(self, text, keywords):
-        # Extract sentences containing the phrase from the entry requirements section
-        sentences = []
-        line_sentences = re.split(r'(?<=[.!?])\s+', text)
-        for keyword in keywords:
-            for sentence in line_sentences:
-                if keyword in sentence:
-                    sentences.append(sentence)
-
-        # Combine the extracted sentences into one
-        combined_text = ' '.join(sentences)
-
-        return combined_text
 
     def get_interview_requirements(self, soup, program_details, extra_data=None):
         # 定义关键词列表

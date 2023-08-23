@@ -13,6 +13,8 @@ class BaseProgramURLCrawler:
         self.base_url = base_url
         self.data_folder = "data"
         self.school_name = school_name
+        if not os.path.exists(self.data_folder):
+            os.makedirs(self.data_folder)
 
     def crawl(self):
         program_words = self._load_program_words()
