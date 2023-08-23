@@ -13,8 +13,6 @@ class BaseProgramURLCrawler:
         self.base_url = base_url
         self.data_folder = "data"
         self.school_name = school_name
-        if not os.path.exists(self.data_folder):
-            os.makedirs(self.data_folder)
 
     def crawl(self):
         program_words = self._load_program_words()
@@ -63,14 +61,37 @@ class BaseProgramURLCrawler:
 
 class BaseProgramDetailsCrawler:
 
-    def __init__(self, school_name):
+    def __init__(self, school_name, test=False):
         self.school_name = school_name
+        self.test = test
+        if self.test:
+            self.useful_link_path = f'data/{self.school_name}/program_useful_link_sample.xlsx'
+            self.details_path = f'data/{self.school_name}/program_details_sample.xlsx'
+        else:
+            self.useful_link_path = f'data/{self.school_name}/program_useful_link.xlsx'
+            self.details_path = f'data/{self.school_name}/program_details.xlsx'
 
     def read_excel(self, path):
         return load_workbook(path)
 
     def get_program_useful_links(self):
-        wb = self.read_excel(f'data/{self.school_name}/program_url_pair.xlsx')
+        url_pair_path = f'data/{self.school_name}/program_url_pair.xlsx'
+        if self.test:
+            url_pair_path = f'data/{self.school_name}/program_url_pair_sample.xlsx'
+            # generate a sample based on first 10 rows of program_url_pair.xlsx        
+            if not os.path.exists(url_pair_path):
+                original_ = f'data/{self.school_name}/program_url_pair.xlsx'
+                wb = self.read_excel(original_)
+                sheet = wb.active
+                new_wb = Workbook()
+                new_sheet = new_wb.active
+                new_sheet.append(["Program Name", "URL"])
+                for row in sheet.iter_rows(min_row=2, max_row=11, values_only=True):
+                    new_sheet.append(row)
+                new_wb.save(url_pair_path)
+
+        print("reading url pairs from " + url_pair_path)
+        wb = self.read_excel(url_pair_path)
         sheet = wb.active
 
         new_wb = Workbook()
@@ -83,7 +104,8 @@ class BaseProgramDetailsCrawler:
         for result in results:
             new_sheet.append(result)
 
-        new_wb.save(f'data/{self.school_name}/program_useful_link.xlsx')
+        new_wb.save(self.useful_link_path)
+        print("useful links saved to " + self.useful_link_path)
 
     def process_row(self, row):
         link_bank = self.read_excel('data/url_bank.xlsx').active
@@ -108,39 +130,12 @@ class BaseProgramDetailsCrawler:
 
         return [program_name, url, intro_text] + useful_links
 
-    # def scrape_program_details(self):
-    #     # 从 program_detail_headers.txt 读取标题
-    #     with open('data/program_detail_headers.txt', 'r', encoding='utf-8') as file:
-    #         headers = [line.strip() for line in file.readlines()]
-    #
-    #     wb = self.read_excel(f'./data/{self.school_name}/program_useful_link.xlsx')
-    #     sheet = wb.active
-    #
-    #     new_wb = Workbook()
-    #     new_sheet = new_wb.active
-    #     new_sheet.append(headers)
-    #
-    #     # one row is one program
-    #     for row in sheet.iter_rows(min_row=2, values_only=True):
-    #         program_name, program_url, intro_text, *useful_links = row
-    #         program_details = {}
-    #         program_details["项目名称"] = program_name
-    #         program_details["项目链接"] = program_url
-    #
-    #         self.get_data_from_main_url(program_url, program_details)
-    #         # self.get_data_from_url(useful_links, program_details)
-    #
-    #         # 根据 headers 生成要追加的行
-    #         data_row = [program_details.get(header, '') for header in headers]
-    #         print(json.dumps(program_details, indent=4, ensure_ascii=False))
-    #         new_sheet.append(data_row)
-    #
-    #     new_wb.save(f"./data/{self.school_name}/program_details.xlsx")
     def thread_task(self, row, headers, new_sheet, lock):
         program_name, program_url, intro_text, *useful_links = row
         program_details = {}
         program_details["专业"] = program_name
         program_details["官网链接"] = program_url
+        program_details["项目简介"] = intro_text
 
         self.get_data_from_main_url(program_url, program_details)
         # self.get_data_from_url(useful_links, program_details)
@@ -152,12 +147,45 @@ class BaseProgramDetailsCrawler:
         with lock:  # 确保线程安全
             new_sheet.append(data_row)
 
+    def generate_program_details(self, verbose = True):
+        self.scrape_program_details()
+        self.write_program_constants()
+        if verbose:
+            print(f"{self.school_name} updated successfully.")
+
+    def write_program_constants(self):
+        # read headers from university_constants.csv
+        with open('data/Constants/university_constants.csv', 'r', encoding='utf-8') as file:
+            lines = [line.strip() for line in file.readlines()]
+            # TODO: Only one line in university_constants.csv for now
+            headers = lines[0].split(sep=',')
+            data = lines[1].split(sep=',')
+
+        # open program_details.xlsx
+
+        wb = self.read_excel(self.details_path)
+        sheet = wb.active
+
+        # insert constant headers to program_details.xlsx at the beginning
+        for header in reversed(headers):
+            sheet.insert_cols(1)
+            sheet.cell(row=1, column=1, value=header)
+        
+        # write constants to program_details.xlsx
+        for header in headers:
+            for row in range(2, sheet.max_row + 1):
+                sheet.cell(row=row, column=headers.index(header) + 1, value=data[headers.index(header)])
+            
+        # save program_details.xlsx
+        wb.save(self.details_path)
+        
+
     def scrape_program_details(self):
         # 从 program_detail_headers.txt 读取标题
         with open('data/program_detail_headers.txt', 'r', encoding='utf-8') as file:
             headers = [line.strip() for line in file.readlines()]
 
-        wb = self.read_excel(f'./data/{self.school_name}/program_useful_link.xlsx')
+        wb = self.read_excel(self.useful_link_path)
         sheet = wb.active
 
         new_wb = Workbook()
@@ -174,15 +202,17 @@ class BaseProgramDetailsCrawler:
         for t in threads:
             t.join()
 
-        new_wb.save(f"./data/{self.school_name}/program_details.xlsx")
+        new_wb.save(self.details_path)
+
     def get_data_from_main_url(self, program_url, program_details):
         try:
             response = requests.get(program_url)
         except requests.ConnectionError as e:
-            print(f"ConnectionError for URL {program_url}: {e}")
+            print(f"Connection Error for URL {program_url}: {e}")
             return
         response.raise_for_status()
         soup = BeautifulSoup(response.text, 'html.parser')
+        # self.get_program_intro(soup, program_details)
         self.get_backgroud_requirements(soup, program_details)
         self.get_course_intro_and_details(soup, program_details)
         self.get_enrollment_deadlines(soup, program_details)
@@ -193,7 +223,8 @@ class BaseProgramDetailsCrawler:
         self.get_work_experience_requirements(soup, program_details)
         self.get_portfolio_requirements(soup, program_details)
         self.get_GRE_GMAT_requirements(soup, program_details)
-        self.get_major_requirements_for_local_students(soup, program_details)
+        self.get_major_requirements_for_chinese_students(soup, program_details)
+        self.get_major_requirements_for_uk_students(soup, program_details)
 
 
     def get_data_from_url(self, useful_links, program_details):
@@ -210,6 +241,9 @@ class BaseProgramDetailsCrawler:
             #     self.get_deadlines(soup, program_details)
 
     # Add your methods like get_deadlines, get_language_requirements, etc...
+
+    # def get_program_intro(self, soup, program_details, extra_data=None):
+    #     program_details["项目简介"] = program_details["项目简介"]
 
     def get_backgroud_requirements(self, soup, program_details, extra_data=None):
         pass
@@ -258,7 +292,10 @@ class BaseProgramDetailsCrawler:
     def get_GRE_GMAT_requirements(self, soup, program_details, extra_data=None):
         pass
 
-    def get_major_requirements_for_local_students(self, soup, program_details, extra_data=None):
+    def get_major_requirements_for_chinese_students(self, soup, program_details, extra_data=None):
+        pass
+
+    def get_major_requirements_for_uk_students(self, soup, program_details, extra_data=None):
         pass
 
     def get_major_specifications(self, soup, program_details, extra_data=None):

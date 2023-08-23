@@ -15,22 +15,49 @@ class UCLProgramURLCrawler(BaseProgramURLCrawler):
     # Override any method if UCL's site has a different structure or logic
     def _parse_programs(self, soup, _):
         program_url_pairs = {}
-        base_url = "https://www.ucl.ac.uk/prospective-students/graduate/taught-degrees/"
+        # base_url = "https://www.ucl.ac.uk/prospective-students/graduate/taught-degrees/"
 
         # 寻找所有<a>标签，其href属性以指定的base_url开始
         for link in soup.find_all('a', href=True):
             link_url = link.get('href')
             link_name = link.get_text().strip().lower()
 
-            if link_url.startswith(base_url):
+            if link_url.startswith(self.base_url):
                 program_url_pairs[link_name] = link_url
 
         return program_url_pairs
 
 
 class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
-    def __init__(self):
-        super().__init__(school_name="UCL")
+    def __init__(self, test=False):
+        super().__init__(school_name="UCL", test=test)
+
+    def process_row(self, row):
+        link_bank = self.read_excel('data/url_bank.xlsx').active
+        program_name, url = row
+
+        response = requests.get(url)
+        response.raise_for_status()
+
+        soup = BeautifulSoup(response.text, 'html.parser')
+        intro_div = soup.find('div', id='introduction')
+        paragraphs = intro_div.find_all('p')
+        if len(paragraphs) < 2:
+            # When detail is not available: The details for this degree are being confirmed and will be published shortly.
+            intro_text = paragraphs[0].text
+        else:
+            intro_text = paragraphs[1].text
+
+        useful_links = []
+        for link in soup.find_all('a'):
+            link_name = link.get_text().strip()
+            link_url = link.get('href')
+
+            for bank_row in link_bank.iter_rows(min_row=2, values_only=True):
+                if bank_row[0].lower() in link_name.lower():
+                    useful_links.append(f'{link_name}:{link_url}')
+                    break
+        return [program_name, url, intro_text] + useful_links
 
     # Override any method if UCL's site has a different structure or logic
     def get_enrollment_deadlines(self, soup, program_details, extra_data=None):
@@ -60,7 +87,6 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
             program_details[f"入学月{1}"] = "未找到"
 
     def get_backgroud_requirements(self, soup, program_details, extra_data=None):
-
         # 定位标题为“Entry requirements”的<h2>标签
         h2_tag = soup.find('h2', string='Entry requirements')
 
@@ -85,7 +111,8 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
         courses = []
 
         # 先捕获必修课程列表
-        compulsory_modules_div = soup.find('div', class_='prog-modules-mandatory')
+        compulsory_modules_div = soup.find(
+            'div', class_='prog-modules-mandatory')
         if compulsory_modules_div:
             for a_tag in compulsory_modules_div.find_all('a'):
                 courses.append(a_tag.get_text(strip=True))
@@ -110,78 +137,115 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
             program_details[f"课程列表英"] = "未找到"
 
     def get_work_experience_requirements(self, soup, program_details, extra_data=None):
-        entry_req_tag = soup.find('h2', text='Entry requirements')
+        phrases = ['work experience', 'professional experience', 'industrial experience',
+                   'existing engineering and design skills', 'practical experience',
+                   'experience as a professional', ' who can demonstrate aptitude and experience',
+                   'years of relevant experience', 'clinical experience', 'teaching experience',
+                   'years\' experience working', 'years of training in',
+                   'extensive experience', 'relevant experience', 'relevant quantitative or qualitative research experience',
+                   'experience in', 'experience working', 'professional involvement',
+                   'experience of', 'with equivalent experience', 'industry experience', 'relevant work',
+                   'field experience', 'relevant employment']
+        entry_req_tag = soup.find(id="entry-requirements")
         if entry_req_tag:
-            for sibling in entry_req_tag.find_next_siblings():
-                # 如果遇到另一个h2标签，跳出循环
-                if sibling.name == 'h2':
-                    break
-                if sibling.name == 'p' and 'work experience' in sibling.get_text(strip=True).lower():
-                    program_details["工作经验"] = sibling.get_text(strip=True)
+            text = entry_req_tag.get_text().lower()
+            for phrase in phrases:
+                if phrase in text:
+                    # Extract sentences containing the phrase from the entry requirements section
+                    sentences = []
+                    line_sentences = re.split(r'(?<=[.!?])\s+', text)
+                    for sentence in line_sentences:
+                        if phrase in sentence:
+                            sentences.append(sentence)
+
+                    # Combine the extracted sentences into one
+                    combined_text = ' '.join(sentences)
+                    program_details["工作经验（年）"] = combined_text
                     return
-        program_details[f"工作经验"] = "未要求"
+
+            program_details["工作经验（年）"] = "未要求"
+        else:
+            program_details["工作经验（年）"] = "未找到Entry requirements标签"
 
     def get_portfolio_requirements(self, soup, program_details, extra_data=None):
-        entry_req_tag = soup.find('h2', text='Entry requirements')
+        phrases = ['written work', 'portfolio']
+        entry_req_tag = soup.find(id="entry-requirements")
         if entry_req_tag:
-            for sibling in entry_req_tag.find_next_siblings():
-                # 如果遇到另一个h2标签，跳出循环
-                if sibling.name == 'h2':
-                    break
-                if sibling.name == 'p' and 'portfolio' in sibling.get_text(strip=True).lower():
-                    program_details["作品集"] = sibling.get_text(strip=True)
+            text = entry_req_tag.get_text().lower()
+            for phrase in phrases:
+                if phrase in text:
+                    # Extract sentences containing the phrase from the entry requirements section
+                    sentences = []
+                    line_sentences = re.split(r'(?<=[.!?])\s+', text)
+                    for sentence in line_sentences:
+                        if phrase in sentence:
+                            sentences.append(sentence)
+
+                    # Combine the extracted sentences into one
+                    combined_text = ' '.join(sentences)
+                    program_details["作品集"] = combined_text
                     return
-        program_details[f"作品集"] = "未要求"
+
+            program_details["作品集"] = "未要求"
+        else:
+            program_details["作品集"] = "未找到Entry requirements标签"
 
     def get_tuition(self, soup, program_details, extra_data=None):
         # 查找包含"Overseas tuition fees"的<h5>标签
-        tuition_tag = soup.find('h5', string=lambda text: 'Overseas tuition fees' in text)
+        tuition_tag = soup.find(
+            'h5', string=lambda text: 'Overseas tuition fees' in text)
         if tuition_tag:
             # 从该标签开始，查找具有class属性值为"study-mode fulltime"的<div>标签
-            fulltime_fee_div = tuition_tag.find_next('div', {'class': 'study-mode fulltime'})
-            parttime_fee_div = tuition_tag.find_next('div', {'class': 'study-mode parttime'})
+            fulltime_fee_div = tuition_tag.find_next(
+                'div', {'class': 'study-mode fulltime'})
+            parttime_fee_div = tuition_tag.find_next(
+                'div', {'class': 'study-mode parttime'})
             if fulltime_fee_div:
                 # 提取文本内容并去除多余的空白字符
-                tuition_fee = fulltime_fee_div.get_text(strip=True).replace('&#163;', '£')
+                tuition_fee = fulltime_fee_div.get_text(
+                    strip=True).replace('&#163;', '£')
                 program_details["课程费用"] = tuition_fee
             elif parttime_fee_div:
                 # 提取文本内容并去除多余的空白字符
-                tuition_fee = parttime_fee_div.get_text(strip=True).replace('&#163;', '£')
-                program_details["课程费用"] = tuition_fee
+                tuition_fee = parttime_fee_div.get_text(
+                    strip=True).replace('&#163;', '£')
+                program_details["课程费用"] = tuition_fee + " (part-time)"
             else:
                 program_details[f"课程费用"] = "未找到"
         else:
             program_details[f"课程费用"] = "未找到"
 
     def get_period(self, soup, program_details, extra_data=None):
-        # 查找包含"Overseas tuition fees"的<h5>标签
         period_tag = soup.find('h5', string=lambda text: 'Duration' in text)
         if period_tag:
             # 从该标签开始，查找具有class属性值为"study-mode fulltime"的<div>标签
-            fulltime_fee_div = period_tag.find_next('div', {'class': 'study-mode fulltime'})
+            fulltime_fee_div = period_tag.find_next(
+                'div', {'class': 'study-mode fulltime'})
             if fulltime_fee_div:
                 # 提取文本内容并去除多余的空白字符
-                study_period = fulltime_fee_div.get_text(strip=True).replace('&#163;', '£')
-                program_details["课程时长1(学制）"] = study_period
+                study_period = fulltime_fee_div.get_text(
+                    strip=True)
+                program_details["课程时长1(学制)"] = study_period
             else:
-                program_details[f"课程时长1(学制）"] = "未找到"
+                program_details[f"课程时长1(学制)"] = "未找到"
         else:
-            program_details[f"课程时长1(学制）"] = "未找到"
+            program_details[f"课程时长1(学制)"] = "未找到"
 
     def get_language_requirements(self, soup, program_details, extra_data=None):
         # 定义雅思得分级别的字典
         ielts_scores = {
-            "Level 1": ("6.5", "Level 1: Overall score of 6.5 and a minimum of 6.0 in each component"),
-            "Level 2": ("7.0", "Level 2: Overall score of 7.0 and a minimum of 6.5 in each component"),
-            "Level 3": ("7.0", "Level 3: Overall score of 7.0 and a minimum of 7.0 in each component"),
-            "Level 4": ("7.5", "Level 4: Overall score of 7.5 and a minimum of 7.0 in each component"),
-            "Level 5": ("8.0", "Level 5: Overall score of 8.0 and a minimum of 8.0 in each component")
+            "Level 1": ("总分 6.5, 小分 6.0", "Level 1: Overall score of 6.5 and a minimum of 6.0 in each component"),
+            "Level 2": ("总分 7.0, 小分 6.5", "Level 2: Overall score of 7.0 and a minimum of 6.5 in each component"),
+            "Level 3": ("总分 7.0, 小分 7.0", "Level 3: Overall score of 7.0 and a minimum of 7.0 in each component"),
+            "Level 4": ("总分 7.5, 小分 7.0", "Level 4: Overall score of 7.5 and a minimum of 7.0 in each component"),
+            "Level 5": ("总分 8.0, 小分 8.0", "Level 5: Overall score of 8.0 and a minimum of 8.0 in each component")
         }
 
         # 在全文的<p>标签中搜索包含"Level N"的文本
         for i in range(1, 6):
             level_text = f"Level {i}"
-            matching_paragraph = soup.find(string=lambda text: level_text in text)
+            matching_paragraph = soup.find(
+                string=lambda text: level_text in text)
 
             if matching_paragraph:
                 program_details["雅思要求"] = ielts_scores[level_text][0]
@@ -214,7 +278,7 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
         else:
             program_details["GMAT"] = "未要求"
 
-    def get_major_requirements_for_local_students(self, soup, program_details, extra_data=None):
+    def get_major_requirements_for_chinese_students(self, soup, program_details, extra_data=None):
 
         # 请求的URL
         url = "https://www.ucl.ac.uk/prospective-students/graduate/system/ajax"
@@ -265,7 +329,7 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
         try:
             json_data = response.json()
         except:
-            program_details["该专业对本地学生要求"] = "未找到，json load error"
+            program_details["该专业对本地学生要求"] = "未找到, 项目页面不可用或者正在更新"
             return
 
         # print(json_data)
@@ -291,6 +355,69 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
             elif percentage == 85:
                 program_details["该专业对本地学生要求"] = "2:1"
             else:
-                program_details["该专业对本地学生要求"] = "其他"
+                program_details["该专业对本地学生要求"] = percentage+'%'
             return
-        program_details["该专业对本地学生要求"] = "未找到，百分比错误"
+        else:
+            # Find the h4 element with the text 'Equivalent qualifications for China'
+            h4_tag = soup.find('h4', text='Equivalent qualifications for China')
+
+            if h4_tag:
+                # Find the next sibling <p> element after the h4 tag
+                program_details["该专业对本地学生要求"] = h4_tag.find_next_sibling('p').get_text()
+            else:
+                program_details["该专业对本地学生要求"] = "未找到"
+
+    def get_major_requirements_for_uk_students(self, soup, program_details, extra_data=None):
+        entry_req_tag = soup.find(id="entry-requirements")
+        if entry_req_tag:
+            text = entry_req_tag.get_text().lower()
+            if "normally require an upper second-class" in text and "may be considered" in text:
+                program_details["英国本地要求展示用"] = "有条件2:2"
+                return
+            elif "a second-class" in text:
+                program_details["英国本地要求展示用"] = "2:2"
+                return
+            elif "an upper second-class" in text:
+                program_details["英国本地要求展示用"] = "2:1"
+                return
+            else:
+                program_details["英国本地要求展示用"] = "未要求"
+        else:
+            program_details["英国本地要求展示用"] = "未找到Entry requirements标签"
+
+    def extract_relevant_text(self, text, keywords):
+        # Extract sentences containing the phrase from the entry requirements section
+        sentences = []
+        line_sentences = re.split(r'(?<=[.!?])\s+', text)
+        for keyword in keywords:
+            for sentence in line_sentences:
+                if keyword in sentence:
+                    sentences.append(sentence)
+
+        # Combine the extracted sentences into one
+        combined_text = ' '.join(sentences)
+
+        return combined_text
+
+    def get_interview_requirements(self, soup, program_details, extra_data=None):
+        # 定义关键词列表
+        keywords = ['interview', 'special qualifying examination', 'qualifying essay',
+                    'qualifying assessment', 'qualification obtained by written examination', 'oral examination', 'oral test', 'required to pass a test']
+
+        # 搜索包含这些关键词的<p>标签
+        matching_paragraphs = []
+        for keyword in keywords:
+            # matching_paragraphs.extend(soup.find_all('p', string=lambda text: keyword in text.lower()))
+            matching_paragraphs.extend(soup.find_all(
+                string=lambda text: keyword in text.lower()))
+
+        # 合并所有匹配的段落的文本内容
+        combined_text = ' '.join([p.get_text(strip=True)
+                                 for p in matching_paragraphs])
+
+        # 将合并后的文本添加到program_details字典中
+        if combined_text:
+            program_details["面/笔试要求"] = "要求/可能要求"
+            program_details["面/笔试要求细则"] = combined_text
+        else:
+            program_details["面/笔试要求"] = "未要求"
