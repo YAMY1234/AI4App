@@ -157,7 +157,8 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
                    'experience as a professional', ' who can demonstrate aptitude and experience',
                    'years of relevant experience', 'clinical experience', 'teaching experience',
                    'years\' experience working', 'years of training in',
-                   'extensive experience', 'relevant experience', 'relevant quantitative or qualitative research experience',
+                   'extensive experience', 'relevant experience',
+                   'relevant quantitative or qualitative research experience',
                    'experience in', 'experience working', 'professional involvement',
                    'experience of', 'with equivalent experience', 'industry experience', 'relevant work',
                    'field experience', 'relevant employment']
@@ -235,7 +236,7 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
         if period_tag:
             headers = ["课程时长1(学制)", "课程时长2(学制)", "课程时长3(学制)"]
             index = 0
-            
+
             # 从该标签开始，查找具有class属性值为"study-mode ...time"的<div>标签
             fulltime_div = period_tag.find_next(
                 'div', {'class': 'study-mode fulltime'})
@@ -243,33 +244,33 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
                 'div', {'class': 'study-mode parttime'})
             flexible_div = period_tag.find_next(
                 'div', {'class': 'study-mode flexible'})
-            
+
             # 提取文本内容并去除多余的空白字符
             if fulltime_div:
                 fulltime_period = fulltime_div.get_text(
-                strip=True)
+                    strip=True)
                 if fulltime_period != "Not applicable":
                     program_details[headers[index]] = fulltime_period + \
-                        " (full-time)"
+                                                      " (full-time)"
                     index += 1
             if parttime_div:
                 parttime_period = parttime_div.get_text(
-                strip=True)
+                    strip=True)
                 if parttime_period != "Not applicable":
                     program_details[headers[index]] = parttime_period + \
-                        " (part-time)"
+                                                      " (part-time)"
                     index += 1
             if flexible_div:
                 flexible_period = flexible_div.get_text(
-                strip=True)
+                    strip=True)
                 if flexible_period != "Not applicable":
                     program_details[headers[index]] = flexible_period + \
-                        " (flexible)"
+                                                      " (flexible)"
                     index += 1
-            
+
             if index == 0:
                 program_details[f"课程时长1(学制)"] = "未找到"
-        
+
     def get_language_requirements(self, soup, program_details, extra_data=None):
         # 定义雅思得分级别的字典
         ielts_scores = {
@@ -373,23 +374,11 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
 
         # response = requests.post(url, headers=headers, data=data)
         print(f"response.status_code: {response.status_code}")
-        
-        # Try maxium X times. Wait Y seconds between each try.
-        max_retries = 10
-        retry_delay = 3
 
-        for attempt in range(max_retries):
-            try:
-                json_data = response.json()
-                break  # Break out of the loop if successful
-            except Exception as e:
-                if attempt < max_retries - 1:
-                    time.sleep(retry_delay)
-                else:
-                    program_details["该专业对本地学生要求"] = "未找到，项目页面不可用或者正在更新"
-                    return
-
-        # print(json_data)
+        try:
+            json_data = response.json()
+        except:
+            program_details["该专业对本地学生要求"] = "未找到，项目页面不可用或者正在更新"
 
         all_text = ""
 
@@ -412,7 +401,7 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
             elif percentage == 85:
                 program_details["该专业对本地学生要求"] = "2:1"
             else:
-                program_details["该专业对本地学生要求"] = percentage+'%'
+                program_details["该专业对本地学生要求"] = percentage + '%'
             return
         else:
             # Find the h4 element with the text 'Equivalent qualifications for China'
@@ -447,7 +436,8 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
     def get_interview_requirements(self, soup, program_details, extra_data=None):
         # 定义关键词列表
         keywords = ['interview', 'special qualifying examination', 'qualifying essay',
-                    'qualifying assessment', 'qualification obtained by written examination', 'oral examination', 'oral test', 'required to pass a test']
+                    'qualifying assessment', 'qualification obtained by written examination', 'oral examination',
+                    'oral test', 'required to pass a test']
 
         # 搜索包含这些关键词的<p>标签
         matching_paragraphs = []
@@ -458,7 +448,7 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
 
         # 合并所有匹配的段落的文本内容
         combined_text = ' '.join([p.get_text(strip=True)
-                                 for p in matching_paragraphs])
+                                  for p in matching_paragraphs])
 
         # 将合并后的文本添加到program_details字典中
         if combined_text:
