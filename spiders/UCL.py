@@ -3,6 +3,7 @@ import time
 import requests
 from bs4 import BeautifulSoup
 
+from tools.general import request_with_retry
 from .base_spider import BaseProgramURLCrawler, BaseProgramDetailsCrawler
 
 UCL_BASE_URL = "https://www.ucl.ac.uk/prospective-students/graduate/taught-degrees"
@@ -357,11 +358,19 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
             '_triggering_element_name': 'ucl_international_equivalencies'
         }
 
-        try:
-            response = requests.post(url, headers=headers, data=data)
-        except requests.ConnectionError as e:
-            print(f"ConnectionError for URL {url}: {e}")
-            return
+        # try:
+        #     response = requests.post(url, headers=headers, data=data)
+        # except requests.ConnectionError as e:
+        #     print(f"ConnectionError for URL {url}: {e}")
+        #
+        response = request_with_retry(
+            url=url,
+            method='POST',
+            headers=headers,
+            data=data,
+            school_name="UCL"
+        )
+
         # response = requests.post(url, headers=headers, data=data)
         print(f"response.status_code: {response.status_code}")
         

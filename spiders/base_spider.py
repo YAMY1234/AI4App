@@ -1,11 +1,15 @@
 import json
 import os
 import threading
+import time
 
 import requests
 from bs4 import BeautifulSoup
 from openpyxl import load_workbook, Workbook
 import concurrent.futures
+
+from tools.general import request_with_retry
+from utils.logger import setup_logger
 
 
 class BaseProgramURLCrawler:
@@ -207,11 +211,15 @@ class BaseProgramDetailsCrawler:
         new_wb.save(self.details_path)
 
     def get_data_from_main_url(self, program_url, program_details):
-        try:
-            response = requests.get(program_url)
-        except requests.ConnectionError as e:
-            print(f"Connection Error for URL {program_url}: {e}")
-            return
+        # try:
+        #     response = requests.get(program_url)
+        # except requests.ConnectionError as e:
+        #     print(f"ConnectionError for URL {program_url}: {e}")
+        #     return
+        response = request_with_retry(
+            url=program_url,
+            school_name=self.school_name
+        )
         response.raise_for_status()
         soup = BeautifulSoup(response.text, 'html.parser')
         # self.get_program_intro(soup, program_details)
