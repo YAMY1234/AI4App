@@ -372,7 +372,6 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
         )
 
         # response = requests.post(url, headers=headers, data=data)
-        print(f"response.status_code: {response.status_code}")
 
         json_data = {}
         try:
@@ -452,3 +451,29 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
             program_details["面/笔试要求细则"] = combined_text
         else:
             program_details["面/笔试要求"] = "未要求"
+
+
+    def get_major_specifications(self, soup, program_details, extra_data=None):
+        # Load the excel worksheet
+        worksheet = self.read_excel("data/UCL/program_specification.xlsx").active
+
+        # Extract program URL from program_details
+        program_url = program_details.get("官网链接", "")
+
+        for row in worksheet.iter_rows(min_row=2, values_only=True):  # Start from the second row to skip header
+            sheet_url = row[0]
+
+            if program_url == sheet_url:
+                # Add the specifications to program_details
+                for i in range(1, 15):  # assuming you have up to 14 specializations
+                    if row[i]:  # Check if the specialization is not None
+                        column_name = f"专业细分方向{i}"
+                        program_details[column_name] = row[i]
+
+                break  # Break the loop once the URL is found
+
+        return program_details
+
+
+
+

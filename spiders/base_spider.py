@@ -150,11 +150,13 @@ class BaseProgramDetailsCrawler:
         data_row = [program_details.get(header, '') for header in headers]
         if self.test:
             print(json.dumps(program_details, indent=4, ensure_ascii=False))
+        else:
+            print(f"succeeded with program: {program_name}.")
 
         with lock:  # 确保线程安全
             new_sheet.append(data_row)
 
-    def generate_program_details(self, verbose = True):
+    def generate_program_details(self, verbose=True):
         self.scrape_program_details()
         self.write_program_constants()
         if verbose:
