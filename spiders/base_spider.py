@@ -63,8 +63,6 @@ class BaseProgramURLCrawler:
         new_wb.save(os.path.join(school_data_folder, 'program_url_pair.xlsx'))
 
 
-
-
 class BaseProgramDetailsCrawler:
 
     def __init__(self, school_name, test=False):
@@ -102,7 +100,7 @@ class BaseProgramDetailsCrawler:
 
         new_wb = Workbook()
         new_sheet = new_wb.active
-        new_sheet.append(['项目名','项目链接' ,'项目简介', '链接'])
+        new_sheet.append(['项目名', '项目链接', '项目简介', '链接'])
 
         with concurrent.futures.ThreadPoolExecutor(max_workers=20) as executor:
             results = list(executor.map(self.process_row, sheet.iter_rows(min_row=2, values_only=True), chunksize=1))
@@ -179,15 +177,14 @@ class BaseProgramDetailsCrawler:
         for header in reversed(headers):
             sheet.insert_cols(1)
             sheet.cell(row=1, column=1, value=header)
-        
+
         # write constants to program_details.xlsx
         for header in headers:
             for row in range(2, sheet.max_row + 1):
                 sheet.cell(row=row, column=headers.index(header) + 1, value=data[headers.index(header)])
-            
+
         # save program_details.xlsx
         wb.save(self.details_path)
-        
 
     def scrape_program_details(self):
         # 从 program_detail_headers.txt 读取标题
@@ -238,7 +235,7 @@ class BaseProgramDetailsCrawler:
         self.get_GRE_GMAT_requirements(soup, program_details)
         self.get_major_requirements_for_chinese_students(soup, program_details)
         self.get_major_requirements_for_uk_students(soup, program_details)
-
+        self.get_major_specifications(soup, program_details)
 
     def get_data_from_url(self, useful_links, program_details):
         # Here you can add more methods to process the soup based on the type of link_name.
@@ -322,6 +319,3 @@ class BaseProgramDetailsCrawler:
 
     # def get_application_deadlines(self, soup, program_details):
     #     pass
-
-
-

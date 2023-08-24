@@ -152,12 +152,12 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
         return combined_text
 
     def judge_wrk_exp_preference(self, text):
-        required_phrases = ['minimum of', 'at least', 'Ideally', 'essential','must have','normally have','should also have','should have','need to have']
+        required_phrases = ['minimum of', 'at least', 'Ideally', 'essential', 'must have', 'normally have',
+                            'should also have', 'should have', 'need to have']
         for phrase in required_phrases:
             if phrase in text:
                 return "需要"
         return "加分项"
-                             
 
     def get_work_experience_requirements(self, soup, program_details, extra_data=None):
         phrases = ['work experience', 'professional experience', 'industrial experience',
@@ -452,10 +452,9 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
         else:
             program_details["面/笔试要求"] = "未要求"
 
-
     def get_major_specifications(self, soup, program_details, extra_data=None):
         # Load the excel worksheet
-        worksheet = self.read_excel("data/UCL/program_specification.xlsx").active
+        worksheet = self.read_excel("data/UCL/program_specifications.xlsx").active
 
         # Extract program URL from program_details
         program_url = program_details.get("官网链接", "")
@@ -473,7 +472,3 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
                 break  # Break the loop once the URL is found
 
         return program_details
-
-
-
-
