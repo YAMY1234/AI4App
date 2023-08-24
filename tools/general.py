@@ -39,6 +39,7 @@ def request_with_retry(url, method='GET', headers=None, data=None, params=None, 
             response.raise_for_status()  # 如果返回的HTTP状态码不是200-399，它将引发一个HTTPError。
             return response
         except (requests.ConnectionError, requests.HTTPError) as e:
+            print(f"Warning: requests.ConnectionError raised {retries+1} times for url: {url}")
             retries += 1
             if retries > max_retries:
                 error_msg = f"{method} request error for URL {url} after {max_retries} retries: {e}"
