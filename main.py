@@ -6,7 +6,7 @@ def main():
     ucl_program_crawler.crawl()
     print("crawling UCL details...")
     ucl_detail_crawler = UCL.UCLProgramDetailsCrawler(test=False)
-    # ucl_detail_crawler.get_program_useful_links()
+    ucl_detail_crawler.get_program_useful_links()
     ucl_detail_crawler.generate_program_details()
     # 具体实现...
 
