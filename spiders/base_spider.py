@@ -169,7 +169,6 @@ class BaseProgramDetailsCrawler:
             data = lines[1].split(sep=',')
 
         # open program_details.xlsx
-
         wb = self.read_excel(self.details_path)
         sheet = wb.active
 

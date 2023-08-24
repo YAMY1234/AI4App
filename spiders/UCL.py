@@ -158,7 +158,6 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
                 return "需要"
         return "加分项"
                              
-
     def get_work_experience_requirements(self, soup, program_details, extra_data=None):
         phrases = ['work experience', 'professional experience', 'industrial experience',
                    'existing engineering and design skills', 'practical experience',
@@ -415,11 +414,30 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
             else:
                 program_details["该专业对本地学生要求"] = "未找到"
 
+    def is_conditional_upper_second(self, text):
+        # pt1 = "with a lower than upper-second class" in text \
+        #     or "normally require an upper second-class" in text \
+        #     or "with a lower second" in text
+        # pt2 = "may be considered" in text \
+        #     or "be considered" in text \
+        #         or "may be" in text
+        
+            
+        if "normally require an upper second-class" in text and "may be considered" in text:
+            return True
+        if "with a lower than upper-second class" in text and "may be" in text:
+            return True
+        if "with a lower second" in text and "be considered" in text:
+            return True
+        return False
+
+
+
     def get_major_requirements_for_uk_students(self, soup, program_details, extra_data=None):
         entry_req_tag = soup.find(id="entry-requirements")
         if entry_req_tag:
             text = entry_req_tag.get_text().lower()
-            if "normally require an upper second-class" in text and "may be considered" in text:
+            if self.is_conditional_upper_second(text):
                 program_details["英国本地要求展示用"] = "有条件2:2"
                 return
             elif "a second-class" in text:
