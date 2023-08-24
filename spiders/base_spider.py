@@ -148,7 +148,8 @@ class BaseProgramDetailsCrawler:
 
         # 根据 headers 生成要追加的行
         data_row = [program_details.get(header, '') for header in headers]
-        print(json.dumps(program_details, indent=4, ensure_ascii=False))
+        if self.test:
+            print(json.dumps(program_details, indent=4, ensure_ascii=False))
 
         with lock:  # 确保线程安全
             new_sheet.append(data_row)

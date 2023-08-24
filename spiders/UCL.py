@@ -151,6 +151,14 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
 
         return combined_text
 
+    def judge_wrk_exp_preference(self, text):
+        required_phrases = ['minimum of', 'at least', 'Ideally', 'essential','must have','normally have','should also have','should have','need to have']
+        for phrase in required_phrases:
+            if phrase in text:
+                return "需要"
+        return "加分项"
+                             
+
     def get_work_experience_requirements(self, soup, program_details, extra_data=None):
         phrases = ['work experience', 'professional experience', 'industrial experience',
                    'existing engineering and design skills', 'practical experience',
@@ -165,21 +173,12 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
         entry_req_tag = soup.find(id="entry-requirements")
         if entry_req_tag:
             text = entry_req_tag.get_text().lower()
-            for phrase in phrases:
-                if phrase in text:
-                    # Extract sentences containing the phrase from the entry requirements section
-                    sentences = []
-                    line_sentences = re.split(r'(?<=[.!?])\s+', text)
-                    for sentence in line_sentences:
-                        if phrase in sentence:
-                            sentences.append(sentence)
-
-                    # Combine the extracted sentences into one
-                    combined_text = ' '.join(sentences)
-                    program_details["工作经验（年）"] = combined_text
-                    return
-
-            program_details["工作经验（年）"] = "未要求"
+            combined_text = self.extract_relevant_text(text, phrases)
+            if combined_text:
+                program_details["工作经验（年）"] = self.judge_wrk_exp_preference(combined_text)
+                program_details["工作经验细则"] = combined_text
+            else:
+                program_details["工作经验（年）"] = "未要求"
         else:
             program_details["工作经验（年）"] = "未找到Entry requirements标签"
 
@@ -375,6 +374,7 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
         # response = requests.post(url, headers=headers, data=data)
         print(f"response.status_code: {response.status_code}")
 
+        json_data = {}
         try:
             json_data = response.json()
         except:
@@ -440,15 +440,11 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
                     'oral test', 'required to pass a test']
 
         # 搜索包含这些关键词的<p>标签
-        matching_paragraphs = []
-        for keyword in keywords:
-            # matching_paragraphs.extend(soup.find_all('p', string=lambda text: keyword in text.lower()))
-            matching_paragraphs.extend(soup.find_all(
-                string=lambda text: keyword in text.lower()))
-
-        # 合并所有匹配的段落的文本内容
-        combined_text = ' '.join([p.get_text(strip=True)
-                                  for p in matching_paragraphs])
+        entry_req_tag = soup.find(id="entry-requirements")
+        combined_text = ""
+        if entry_req_tag:
+            combined_text = self.extract_relevant_text(
+                entry_req_tag.get_text().lower(), keywords)
 
         # 将合并后的文本添加到program_details字典中
         if combined_text:
