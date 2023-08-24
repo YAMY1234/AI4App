@@ -16,15 +16,21 @@ class UCLProgramURLCrawler(BaseProgramURLCrawler):
     # Override any method if UCL's site has a different structure or logic
     def _parse_programs(self, soup, _):
         program_url_pairs = {}
-        # base_url = "https://www.ucl.ac.uk/prospective-students/graduate/taught-degrees/"
 
-        # 寻找所有<a>标签，其href属性以指定的base_url开始
         for link in soup.find_all('a', href=True):
             link_url = link.get('href')
             link_name = link.get_text().strip().lower()
 
+            # Check if the URL starts with the base URL
             if link_url.startswith(self.base_url):
-                program_url_pairs[link_name] = link_url
+                # Try to find the faculty info immediately following the link
+                faculty_info = link.find_next_sibling("span", class_="search-results__dept")
+                if faculty_info:
+                    program_faculty = faculty_info.get_text().strip()
+                else:
+                    program_faculty = "N/A"  # Default value in case the faculty info is missing
+
+                program_url_pairs[link_name] = [link_url, program_faculty]
 
         return program_url_pairs
 
@@ -35,7 +41,7 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
 
     def process_row(self, row):
         link_bank = self.read_excel('data/url_bank.xlsx').active
-        program_name, url = row
+        program_name, url, faculty = row
 
         response = requests.get(url)
         response.raise_for_status()
@@ -58,7 +64,7 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
                 if bank_row[0].lower() in link_name.lower():
                     useful_links.append(f'{link_name}:{link_url}')
                     break
-        return [program_name, url, intro_text] + useful_links
+        return [program_name, url, faculty, intro_text] + useful_links
 
     # Override any method if UCL's site has a different structure or logic
     def get_enrollment_deadlines(self, soup, program_details, extra_data=None):

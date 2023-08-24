@@ -9,6 +9,7 @@ from openpyxl import load_workbook, Workbook
 import concurrent.futures
 
 from tools.general import request_with_retry
+from tools.general import translate_text
 from utils.logger import setup_logger
 
 
@@ -53,11 +54,12 @@ class BaseProgramURLCrawler:
         new_ws.title = "Program URLs"
 
         # Add header row
-        new_ws.append(["Program Name", "URL"])
+        new_ws.append(["Program Name", "URL", "Faculty"])
 
         # Store the results in the excel sheet
-        for program_name, url in program_url_pairs.items():
-            new_ws.append([program_name, url])
+        for program_name, details in program_url_pairs.items():
+            url, faculty = details
+            new_ws.append([program_name, url, faculty])
 
         # Save the file
         new_wb.save(os.path.join(school_data_folder, 'program_url_pair.xlsx'))
@@ -89,7 +91,7 @@ class BaseProgramDetailsCrawler:
                 sheet = wb.active
                 new_wb = Workbook()
                 new_sheet = new_wb.active
-                new_sheet.append(["Program Name", "URL"])
+                new_sheet.append(["Program Name", "URL", "Faculty"])
                 for row in sheet.iter_rows(min_row=2, max_row=11, values_only=True):
                     new_sheet.append(row)
                 new_wb.save(url_pair_path)
@@ -100,7 +102,7 @@ class BaseProgramDetailsCrawler:
 
         new_wb = Workbook()
         new_sheet = new_wb.active
-        new_sheet.append(['项目名', '项目链接', '项目简介', '链接'])
+        new_sheet.append(['项目名', '项目链接', '学院', '项目简介', '链接'])
 
         with concurrent.futures.ThreadPoolExecutor(max_workers=20) as executor:
             results = list(executor.map(self.process_row, sheet.iter_rows(min_row=2, values_only=True), chunksize=1))
@@ -113,7 +115,7 @@ class BaseProgramDetailsCrawler:
 
     def process_row(self, row):
         link_bank = self.read_excel('data/url_bank.xlsx').active
-        program_name, url = row
+        program_name, url, faculty = row
 
         response = requests.get(url)
         response.raise_for_status()
@@ -132,14 +134,23 @@ class BaseProgramDetailsCrawler:
                     useful_links.append(f'{link_name}:{link_url}')
                     break
 
-        return [program_name, url, intro_text] + useful_links
+        return [program_name, url, faculty, intro_text] + useful_links
 
     def thread_task(self, row, headers, new_sheet, lock):
-        program_name, program_url, intro_text, *useful_links = row
-        program_details = {}
-        program_details["专业"] = program_name
-        program_details["官网链接"] = program_url
-        program_details["项目简介"] = intro_text
+        def rearrange_program_name(name):
+            words = name.split()  # Split the name into individual words
+            if len(words) > 1:  # Check if there's more than one word
+                last_word = words.pop(-1)  # Get the last word
+                words.insert(0, last_word)  # Insert the last word at the beginning
+            # Join the words back together and capitalize each word
+            return ' '.join(word.capitalize() for word in words)
+
+        program_name, program_url, program_faculty, intro_text, *useful_links = row
+        program_details = {"专业": rearrange_program_name(program_name),
+                           "学院": program_faculty,
+                           "官网链接": program_url,
+                           "项目简介": intro_text,
+                           }
 
         self.get_data_from_main_url(program_url, program_details)
         # self.get_data_from_url(useful_links, program_details)
@@ -156,15 +167,14 @@ class BaseProgramDetailsCrawler:
 
     def generate_program_details(self, verbose=True):
         self.scrape_program_details()
-        self.write_program_constants()
+        self.write_program_constants_and_translate()
         if verbose:
             print(f"{self.school_name} updated successfully.")
 
-    def write_program_constants(self):
-        # read headers from university_constants.csv
+    def write_program_constants_and_translate(self):
+        # 从university_constants.csv中读取headers和数据
         with open('data/Constants/university_constants.csv', 'r', encoding='utf-8') as file:
             lines = [line.strip() for line in file.readlines()]
-            # TODO: Only one line in university_constants.csv for now
             headers = lines[0].split(sep=',')
             data = lines[1].split(sep=',')
 
@@ -172,17 +182,31 @@ class BaseProgramDetailsCrawler:
         wb = self.read_excel(self.details_path)
         sheet = wb.active
 
-        # insert constant headers to program_details.xlsx at the beginning
-        for header in reversed(headers):
-            sheet.insert_cols(1)
-            sheet.cell(row=1, column=1, value=header)
+        # 获取现有的headers
+        existing_headers = [cell.value for cell in sheet[1]]
 
         # write constants to program_details.xlsx
         for header in headers:
-            for row in range(2, sheet.max_row + 1):
-                sheet.cell(row=row, column=headers.index(header) + 1, value=data[headers.index(header)])
+            if header in existing_headers:
+                col_index = existing_headers.index(header) + 1
+                for row in range(2, sheet.max_row + 1):
+                    sheet.cell(row=row, column=col_index, value=data[headers.index(header)])
 
-        # save program_details.xlsx
+        # 找出特定列名所在的列号
+        col_institute_idx = existing_headers.index('学院') + 1
+        col_program_idx = existing_headers.index('专业') + 1
+        col_background_idx = existing_headers.index('相关背景要求') + 1
+
+        # 翻译特定列并写入相应的中文列
+        for row in range(2, sheet.max_row + 1):
+            institute = sheet.cell(row=row, column=col_institute_idx).value
+            program = sheet.cell(row=row, column=col_program_idx).value
+            background = sheet.cell(row=row, column=col_background_idx).value
+
+            sheet.cell(row=row, column=col_institute_idx + 1, value=translate_text(institute))
+            sheet.cell(row=row, column=col_program_idx + 1, value=translate_text(program))
+            sheet.cell(row=row, column=col_background_idx + 1, value=translate_text(background))
+
         wb.save(self.details_path)
 
     def scrape_program_details(self):
