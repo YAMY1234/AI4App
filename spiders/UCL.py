@@ -414,21 +414,20 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
                 program_details["该专业对本地学生要求"] = "未找到"
 
     def is_conditional_upper_second(self, text):
-        # pt1 = "with a lower than upper-second class" in text \
-        #     or "normally require an upper second-class" in text \
-        #     or "with a lower second" in text
-        # pt2 = "may be considered" in text \
-        #     or "be considered" in text \
-        #         or "may be" in text
-        
-            
-        if "normally require an upper second-class" in text and "may be considered" in text:
+        pt1 = "with a lower than upper-second class" in text \
+            or "normally require an upper second-class" in text \
+            or "with a lower second" in text \
+            or "upper second-class" in text 
+        pt2 = "may be considered" in text \
+            or "second acceptable qualification" in text\
+            or "in exceptional cases" in text\
+            or "in exceptional circumstances" in text\
+            or "consider applications from" in text\
+            or "may be admitted" in text
+        if pt1 and pt2:
             return True
-        if "with a lower than upper-second class" in text and "may be" in text:
-            return True
-        if "with a lower second" in text and "be considered" in text:
-            return True
-        return False
+        else:
+            return False
 
 
 
