@@ -380,12 +380,15 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
         # except requests.ConnectionError as e:
         #     print(f"ConnectionError for URL {url}: {e}")
         #
+        time.sleep(0.2)
         response = request_with_retry(
             url=url,
             method='POST',
             headers=headers,
             data=data,
-            school_name="UCL"
+            school_name="UCL",
+            max_retries=10,
+            delay=10
         )
 
         # response = requests.post(url, headers=headers, data=data)
