@@ -506,8 +506,8 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
     def get_interview_requirements(self, soup, program_details, extra_data=None):
         # 定义关键词列表
         keywords = ['interview', 'special qualifying examination', 'qualifying essay',
-                    'qualifying assessment', 'qualification obtained by written examination', 'oral examination',
-                    'oral test', 'required to pass a test']
+                    'qualifying assessment', 'written examination', 'oral examination',
+                    'oral test', 'required to pass a test', 'written examination', 'written test', 'written assessment']
 
         # 搜索包含这些关键词的<p>标签
         entry_req_tag = soup.find(id="entry-requirements")

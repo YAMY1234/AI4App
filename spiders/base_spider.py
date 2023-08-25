@@ -156,9 +156,13 @@ class BaseProgramDetailsCrawler:
         def rearrange_program_name(name):
             words = name.split()  # Split the name into individual words
             if len(words) > 1:  # Check if there's more than one word
-                last_word = words.pop(-1)  # Get the last word
-                # Insert the last word at the beginning
-                words.insert(0, last_word)
+                last_word = words[-1]  # Get the last word
+                if last_word.lower().startswith('m'):  # Check if the last word starts with 'm' or 'M'
+                    words.pop(-1)  # Remove the last word
+                    # Insert the last word at the beginning
+                    words.insert(0, last_word)
+                else:
+                    words.insert(0, "Master's")  # the specific master program not identified
             # Join the words back together and capitalize each word
             return ' '.join(word.capitalize() for word in words)
 
