@@ -24,7 +24,8 @@ class UCLProgramURLCrawler(BaseProgramURLCrawler):
             # Check if the URL starts with the base URL
             if link_url.startswith(self.base_url):
                 # Try to find the faculty info immediately following the link
-                faculty_info = link.find_next_sibling("span", class_="search-results__dept")
+                faculty_info = link.find_next_sibling(
+                    "span", class_="search-results__dept")
                 if faculty_info:
                     program_faculty = faculty_info.get_text().strip()
                 else:
@@ -36,8 +37,8 @@ class UCLProgramURLCrawler(BaseProgramURLCrawler):
 
 
 class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
-    def __init__(self, test=False):
-        super().__init__(school_name="UCL", test=test)
+    def __init__(self, test=False, verbose=True):
+        super().__init__(school_name="UCL", test=test, verbose=verbose)
 
     def process_row(self, row):
         link_bank = self.read_excel('data/url_bank.xlsx').active
@@ -147,13 +148,18 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
         # Extract sentences containing the phrase from the entry requirements section
         sentences = []
         line_sentences = re.split(r'(?<=[.!?])\s+', text)
+        found = False
         for keyword in keywords:
             for sentence in line_sentences:
                 if keyword in sentence:
                     sentences.append(sentence)
+                    found = True
+            # Avoid adding duplicate sentences when multiple keywords are matched
+            if found:
+                break
 
         # Combine the extracted sentences into one
-        combined_text = ' '.join(sentences)
+        combined_text = ' '.join(sentences).strip()
 
         return combined_text
 
@@ -176,38 +182,43 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
                    'experience in', 'experience working', 'professional involvement',
                    'experience of', 'with equivalent experience', 'industry experience', 'relevant work',
                    'field experience', 'relevant employment']
+        
         entry_req_tag = soup.find(id="entry-requirements")
         if entry_req_tag:
-            text = entry_req_tag.get_text().lower()
-            combined_text = self.extract_relevant_text(text, phrases)
-            if combined_text:
-                program_details["工作经验（年）"] = self.judge_wrk_exp_preference(combined_text)
-                program_details["工作经验细则"] = combined_text
-            else:
-                program_details["工作经验（年）"] = "未要求"
+            entry_req_paragraph = entry_req_tag.find('h2').find_next_sibling('p')
+            if entry_req_paragraph:
+                text = entry_req_paragraph.get_text().lower()
+                combined_text = self.extract_relevant_text(text, phrases)
+                if combined_text:
+                    program_details["工作经验（年）"] = self.judge_wrk_exp_preference(
+                        combined_text)
+                    program_details["工作经验细则"] = combined_text
+                else:
+                    program_details["工作经验（年）"] = "未要求"
         else:
             program_details["工作经验（年）"] = "未找到Entry requirements标签"
+
+    def judge_portfolio_preference(self, text):
+        required_phrases = ['may be', 'may also be', 'may be considered', 'may also be considered']
+        for phrase in required_phrases:
+            if phrase in text:
+                return "加分项"
+        return "需要"
 
     def get_portfolio_requirements(self, soup, program_details, extra_data=None):
         phrases = ['written work', 'portfolio']
         entry_req_tag = soup.find(id="entry-requirements")
         if entry_req_tag:
-            text = entry_req_tag.get_text().lower()
-            for phrase in phrases:
-                if phrase in text:
-                    # Extract sentences containing the phrase from the entry requirements section
-                    sentences = []
-                    line_sentences = re.split(r'(?<=[.!?])\s+', text)
-                    for sentence in line_sentences:
-                        if phrase in sentence:
-                            sentences.append(sentence)
-
-                    # Combine the extracted sentences into one
-                    combined_text = ' '.join(sentences)
-                    program_details["作品集"] = combined_text
-                    return
-
-            program_details["作品集"] = "未要求"
+            entry_req_paragraph = entry_req_tag.find('h2').find_next_sibling('p')
+            if entry_req_paragraph:
+                text = entry_req_paragraph.get_text().lower()
+                combined_text = self.extract_relevant_text(text, phrases)
+                if combined_text:
+                    program_details["作品集"] = self.judge_portfolio_preference(
+                        combined_text)
+                    program_details["作品集细则"] = combined_text
+                else:
+                    program_details["作品集"] = "未要求"
         else:
             program_details["作品集"] = "未找到Entry requirements标签"
 
@@ -256,21 +267,21 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
                     strip=True)
                 if fulltime_period != "Not applicable":
                     program_details[headers[index]] = fulltime_period + \
-                                                      " (full-time)"
+                        " (full-time)"
                     index += 1
             if parttime_div:
                 parttime_period = parttime_div.get_text(
                     strip=True)
                 if parttime_period != "Not applicable":
                     program_details[headers[index]] = parttime_period + \
-                                                      " (part-time)"
+                        " (part-time)"
                     index += 1
             if flexible_div:
                 flexible_period = flexible_div.get_text(
                     strip=True)
                 if flexible_period != "Not applicable":
                     program_details[headers[index]] = flexible_period + \
-                                                      " (flexible)"
+                        " (flexible)"
                     index += 1
 
             if index == 0:
@@ -406,7 +417,7 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
             elif percentage == 85:
                 program_details["该专业对本地学生要求"] = "2:1"
             else:
-                program_details["该专业对本地学生要求"] = percentage + '%'
+                program_details["该专业对本地学生要求"] = str(percentage) + '%'
             return
         else:
             # Find the h4 element with the text 'Equivalent qualifications for China'
@@ -421,40 +432,76 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
                 program_details["该专业对本地学生要求"] = "未找到"
 
     def is_conditional_upper_second(self, text):
-        pt1 = "with a lower than upper-second class" in text \
-            or "normally require an upper second-class" in text \
-            or "with a lower second" in text \
-            or "upper second-class" in text
-        pt2 = "may be considered" in text \
-            or "second acceptable qualification" in text\
-            or "in exceptional cases" in text\
-            or "in exceptional circumstances" in text\
-            or "consider applications from" in text\
-            or "may be admitted" in text
-        if pt1 and pt2:
-            return True
-        else:
-            return False
+        phrases_pt1 = ["with a lower than upper-second class",
+                       "normally require an upper second-class",
+                       "with a lower second",
+                       "upper second-class"]
 
+        phrases_pt2 = [
+            "second acceptable qualification",
+            "equivalent overseas qualification",
+            "in exceptional cases",
+            "in exceptional circumstances",
+            "fail to meet the standard requirement",
+            "may, at their discretion, consider",
+            "may also be considered",
+            "may be considered",
+            "may also be accepted",
+            "may be accepted",
+            "may be admitted"]
 
+        return any(phrase in text for phrase in phrases_pt1) and any(phrase in text for phrase in phrases_pt2)
+
+    def is_upper_second_class(self, text):
+        upper_2nd_phrases = ["upper second-class",
+                             "upper second class",
+                             "upper-second class",
+                             "1st class",
+                             "a good 2.1",
+                             "a first-class",
+                             "a first class",
+                             "2:1 or equivalent",
+                             "dental qualification"
+                             ]
+        return any(phrase in text for phrase in upper_2nd_phrases)
+
+    def is_second_class(self, text):
+        second_phrases = ["lower second-class",
+                             "lower second class",
+                             "lower-second class",
+                             "good second class",
+                             "a second class",
+                             "a second-class",
+                             "2:2 or equivalent"
+                             ]
+        return any(phrase in text for phrase in second_phrases)
 
     def get_major_requirements_for_uk_students(self, soup, program_details, extra_data=None):
         entry_req_tag = soup.find(id="entry-requirements")
         if entry_req_tag:
-            text = entry_req_tag.get_text().lower()
-            if self.is_conditional_upper_second(text):
-                program_details["英国本地要求展示用"] = "有条件2:2"
-                return
-            elif "a second-class" in text:
-                program_details["英国本地要求展示用"] = "2:2"
-                return
-            elif "an upper second-class" in text:
-                program_details["英国本地要求展示用"] = "2:1"
-                return
-            else:
-                program_details["英国本地要求展示用"] = "未要求"
+            entry_req_paragraph = entry_req_tag.find('h2').find_next_sibling('p')
+            if entry_req_paragraph:
+                text = entry_req_paragraph.get_text().lower()
+                if self.is_conditional_upper_second(text):
+                    program_details["英国本地要求展示用"] = "有条件2:2"
+                    return
+                elif self.is_upper_second_class(text):
+                    program_details["英国本地要求展示用"] = "2:1"
+                    return
+                elif self.is_second_class(text):
+                    program_details["英国本地要求展示用"] = "2:2"
+                    return
+                else:
+                    program_details["英国本地要求展示用"] = "未要求"
         else:
             program_details["英国本地要求展示用"] = "未找到Entry requirements标签"
+
+    def judge_interview_preference(self, text):
+        required_phrases = ['may be', 'may also be', 'may be considered', 'may also be considered']
+        for phrase in required_phrases:
+            if phrase in text:
+                return "可能要求"
+        return "需要"
 
     def get_interview_requirements(self, soup, program_details, extra_data=None):
         # 定义关键词列表
@@ -466,24 +513,29 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
         entry_req_tag = soup.find(id="entry-requirements")
         combined_text = ""
         if entry_req_tag:
-            combined_text = self.extract_relevant_text(
-                entry_req_tag.get_text().lower(), keywords)
+            entry_req_paragraph = entry_req_tag.find('h2').find_next_sibling('p')
+            if entry_req_paragraph:
+                text = entry_req_paragraph.get_text().lower()
+                combined_text = self.extract_relevant_text(text, keywords)
 
         # 将合并后的文本添加到program_details字典中
         if combined_text:
-            program_details["面/笔试要求"] = "要求/可能要求"
+            program_details["面/笔试要求"] = self.judge_interview_preference(combined_text)
             program_details["面/笔试要求细则"] = combined_text
         else:
             program_details["面/笔试要求"] = "未要求"
 
     def get_major_specifications(self, soup, program_details, extra_data=None):
+        # Todo: 写爬虫更新而不是直接复制粘贴
         # Load the excel worksheet
-        worksheet = self.read_excel("data/UCL/program_specifications.xlsx").active
+        worksheet = self.read_excel(
+            "data/UCL/program_specifications.xlsx").active
 
         # Extract program URL from program_details
         program_url = program_details.get("官网链接", "")
 
-        for row in worksheet.iter_rows(min_row=2, values_only=True):  # Start from the second row to skip header
+        # Start from the second row to skip header
+        for row in worksheet.iter_rows(min_row=2, values_only=True):
             sheet_url = row[0]
 
             if program_url == sheet_url:
