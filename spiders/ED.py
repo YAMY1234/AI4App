@@ -53,6 +53,7 @@ class EDProgramURLCrawler(BaseProgramURLCrawler):
 
         return program_url_pairs
 
+
 class EDProgramDetailsCrawler(BaseProgramDetailsCrawler):
     def __init__(self, test=False, verbose=True):
         super().__init__(school_name="ED", test=test, verbose=verbose)
@@ -104,8 +105,23 @@ class EDProgramDetailsCrawler(BaseProgramDetailsCrawler):
         # Join the course list to form a single string
         program_details["课程列表英"] = '; '.join(course_list)
 
+    '''
+    需要修改或实现的函数以及需要添加到的dict的key: def get_period(self, soup, program_details, extra_data=None):  需要添加到：program_details[f"课程时长1(学制)"], 
+    
+    修改要求: 首先，定位到名为Applying的h2标签，然后在h2标签所在的那一个<div class="col-xs-12">标签当中搜寻其中的文字信息，如果对应的小写匹配的1 year full-timee, 2 year full-time，或者Awards: MSc (12-12 mth FT, 24-24 mth PT)这种的话，那么就填入对应的full-time对应的时间作为答案。 
+    
+    参考网页代码,
+     <h2>Applying</h2>
+    
+     <p>Select your programme and preferred start date to begin your application.</p><div class="row finderSearch"><div class="col-xs-12"><h5>MSc Accounting and Finance - 1 Year (Full-time)</h5><div class="input-group input-group-lg"><select name="code2" class="form-control" required=""><option value="">Select your start date</option><option value="https://www.star.euclid.ed.ac.uk/public/urd/sits.urd/run/siw_ipp_lgn.login?process=siw_ipp_app&amp;code1=PTMSCACFIN1F&amp;code2=0017">9 September 2024</option></select><span class="input-group-btn"><input type="button" value="Apply" class="btn btn-uoe btn-apply btn-euclid-apply" title="Apply: MSc Accounting and Finance - 1 Year (Full-time)" /></span></div></div></div> </div>
+    
+     </div>
+     BUG:   File "/Users/liyangmin/PycharmProjects/AI4App/spiders/ED.py", line 117, in get_period
+        col_div = applying_h2.find_next_sibling("div", class_="row").find("div", class_="col-xs-12")
+    AttributeError: 'NoneType' object has no attribute 'find'
+    '''
 
-    def get_period(self, soup, program_details, extra_data=None):
+    def get_period(self, soup, program_details, extra_data=None):  # todo: fix the bug above
         # Find the "Applying" h2 tag
         applying_h2 = soup.find("h2", string="Applying")
 
