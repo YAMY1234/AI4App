@@ -40,6 +40,7 @@ class EDProgramURLCrawler(BaseProgramURLCrawler):
 
             # Check if the URL starts with one of the base URLs
             if "id=" in link_url:
+                link_url = "https://www.ed.ac.uk" + link_url
                 # Try to find the faculty info immediately following the link
                 faculty_info = link.find_next_sibling(
                     "span", class_="search-results__dept")
