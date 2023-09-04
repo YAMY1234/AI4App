@@ -316,6 +316,7 @@ class BaseProgramDetailsCrawler:
         self.get_major_requirements_for_chinese_students(soup, program_details)
         self.get_major_requirements_for_uk_students(soup, program_details)
         self.get_major_specifications(soup, program_details)
+        self.get_program_description(soup, program_details)
 
     def get_data_from_url(self, useful_links, program_details):
         # Here you can add more methods to process the soup based on the type of link_name.
@@ -391,6 +392,9 @@ class BaseProgramDetailsCrawler:
         pass
 
     def get_major_specifications(self, soup, program_details, extra_data=None):
+        pass
+
+    def get_program_description(self, soup, program_details, extra_data=None):
         pass
 
     # def get_campus(self, soup, program_details):

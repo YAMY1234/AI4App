@@ -84,26 +84,24 @@ class EDProgramDetailsCrawler(BaseProgramDetailsCrawler):
         from bs4 import BeautifulSoup
 
     def get_course_intro_and_details(self, soup, program_details, extra_data=None):
-        # Locate the "Programme structure" panel
-        panel_title = soup.find("h2", class_="panel-title", string="Programme structure")
-        if not panel_title:
-            program_details["课程列表英"] = "N/A"
-            return
+        # 定位到程序结构所在的div标签
+        structure_div = soup.find('div', id='proxy_collapsehow_taught')
 
-        # Navigate to the panel content div
-        panel_body = panel_title.find_next_sibling("div", class_="panel-collapse").find("div", class_="panel-body")
-        if not panel_body:
-            program_details["课程列表英"] = "N/A"
-            return
+        if structure_div:
+            # 提取除<ul>外的所有文本作为课程介绍
+            course_intro_texts = [p.get_text() for p in structure_div.find_all('p')]
+            course_intro = '\n'.join(course_intro_texts).strip()
+            program_details['课程介绍英'] = course_intro
 
-        # Extract all <li> tags without <a> tags within the panel content
-        course_list = []
-        for li in panel_body.find_all("li"):
-            if not li.find("a"):  # Check if the <li> tag does not contain an <a> tag
-                course_list.append(li.get_text(strip=True))
-
-        # Join the course list to form a single string
-        program_details["课程列表英"] = '; '.join(course_list)
+            # 提取所有<li>标签的文本内容
+            course_list_texts = [li.get_text() for li in structure_div.find_all('li')]
+            course_list = '\n - '.join(course_list_texts).strip()
+            if course_list:
+                course_list = '- ' + course_list  # Add the '-' before the first item
+            program_details['课程列表英'] = course_list
+        else:
+            program_details['课程介绍英'] = "信息不可用"
+            program_details['课程列表英'] = "信息不可用"
 
     '''
     需要修改或实现的函数以及需要添加到的dict的key: def get_period(self, soup, program_details, extra_data=None):  需要添加到：program_details[f"课程时长1(学制)"], 
@@ -122,77 +120,65 @@ class EDProgramDetailsCrawler(BaseProgramDetailsCrawler):
     '''
 
     def get_period(self, soup, program_details, extra_data=None):  # todo: fix the bug above
-        # Find the "Applying" h2 tag
-        applying_h2 = soup.find("h2", string="Applying")
+        # 正则表达式匹配数字和英文年/月
+        pattern = r'\b\d+(-\d+)?\s*(years?|months?|yrs?|mths?)\b'
 
-        if not applying_h2:
-            program_details["课程时长1(学制)"] = "N/A"
-            return
+        # 获取soup的全部文本
+        text = soup.get_text()
 
-        # Navigate to the <div class="col-xs-12"> container
-        col_div = applying_h2.find_next_sibling("div", class_="row").find("div", class_="col-xs-12")
+        # 根据句子对文本进行分割
+        sentences = re.split(r'[.;!\n]|<[^>]+>', text)
+        matched_sentences = []
 
-        if not col_div:
-            program_details["课程时长1(学制)"] = "N/A"
-            return
+        for sentence in sentences:
+            # 搜索与正则模式匹配的文本
+            if re.search(pattern, sentence, re.IGNORECASE):
+                matched_sentences.append(sentence.strip())
 
-        # Extract and search for duration info from text
-        col_text = col_div.get_text(strip=True).lower()
-        if "1 year full-time" in col_text:
-            program_details["课程时长1(学制)"] = "1 year full-time"
-        elif "2 years full-time" in col_text:
-            program_details["课程时长1(学制)"] = "2 years full-time"
-        else:
-            # Handle more complex cases like: Awards: MSc (12-12 mth FT, 24-24 mth PT)
-            import re
-            match = re.search(r"\((\d+-\d+ mth FT)", col_text)
-            if match:
-                program_details["课程时长1(学制)"] = match.group(1)
-            else:
-                program_details["课程时长1(学制)"] = "N/A"
+        # 将匹配的句子合并成字符串
+        result = '. '.join(matched_sentences) + '.'
+        program_details["课程时长1(学制)"] = result
 
     def get_enrollment_deadlines(self, soup, program_details, extra_data=None):
         program_details["入学月1"] = "9"
 
+    '''
+    有很多的tuition fee这里都为空，需要注意
+    '''
     def get_tuition(self, soup, program_details, extra_data=None):
-        h2_tag = soup.find('h2', text='Fees and costs')
-        if not h2_tag:
-            program_details[f"课程费用"] = "该项目未显示"
-            return
 
-        h3_tag = h2_tag.find_next('h3', text='Tuition fees')
-        if not h3_tag:
-            program_details[f"课程费用"] = "该项目未显示"
-            return
-
-        link_tag = h3_tag.find_next('a', href=True)
+        link_tag = soup.find('a',
+                             href=re.compile(r'^http://www\.ed\.ac\.uk/studying/postgraduate/fees\?programme_code='))
         if not link_tag:
-            program_details[f"课程费用"] = "该项目未显示"
+            fees_h3 = soup.find('h3', string='Tuition Fees')
+            if not fees_h3:
+                fees_h3 = soup.find('h3', string='Tuition fees')
+            if fees_h3:
+                next_h2 = fees_h3.find_next('h3')
+                if next_h2:
+                    content_between_h2s = ''.join(map(str, list(fees_h3.next_siblings)[:-1]))
+                    program_details["课程费用"] = BeautifulSoup(content_between_h2s, 'html.parser').get_text(
+                        separator='\n', strip=True)
+                else:
+                    program_details["课程费用"] = "信息不可用Tuition fees后面没有h2标签"
+            else:
+                program_details["课程费用"] = "信息不可用 Tuition Fees找不到"
             return
 
         url = link_tag['href']
 
-        # Sending POST request (assuming you meant POST, as you mentioned in your requirements)
         response = requests.get(url)
         if response.status_code != 200:
-            program_details[f"课程费用"] = "该项目未显示"
+            program_details["课程费用"] = "该项目未显示，链接请求失败"
             return
 
         response_soup = BeautifulSoup(response.text, 'html.parser')
-        table = response_soup.find('table', {'class': 'table table-bordered'})
-        if not table:
-            program_details[f"课程费用"] = "该项目未显示"
-            return
-
-        rows = table.find_all('tr')
-        for row in rows:
-            columns = row.find_all('td')
-            if columns and '2024/5' in columns[0].get_text():
-                international_fee = columns[2].get_text().strip()
-                program_details[f"课程费用"] = international_fee.replace("£", "").replace(",", "").split('.')[0]
-                return
-
-        program_details[f"课程费用"] = "该项目未显示"
+        tuition_div = response_soup.find('div', {'class': 'region-content', 'itemprop': 'mainContentOfPage'})
+        if tuition_div:
+            tuition_text = tuition_div.get_text(strip=True, separator='\n')
+            program_details["课程费用"] = tuition_text
+        else:
+            program_details["课程费用"] = "该项目未显示，不存在该内容"
 
     def get_language_requirements(self, soup, program_details, extra_data=None):
         h3_tag = soup.find('h3', text='English language requirements')
@@ -212,3 +198,38 @@ class EDProgramDetailsCrawler(BaseProgramDetailsCrawler):
             element = element.next_sibling
 
         program_details["雅思要求"] = "信息未找到"
+
+    def get_program_description(self, soup, program_details, extra_data=None):
+        # 定位到程序描述所在的div标签
+        description_div = soup.find('div', id='proxy_collapseprogramme')
+
+        if description_div:
+            # 提取div标签内的所有文本
+            description_text = description_div.get_text(separator='\n', strip=True)
+            program_details["项目简介"] = description_text
+        else:
+            program_details["项目简介"] = "信息不可用"
+
+        school_span = soup.find('span', text='School: ')
+        college_span = soup.find('span', text='College: ')
+
+        school_info = ""
+        college_info = ""
+
+        if school_span:
+            school_a = school_span.find_next_sibling()
+            if school_a:
+                school_info = "School: " + school_a.get_text(strip=True)
+
+        if college_span:
+            college_a = college_span.find_next_sibling()
+            if college_a:
+                college_info = "College: " + college_a.get_text(strip=True)
+
+        # 拼接School和College信息
+        combined_info = school_info
+        if school_info and college_info:
+            combined_info += " | "
+        combined_info += college_info
+
+        program_details["学院"] = combined_info if combined_info else "信息不可用"

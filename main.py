@@ -14,12 +14,12 @@ def UCL_caller():
 
 def ED_caller():
     print("crawling program details...")
-    program_crawler = ED.EDProgramURLCrawler()
-    program_crawler.crawl()
+    # program_crawler = ED.EDProgramURLCrawler()
+    # program_crawler.crawl()
     print("crawling UCL details...")
-    detail_crawler = ED.EDProgramDetailsCrawler(test=False, verbose=False)
+    detail_crawler = ED.EDProgramDetailsCrawler(test=True, verbose=True)
     detail_crawler.get_program_useful_links()
-    detail_crawler.generate_program_details(translate=True)
+    detail_crawler.generate_program_details(translate=False)
 
 def main():
     ED_caller()
