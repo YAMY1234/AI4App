@@ -95,9 +95,6 @@ class EDProgramDetailsCrawler(BaseProgramDetailsCrawler):
         else:
             program_details[header.background_requirements] = "未找到Entry requirements标签"
 
-
-
-
     def get_course_intro_and_details(self, soup, program_details, extra_data=None):
         # 定位到程序结构所在的div标签
         structure_div = soup.find('div', id='proxy_collapsehow_taught')
@@ -253,7 +250,6 @@ class EDProgramDetailsCrawler(BaseProgramDetailsCrawler):
         else:
             program_details[header.ielts_requirement] = "信息不可用"
         
-
     def get_program_description(self, soup, program_details, extra_data=None):
         # 定位到程序描述所在的div标签
         description_div = soup.find('div', id='proxy_collapseprogramme')
@@ -404,3 +400,50 @@ class EDProgramDetailsCrawler(BaseProgramDetailsCrawler):
                 program_details[header.work_experience_years] = "未要求"
         else:
             program_details[header.work_experience_years] = "未找到Entry requirements标签"
+
+    def is_conditional_upper_second(self, text):
+        phrases = ["consider a uk 2:2", "may also consider applicants with a uk 2:1 or 2:2","a uk 2:2 honours degree with a strong personal statement"] 
+
+        return any(phrase in text for phrase in phrases)
+
+    def is_upper_second_class(self, text):
+        upper_2nd_phrases = ["upper second-class",
+                             "upper second class",
+                             "upper-second class",
+                             "1st class",
+                             "first class",
+                             "a good 2.1",
+                             "2:1 or equivalent",
+                             "dental qualification",
+                             "a uk 2:1 honours degree",
+                             "uk first-class"
+                             ]
+        return any(phrase in text for phrase in upper_2nd_phrases)
+
+    def is_second_class(self, text):
+        second_phrases = ["lower second-class",
+                          "lower second class",
+                          "lower-second class",
+                          "good second class",
+                          "a second class",
+                          "a second-class",
+                          "2:2 or equivalent"
+                          ]
+        return any(phrase in text for phrase in second_phrases)
+
+    def get_major_requirements_for_uk_students(self, soup, program_details, extra_data=None):
+        if program_details[header.background_requirements] != "未找到Entry requirements标签":
+            text = program_details[header.background_requirements].lower()
+            if self.is_conditional_upper_second(text):
+                program_details[header.local_requirements_display] = "有条件2:2"
+                return
+            elif self.is_upper_second_class(text):
+                program_details[header.local_requirements_display] = "2:1"
+                return
+            elif self.is_second_class(text):
+                program_details[header.local_requirements_display] = "2:2"
+                return
+            else:
+                program_details[header.local_requirements_display] = "未要求"
+        else:
+            program_details[header.local_requirements_display] = "未找到Entry requirements标签"
