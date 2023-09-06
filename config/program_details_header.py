@@ -61,7 +61,7 @@ class ProgramHeader:
 # 创建一个SchoolInfo对象
 header = ProgramHeader()
 
-header.major_id = header.major_id
+header.major_id = "专业id"
 header.region = "地区"
 header.school_english_name = "学校英文名"
 header.school_chinese_name = "学校中文名"
