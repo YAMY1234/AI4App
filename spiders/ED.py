@@ -233,3 +233,138 @@ class EDProgramDetailsCrawler(BaseProgramDetailsCrawler):
         combined_info += college_info
 
         program_details["学院"] = combined_info if combined_info else "信息不可用"
+
+
+    def judge_interview_preference(self, text):
+        required_phrases = ['may be', 'may also be', 'may be considered', 'may also be considered']
+        for phrase in required_phrases:
+            if phrase in text:
+                return "可能要求"
+        return "需要"
+
+    def get_interview_requirements(self, soup, program_details, extra_data=None):
+        # 定义关键词列表
+        keywords = ['interview', 'special qualifying examination', 'qualifying essay',
+                    'qualifying assessment', 'written examination', 'oral examination',
+                    'oral test', 'required to pass a test', 'written examination', 'written test', 'written assessment']
+
+        combined_text = ""
+        # 搜索包含这些关键词的<p>标签
+        program_description = soup.find(id="proxy_collapseprogramme")
+        if program_description:
+            for p_tag in program_description.find_all('p'):
+                combined_text += p_tag.get_text().lower() + " "
+        
+        program_entry_req = soup.find(id="proxy_collapseentry_req")
+        # Loop through the children of the 'div' tag to find the 'p' elements
+        if program_entry_req:
+            panel_body_tag = program_entry_req.find('div', {'class': 'panel-body'})
+            for child in panel_body_tag.children:
+                # Break if we encounter the 'h3' with "Students from China"
+                if child.name == 'h3' and child.string == 'Students from China':
+                    break
+                # Add the 'p' element to the list
+                if child.name == 'p':
+                    combined_text += child.get_text().lower() + " "
+            combined_text = self.extract_relevant_text(combined_text, keywords)
+
+        # 将合并后的文本添加到program_details字典中
+        if combined_text:
+            program_details["面/笔试要求"] = self.judge_interview_preference(combined_text)
+            program_details["面/笔试要求细则"] = combined_text
+        else:
+            program_details["面/笔试要求"] = "未要求"
+
+    def judge_portfolio_preference(self, text):
+        required_phrases = ['may be', 'may also be', 'may be considered', 'may also be considered']
+        for phrase in required_phrases:
+            if phrase in text:
+                return "加分项"
+        return "需要"
+
+    def get_portfolio_requirements(self, soup, program_details, extra_data=None):
+        phrases = ['written work', 'portfolio']
+        program_entry_req = soup.find(id="proxy_collapseentry_req")
+        combined_text = ""
+        # Loop through the children of the 'div' tag to find the 'p' elements
+        if program_entry_req:
+            panel_body_tag = program_entry_req.find('div', {'class': 'panel-body'})
+            for child in panel_body_tag.children:
+                # Break if we encounter the 'h3' with "Students from China"
+                if child.name == 'h3' and child.string == 'Students from China':
+                    break
+                # Add the 'p' element to the list
+                if child.name == 'p':
+                    combined_text += child.get_text().lower() + " "
+            
+            combined_text = self.extract_relevant_text(combined_text, phrases)
+            if combined_text:
+                program_details["作品集"] = self.judge_portfolio_preference(
+                    combined_text)
+                program_details["作品集细则"] = combined_text
+            else:
+                program_details["作品集"] = "未要求"
+        else:
+            program_details["作品集"] = "未找到Entry requirements标签"
+
+    def extract_relevant_text(self, text, keywords):
+        # Extract sentences containing the phrase from the entry requirements section
+        sentences = []
+        line_sentences = re.split(r'(?<=[.!?])\s+', text)
+        found = False
+        for keyword in keywords:
+            for sentence in line_sentences:
+                if keyword in sentence:
+                    sentences.append(sentence)
+                    found = True
+            # Avoid adding duplicate sentences when multiple keywords are matched
+            if found:
+                break
+
+        # Combine the extracted sentences into one
+        combined_text = ' '.join(sentences).strip()
+
+        return combined_text
+
+    def judge_wrk_exp_preference(self, text):
+        required_phrases = ['minimum of', 'at least', 'Ideally', 'essential', 'must have', 'normally have',
+                            'should also have', 'should have', 'need to have']
+        for phrase in required_phrases:
+            if phrase in text:
+                return "需要"
+        return "加分项"
+
+    def get_work_experience_requirements(self, soup, program_details, extra_data=None):
+        phrases = ['work experience', 'professional experience', 'industrial experience',
+                   'existing engineering and design skills', 'practical experience',
+                   'experience as a professional', ' who can demonstrate aptitude and experience',
+                   'years of relevant experience', 'clinical experience', 'teaching experience',
+                   'years\' experience working', 'years of training in',
+                   'extensive experience', 'relevant experience',
+                   'relevant quantitative or qualitative research experience',
+                   'experience in', 'experience working', 'professional involvement',
+                   'experience of', 'with equivalent experience', 'industry experience', 'relevant work',
+                   'field experience', 'relevant employment']
+        
+        program_entry_req = soup.find(id="proxy_collapseentry_req")
+        combined_text = ""
+        # Loop through the children of the 'div' tag to find the 'p' elements
+        if program_entry_req:
+            panel_body_tag = program_entry_req.find('div', {'class': 'panel-body'})
+            for child in panel_body_tag.children:
+                # Break if we encounter the 'h3' with "Students from China"
+                if child.name == 'h3' and child.string == 'Students from China':
+                    break
+                # Add the 'p' element to the list
+                if child.name == 'p':
+                    combined_text += child.get_text().lower() + " "
+            
+            combined_text = self.extract_relevant_text(combined_text, phrases)
+            if combined_text:
+                program_details["工作经验（年）"] = self.judge_wrk_exp_preference(
+                    combined_text)
+                program_details["工作经验细则"] = combined_text
+            else:
+                program_details["工作经验（年）"] = "未要求"
+        else:
+            program_details["工作经验（年）"] = "未找到Entry requirements标签"

@@ -17,8 +17,8 @@ def ED_caller():
     # program_crawler = ED.EDProgramURLCrawler()
     # program_crawler.crawl()
     print("crawling UCL details...")
-    detail_crawler = ED.EDProgramDetailsCrawler(test=True, verbose=True)
-    detail_crawler.get_program_useful_links()
+    detail_crawler = ED.EDProgramDetailsCrawler(test=False, verbose=True)
+    # detail_crawler.get_program_useful_links()
     detail_crawler.generate_program_details(translate=False)
 
 def main():
