@@ -19,21 +19,113 @@ def main():
     standard_path = "C:/Users/Lenovo/Desktop/test_data/data1.xlsx" # 人工爬的数据
     ourdata_path = "C:/Users/Lenovo/Desktop/test_data/data2.xlsx" # 机器爬的数据
     column_type = "simple" # general是总表，全部比对，simple是方便大家检查的表，只比对了一部分
-    general_names = [header.major_id,header.region,header.school_english_name,"学校中文名",header.qs_ranking_2023,header.qs_ranking_2022,header.college,\
-                "学院中文",header.major,header.major_chinese,header.background_requirements,"相关背景要求中","课程简介中","课程列表中",\
-                header.course_list_english,header.website_link,"课程时长1（学制）1","课程时长1（学制）2","课程时长21","课程时长22",\
-                "课程时长31","课程时长32","课程时长41","课程时长42",header.admission_month_1,"入学月2","入学月3","入学月4",\
-                header.course_fee,header.course_campus,header.ielts_requirement,header.ielts_remark,header.toefl_requirement,header.toefl_remark,"面/笔试要求1","面/笔试要求2",\
-                "工作经验（年）1","工作经验（年）2","作品集1","作品集2","GMAT1","GMAT2","GRE1","GRE2",
-                "该专业对本地学生要求","英国本地要求展示用"]
-    simple_names = ["专业ID","学院","专业","相关背景要求","课程列表英","官网链接","课程时长1（学制）1","入学月1",\
-                    "课程费用","雅思要求","雅思备注","面/笔试要求1","面/笔试要求2","工作经验（年）1","工作经验（年）2",\
-                    "作品集1","作品集2","GMAT1","GMAT2","GRE1","GRE2","该专业对本地学生要求","英国本地要求展示用"]
+    # general_names = ["专业ID","地区","学校英文名","学校中文名","QS排名2023","QS排名2022","学院",\
+    #             "学院中文","专业","专业中文","相关背景要求","相关背景要求中","课程简介中","课程列表中",\
+    #             "课程列表英","官网链接","课程时长1（学制）1","课程时长1（学制）2","课程时长21","课程时长22",\
+    #             "课程时长31","课程时长32","课程时长41","课程时长42","入学月1","入学月2","入学月3","入学月4",\
+    #             "课程费用","课程校区","雅思要求","雅思备注","托福要求","托福备注","面/笔试要求1","面/笔试要求2",\
+    #             "工作经验（年）1","工作经验（年）2","作品集1","作品集2","GMAT1","GMAT2","GRE1","GRE2",
+    #             "该专业对本地学生要求","英国本地要求展示用"]
+    # simple_names = ["专业ID","学院","专业","相关背景要求","课程列表英","官网链接","课程时长1（学制）1","入学月1",\
+    #                 "课程费用","雅思要求","雅思备注","面/笔试要求1","面/笔试要求2","工作经验（年）1","工作经验（年）2",\
+    #                 "作品集1","作品集2","GMAT1","GMAT2","GRE1","GRE2","该专业对本地学生要求","英国本地要求展示用"]
+    # simple_names2 = ["专业ID","专业","官网链接","面/笔试要求1","面/笔试要求2","工作经验（年）1","工作经验（年）2",\
+    #                 "作品集1","作品集2"]
+    general_names = [
+    header.major_id,
+    header.region,
+    header.school_english_name,
+    header.school_chinese_name,
+    header.qs_ranking_2023,
+    header.qs_ranking_2022,
+    header.college,
+    header.college_chinese,
+    header.major,
+    header.major_chinese,
+    header.background_requirements,
+    header.background_requirements_chinese,
+    header.project_intro_chinese,
+    header.course_list_chinese,
+    header.course_list_english,
+    header.website_link,
+    header.course_duration_1,
+    header.course_duration_2,
+    header.course_duration_3,
+    header.course_duration_4,
+    header.admission_month_1,
+    header.admission_month_2,
+    header.admission_month_3,
+    header.admission_month_4,
+    header.course_fee,
+    header.course_campus,
+    header.ielts_requirement,
+    header.ielts_remark,
+    header.toefl_requirement,
+    header.toefl_remark,
+    header.exam_requirements,
+    header.exam_requirements_details,
+    header.work_experience_years,
+    header.work_experience_details,
+    header.portfolio,
+    header.portfolio_details,
+    header.gmat,
+    header.gre,
+    header.local_student_requirements,
+    header.local_requirements_display,
+    header.major_specialization_1,
+    header.major_specialization_2,
+    header.major_specialization_3,
+    header.major_specialization_4,
+    header.major_specialization_5,
+    header.major_specialization_6,
+    header.major_specialization_7,
+    header.major_specialization_8,
+    header.major_specialization_9,
+    header.major_specialization_10,
+    header.major_specialization_11,
+    header.major_specialization_12,
+    header.major_specialization_13,
+    header.major_specialization_14
+]
+    simple_names = [
+        header.major_id,
+        header.college,
+        header.major,
+        header.background_requirements,
+        header.course_list_english,
+        header.website_link,
+        header.course_duration_1,
+        header.admission_month_1,
+        header.course_fee,
+        header.ielts_requirement,
+        header.ielts_remark,
+        header.exam_requirements,
+        header.exam_requirements_details,
+        header.work_experience_years,
+        header.work_experience_details,
+        header.portfolio,
+        header.gmat,
+        header.gre,
+        header.local_student_requirements,
+        header.local_requirements_display
+    ]
+    simple_names2 = [
+        header.major_id,
+        header.major,
+        header.website_link,
+        header.exam_requirements,
+        header.exam_requirements_details,
+        header.work_experience_years,
+        header.work_experience_details,
+        header.portfolio,
+        header.gmat,
+        header.gre
+    ]
 
     if column_type == "general":
         selected_col_names = general_names
     elif column_type == "simple":
-        selected_col_names = simple_names
+        selected_col_names = simple_names2
     else:
         print("无效的列名类型。请选择 'general' 或 'simple'。")
         return
@@ -74,16 +166,16 @@ def main():
     # 4. 保存合并后的数据表
     final_df.to_excel("output_all.xlsx", index=False)
 
-    # 5.自定义操作
-    ## 检查两个表的某些项是否一样，不一样输出到wrong_data.xlsx
-    examine_cols = [header.major_id,header.course_fee,header.ielts_requirement,header.local_student_requirements,header.local_requirements_display,header.admission_month_1,"课程时长1（学制）1"]
-    # 将不一样的数据提取出来
-    different_data = final_df[final_df.apply(lambda x: any(x[col + "_机器"] != x[col + "_人工"] for col in examine_cols), axis=1)]
+    # # 5.自定义操作
+    # ## 检查两个表的某些项是否一样，不一样输出到wrong_data.xlsx
+    # examine_cols = [header.major_id,header.course_fee,header.ielts_requirement,header.local_student_requirements,header.local_requirements_display,header.admission_month_1,"课程时长1（学制）1"]
+    # # 将不一样的数据提取出来
+    # different_data = final_df[final_df.apply(lambda x: any(x[col + "_机器"] != x[col + "_人工"] for col in examine_cols), axis=1)]
 
-    # 将any(x[col + "_机器"] != x[col + "_人工"] 的数据高亮显示出来
-    #TODO
-    # 保存不一样的数据到 Excel 文件
-    different_data.to_excel("wrong_data.xlsx", index=False)
+    # # 将any(x[col + "_机器"] != x[col + "_人工"] 的数据高亮显示出来
+    # #TODO
+    # # 保存不一样的数据到 Excel 文件
+    # different_data.to_excel("wrong_data.xlsx", index=False)
 
 if __name__ == "__main__":
     main()
