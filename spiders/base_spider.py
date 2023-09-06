@@ -113,7 +113,7 @@ class BaseProgramDetailsCrawler:
 
         new_wb = Workbook()
         new_sheet = new_wb.active
-        new_sheet.append(['项目名', '项目链接', '学院', '项目简介', '链接'])
+        new_sheet.append(['项目名', '项目链接', header.college, '项目简介', '链接'])
 
         # Todo: adjust max_workers based on the number of cores
         with concurrent.futures.ThreadPoolExecutor(max_workers=20) as executor:
@@ -236,9 +236,9 @@ class BaseProgramDetailsCrawler:
         existing_headers = [cell.value for cell in sheet[1]]
 
         # 找出特定列名所在的列号
-        col_institute_idx = existing_headers.index('学院') + 1
+        col_institute_idx = existing_headers.index(header.college) + 1
         col_program_idx = existing_headers.index('专业') + 1
-        col_background_idx = existing_headers.index('相关背景要求') + 1
+        col_background_idx = existing_headers.index(header.background_requirements) + 1
 
         # 翻译特定列并写入相应的中文列
         for row in range(2, sheet.max_row + 1):

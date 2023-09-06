@@ -92,17 +92,17 @@ class EDProgramDetailsCrawler(BaseProgramDetailsCrawler):
             # 提取除<ul>外的所有文本作为课程介绍
             course_intro_texts = [p.get_text() for p in structure_div.find_all('p')]
             course_intro = '\n'.join(course_intro_texts).strip()
-            program_details['课程介绍英'] = course_intro
+            program_details[header.course_description_english] = course_intro
 
             # 提取所有<li>标签的文本内容
             course_list_texts = [li.get_text() for li in structure_div.find_all('li')]
             course_list = '\n - '.join(course_list_texts).strip()
             if course_list:
                 course_list = '- ' + course_list  # Add the '-' before the first item
-            program_details['课程列表英'] = course_list
+            program_details[header.course_list_english] = course_list
         else:
-            program_details['课程介绍英'] = "信息不可用"
-            program_details['课程列表英'] = "信息不可用"
+            program_details[header.course_description_english] = "信息不可用"
+            program_details[header.course_list_english] = "信息不可用"
 
     '''
     需要修改或实现的函数以及需要添加到的dict的key: def get_period(self, soup, program_details, extra_data=None):  需要添加到：program_details[f"课程时长1(学制)"], 
@@ -120,25 +120,47 @@ class EDProgramDetailsCrawler(BaseProgramDetailsCrawler):
     AttributeError: 'NoneType' object has no attribute 'find'
     '''
 
-    def get_period(self, soup, program_details, extra_data=None):  # todo: fix the bug above
-        # 正则表达式匹配数字和英文年/月
-        # pattern = r'\d+(-\d+)?\s*(years?|months?|yrs?|mths?)'
-        pattern = r'(years?|months?|yrs?|mths?)'
+    def get_period(self, soup, program_details, extra_data=None):
+        # 正则表达式模式
+        patterns = [
+            r'(?:(?:one|two|three|four|five|six|seven|eight|nine)-years?)',
+            r'(?:(?:one|two|three|four|five|six|seven|eight|nine) years?)',
+            r'(?:(?:\d+)-years?)',
+            r'(?:(?:\d+) years?)',
+            r'(?:(?:one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve)-mths?)',
+            r'(?:(?:one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve) mths?)',
+            r'(?:(?:one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve)-months?)',
+            r'(?:(?:one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve) months?)',
+            r'(?:(?:\d+)-mths?)',
+            r'(?:(?:\d+) mths?)',
+            r'(?:(?:\d+)-months?)',
+            r'(?:(?:\d+) months?)',
+        ]
 
-        # 获取soup的全部文本
-        text = soup.get_text()
+        # 提取extra_data中的所有文本内容
+        content_matches = re.findall(r'<[^>]+>([^<]+)<', extra_data)
+        all_content = ' '.join(content_matches)
 
-        # 根据句子对文本进行分割
-        sentences = re.split(r'[.;!\n]|<[^>]+>', text)
         matched_sentences = []
+        primary_period = None
 
-        for sentence in sentences:
-            # 搜索与正则模式匹配的文本
-            if re.search(pattern, sentence, re.IGNORECASE):
-                matched_sentences.append(sentence.strip())
+        for pattern in patterns:
+            for sentence in re.split(r'[.;!\n]', all_content):
+                match = re.search(pattern, sentence, re.IGNORECASE)
+                if match:
+                    if not primary_period:
+                        primary_period = match.group()
+                    matched_sentences.append(sentence.strip())
 
-        # 将匹配的句子合并成字符串
-        result = '. '.join(matched_sentences) + '.'
+        # 若有重复项，利用集合去除重复项
+        matched_sentences = list(set(matched_sentences))
+
+        # 将主要时长放在前面
+        if primary_period:
+            result = primary_period + '. ' + '. '.join(matched_sentences) + '.'
+        else:
+            result = '. '.join(matched_sentences) + '.'
+
         program_details[header.course_duration_1] = result
 
     def get_enrollment_deadlines(self, soup, program_details, extra_data=None):
@@ -152,20 +174,26 @@ class EDProgramDetailsCrawler(BaseProgramDetailsCrawler):
         link_tag = soup.find('a',
                              href=re.compile(r'^http://www\.ed\.ac\.uk/studying/postgraduate/fees\?programme_code='))
         if not link_tag:
-            fees_h3 = soup.find('h3', string='Tuition Fees')
-            if not fees_h3:
-                fees_h3 = soup.find('h3', string='Tuition fees')
-            if fees_h3:
-                next_h2 = fees_h3.find_next('h3')
-                if next_h2:
-                    content_between_h2s = ''.join(map(str, list(fees_h3.next_siblings)[:-1]))
-                    program_details[header.course_fee] = BeautifulSoup(content_between_h2s, 'html.parser').get_text(
-                        separator='\n', strip=True)
-                else:
-                    program_details[header.course_fee] = "信息不可用Tuition fees后面没有h2标签"
+            tuition_regex = re.compile(r'<h3>Tuition fees</h3>(.*?)<h2', re.DOTALL)
+            content_match = tuition_regex.search(str(soup))
+
+            if content_match:
+                content = content_match.group(1)
+
+                # Match content between tags
+                texts = re.findall(r'>\s*([^<]+)\s*<', content)
+
+                # Match https links
+                links = re.findall(r'https://[^\s"]+', content)
+
+                # Combine results
+                combined_results = '; '.join([text for text in (texts + links) if text.strip()])
+
+                program_details[header.course_fee] = combined_results.strip()
+                return
             else:
-                program_details[header.course_fee] = "信息不可用 Tuition Fees找不到"
-            return
+                program_details[header.course_fee] = "信息不可用 Tuition Fees/fees找不到，也没有项目专用的学费链接"
+                return
 
         url = link_tag['href']
 
@@ -180,7 +208,7 @@ class EDProgramDetailsCrawler(BaseProgramDetailsCrawler):
             tuition_text = tuition_div.get_text(strip=True, separator='\n')
             program_details[header.course_fee] = tuition_text
         else:
-            program_details[header.course_fee] = "该项目未显示，不存在该内容"
+            program_details[header.course_fee] = "存在项目学费链接，但该项目未显示学费"
 
     def get_language_requirements(self, soup, program_details, extra_data=None):
         # 查找包含IELTS的abbr标签
