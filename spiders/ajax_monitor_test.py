@@ -1,5 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
+from config.program_details_header import header
+import re
 
 # 请求的URL
 url = "https://www.ucl.ac.uk/prospective-students/graduate/system/ajax"
@@ -75,8 +77,8 @@ program_details = {}
 if match:
     percentage = int(match.group(1))
     if percentage == 80:
-        program_details["该专业对本地学生要求"] = "2:2"
+        program_details[header.local_student_requirements] = "2:2"
     elif percentage == 85:
-        program_details["该专业对本地学生要求"] = "2:1"
+        program_details[header.local_student_requirements] = "2:1"
     else:
-        program_details["该专业对本地学生要求"] = "其他"
+        program_details[header.local_student_requirements] = "其他"

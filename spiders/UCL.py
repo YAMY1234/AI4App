@@ -2,6 +2,7 @@ import re
 import time
 import requests
 from bs4 import BeautifulSoup
+from config.program_details_header import header
 
 from tools.general import request_with_retry
 from .base_spider import BaseProgramURLCrawler, BaseProgramDetailsCrawler
@@ -113,7 +114,7 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
                 requirements.append(sibling.get_text(strip=True))
 
         # 将所有的<p>标签的文本内容合并成一个字符串，并保存到program_details字典中
-        program_details["相关背景要求"] = ' '.join(requirements)
+        program_details[header.background_requirements] = ' '.join(requirements)
 
     def get_course_intro_and_details(self, soup, program_details, extra_data=None):
         courses = []
@@ -140,9 +141,9 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
                     courses.append(div_tag.get_text(strip=True))
 
         # 将捕获的课程列表添加到program_details字典中
-        program_details["课程列表英"] = '\n'.join(courses)
+        program_details[header.course_list_english] = '\n'.join(courses)
         if len(courses) == 0:
-            program_details[f"课程列表英"] = "未找到"
+            program_details[header.course_list_english] = "未找到"
 
     def extract_relevant_text(self, text, keywords):
         # Extract sentences containing the phrase from the entry requirements section
@@ -190,13 +191,13 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
                 text = entry_req_paragraph.get_text().lower()
                 combined_text = self.extract_relevant_text(text, phrases)
                 if combined_text:
-                    program_details["工作经验（年）"] = self.judge_wrk_exp_preference(
+                    program_details[header.work_experience_years] = self.judge_wrk_exp_preference(
                         combined_text)
-                    program_details["工作经验细则"] = combined_text
+                    program_details[header.work_experience_details] = combined_text
                 else:
-                    program_details["工作经验（年）"] = "未要求"
+                    program_details[header.work_experience_years] = "未要求"
         else:
-            program_details["工作经验（年）"] = "未找到Entry requirements标签"
+            program_details[header.work_experience_years] = "未找到Entry requirements标签"
 
     def judge_portfolio_preference(self, text):
         required_phrases = ['may be', 'may also be', 'may be considered', 'may also be considered']
@@ -214,13 +215,13 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
                 text = entry_req_paragraph.get_text().lower()
                 combined_text = self.extract_relevant_text(text, phrases)
                 if combined_text:
-                    program_details["作品集"] = self.judge_portfolio_preference(
+                    program_details[header.portfolio] = self.judge_portfolio_preference(
                         combined_text)
-                    program_details["作品集细则"] = combined_text
+                    program_details[header.portfolio_details] = combined_text
                 else:
-                    program_details["作品集"] = "未要求"
+                    program_details[header.portfolio] = "未要求"
         else:
-            program_details["作品集"] = "未找到Entry requirements标签"
+            program_details[header.portfolio] = "未找到Entry requirements标签"
 
     def get_tuition(self, soup, program_details, extra_data=None):
         # 查找包含"Overseas tuition fees"的<h5>标签
@@ -236,21 +237,21 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
                 # 提取文本内容并去除多余的空白字符
                 tuition_fee = fulltime_fee_div.get_text(
                     strip=True).replace('&#163;', '£')
-                program_details["课程费用"] = tuition_fee
+                program_details[header.course_fee] = tuition_fee
             elif parttime_fee_div:
                 # 提取文本内容并去除多余的空白字符
                 tuition_fee = parttime_fee_div.get_text(
                     strip=True).replace('&#163;', '£')
-                program_details["课程费用"] = tuition_fee + " (part-time)"
+                program_details[header.course_fee] = tuition_fee + " (part-time)"
             else:
-                program_details[f"课程费用"] = "未找到"
+                program_details[header.course_fee] = "未找到"
         else:
-            program_details[f"课程费用"] = "未找到"
+            program_details[header.course_fee] = "未找到"
 
     def get_period(self, soup, program_details, extra_data=None):
         period_tag = soup.find('h5', string=lambda text: 'Duration' in text)
         if period_tag:
-            headers = ["课程时长1(学制)", "课程时长2(学制)", "课程时长3(学制)"]
+            headers = [header.course_duration_1, "课程时长2(学制)", "课程时长3(学制)"]
             index = 0
 
             # 从该标签开始，查找具有class属性值为"study-mode ...time"的<div>标签
@@ -285,7 +286,7 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
                     index += 1
 
             if index == 0:
-                program_details[f"课程时长1(学制)"] = "未找到"
+                program_details[header.course_duration_1] = "未找到"
 
     def get_language_requirements(self, soup, program_details, extra_data=None):
         # 定义雅思得分级别的字典
@@ -304,11 +305,11 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
                 string=lambda text: level_text in text)
 
             if matching_paragraph:
-                program_details["雅思要求"] = ielts_scores[level_text][0]
-                program_details["雅思备注"] = ielts_scores[level_text][1]
+                program_details[header.ielts_requirement] = ielts_scores[level_text][0]
+                program_details[header.ielts_remark] = ielts_scores[level_text][1]
                 return  # 找到一个匹配后即退出循环，确保只有一个级别的数据被添加到字典中
-        program_details["雅思要求"] = "未找到"
-        program_details["雅思备注"] = "未找到"
+        program_details[header.ielts_requirement] = "未找到"
+        program_details[header.ielts_remark] = "未找到"
 
     def get_GRE_GMAT_requirements(self, soup, program_details, extra_data=None):
         gre_texts = []
@@ -326,13 +327,13 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
 
         # 如果找到GRE或GMAT相关的文本，将它们合并并添加到program_details
         if gre_texts:
-            program_details["GRE"] = ' '.join(gre_texts)
+            program_details[header.gre] = ' '.join(gre_texts)
         else:
-            program_details["GRE"] = "未要求"
+            program_details[header.gre] = "未要求"
         if gmat_texts:
-            program_details["GMAT"] = ' '.join(gmat_texts)
+            program_details[header.gmat] = ' '.join(gmat_texts)
         else:
-            program_details["GMAT"] = "未要求"
+            program_details[header.gmat] = "未要求"
 
     def get_major_requirements_for_chinese_students(self, soup, program_details, extra_data=None):
 
@@ -397,7 +398,7 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
         try:
             json_data = response.json()
         except:
-            program_details["该专业对本地学生要求"] = "未找到，项目页面不可用或者正在更新"
+            program_details[header.local_student_requirements] = "未找到，项目页面不可用或者正在更新"
 
         all_text = ""
 
@@ -416,11 +417,11 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
         if match:
             percentage = int(match.group(1))
             if percentage == 80:
-                program_details["该专业对本地学生要求"] = "2:2"
+                program_details[header.local_student_requirements] = "2:2"
             elif percentage == 85:
-                program_details["该专业对本地学生要求"] = "2:1"
+                program_details[header.local_student_requirements] = "2:1"
             else:
-                program_details["该专业对本地学生要求"] = str(percentage) + '%'
+                program_details[header.local_student_requirements] = str(percentage) + '%'
             return
         else:
             # Find the h4 element with the text 'Equivalent qualifications for China'
@@ -429,10 +430,10 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
 
             if h4_tag:
                 # Find the next sibling <p> element after the h4 tag
-                program_details["该专业对本地学生要求"] = h4_tag.find_next_sibling(
+                program_details[header.local_student_requirements] = h4_tag.find_next_sibling(
                     'p').get_text()
             else:
-                program_details["该专业对本地学生要求"] = "未找到"
+                program_details[header.local_student_requirements] = "未找到"
 
     def is_conditional_upper_second(self, text):
         phrases_pt1 = ["with a lower than upper-second class",
@@ -486,18 +487,18 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
             if entry_req_paragraph:
                 text = entry_req_paragraph.get_text().lower()
                 if self.is_conditional_upper_second(text):
-                    program_details["英国本地要求展示用"] = "有条件2:2"
+                    program_details[header.local_requirements_display] = "有条件2:2"
                     return
                 elif self.is_upper_second_class(text):
-                    program_details["英国本地要求展示用"] = "2:1"
+                    program_details[header.local_requirements_display] = "2:1"
                     return
                 elif self.is_second_class(text):
-                    program_details["英国本地要求展示用"] = "2:2"
+                    program_details[header.local_requirements_display] = "2:2"
                     return
                 else:
-                    program_details["英国本地要求展示用"] = "未要求"
+                    program_details[header.local_requirements_display] = "未要求"
         else:
-            program_details["英国本地要求展示用"] = "未找到Entry requirements标签"
+            program_details[header.local_requirements_display] = "未找到Entry requirements标签"
 
     def judge_interview_preference(self, text):
         required_phrases = ['may be', 'may also be', 'may be considered', 'may also be considered']
@@ -523,10 +524,10 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
 
         # 将合并后的文本添加到program_details字典中
         if combined_text:
-            program_details["面/笔试要求"] = self.judge_interview_preference(combined_text)
-            program_details["面/笔试要求细则"] = combined_text
+            program_details[header.exam_requirements] = self.judge_interview_preference(combined_text)
+            program_details[header.exam_requirements_details] = combined_text
         else:
-            program_details["面/笔试要求"] = "未要求"
+            program_details[header.exam_requirements] = "未要求"
 
     def get_major_specifications(self, soup, program_details, extra_data=None):
         # Todo: 写爬虫更新而不是直接复制粘贴
@@ -535,7 +536,7 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
             "data/UCL/program_specifications.xlsx").active
 
         # Extract program URL from program_details
-        program_url = program_details.get("官网链接", "")
+        program_url = program_details.get(header.website_link, "")
 
         # Start from the second row to skip header
         for row in worksheet.iter_rows(min_row=2, values_only=True):

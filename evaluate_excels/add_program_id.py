@@ -1,4 +1,5 @@
 # from spiders import UCL
+from config.program_details_header import header
 
 # def main():
 #     # print("crawling program details...")
@@ -20,12 +21,12 @@ standard_df = pd.read_excel("data\\UCL\\ucl_standard.xlsx")
 def add_program_id(program_df, standard_df):
     # 2. 对“ucl项目含ID.xlsx”中的数据进行迭代
     for index, row in program_df.iterrows():
-        link = row["官网链接"]
-        matched_row = standard_df[standard_df["官网链接"] == link]
+        link = row[header.website_link]
+        matched_row = standard_df[standard_df[header.website_link] == link]
         
         # 3. 如果找到匹配的行，更新“专业ID”列
         if not matched_row.empty:
-            program_id = str(matched_row["专业ID"].values[0]).zfill(7)
+            program_id = str(matched_row[header.major_id].values[0]).zfill(7)
             program_df.at[index, "专业ID"] = program_id
 
     # 4. 保存更新后的“program_details.xlsx”

@@ -2,6 +2,7 @@ import re
 import time
 import requests
 from bs4 import BeautifulSoup
+from config.program_details_header import header
 
 from tools.general import request_with_retry
 from .base_spider import BaseProgramURLCrawler, BaseProgramDetailsCrawler
@@ -62,13 +63,13 @@ class EDProgramDetailsCrawler(BaseProgramDetailsCrawler):
         # Locate the "Programme description" panel
         panel_title = soup.find("h2", class_="panel-title", string="Programme description")
         if not panel_title:
-            program_details["相关背景要求"] = "N/A"
+            program_details[header.background_requirements] = "N/A"
             return
 
         # Navigate to the panel content div
         panel_body = panel_title.find_next_sibling("div", class_="panel-collapse").find("div", class_="panel-body")
         if not panel_body:
-            program_details["相关背景要求"] = "N/A"
+            program_details[header.background_requirements] = "N/A"
             return
 
         # Extract all <p> and <h> tags within the panel content
@@ -79,7 +80,7 @@ class EDProgramDetailsCrawler(BaseProgramDetailsCrawler):
                 texts.append(tag.get_text(strip=True))
 
         # Join the texts to form a single string
-        program_details["相关背景要求"] = ' '.join(texts)
+        program_details[header.background_requirements] = ' '.join(texts)
 
         from bs4 import BeautifulSoup
 
@@ -121,7 +122,8 @@ class EDProgramDetailsCrawler(BaseProgramDetailsCrawler):
 
     def get_period(self, soup, program_details, extra_data=None):  # todo: fix the bug above
         # 正则表达式匹配数字和英文年/月
-        pattern = r'\b\d+(-\d+)?\s*(years?|months?|yrs?|mths?)\b'
+        # pattern = r'\d+(-\d+)?\s*(years?|months?|yrs?|mths?)'
+        pattern = r'(years?|months?|yrs?|mths?)'
 
         # 获取soup的全部文本
         text = soup.get_text()
@@ -137,10 +139,10 @@ class EDProgramDetailsCrawler(BaseProgramDetailsCrawler):
 
         # 将匹配的句子合并成字符串
         result = '. '.join(matched_sentences) + '.'
-        program_details["课程时长1(学制)"] = result
+        program_details[header.course_duration_1] = result
 
     def get_enrollment_deadlines(self, soup, program_details, extra_data=None):
-        program_details["入学月1"] = "9"
+        program_details[header.admission_month_1] = "9"
 
     '''
     有很多的tuition fee这里都为空，需要注意
@@ -157,47 +159,41 @@ class EDProgramDetailsCrawler(BaseProgramDetailsCrawler):
                 next_h2 = fees_h3.find_next('h3')
                 if next_h2:
                     content_between_h2s = ''.join(map(str, list(fees_h3.next_siblings)[:-1]))
-                    program_details["课程费用"] = BeautifulSoup(content_between_h2s, 'html.parser').get_text(
+                    program_details[header.course_fee] = BeautifulSoup(content_between_h2s, 'html.parser').get_text(
                         separator='\n', strip=True)
                 else:
-                    program_details["课程费用"] = "信息不可用Tuition fees后面没有h2标签"
+                    program_details[header.course_fee] = "信息不可用Tuition fees后面没有h2标签"
             else:
-                program_details["课程费用"] = "信息不可用 Tuition Fees找不到"
+                program_details[header.course_fee] = "信息不可用 Tuition Fees找不到"
             return
 
         url = link_tag['href']
 
         response = requests.get(url)
         if response.status_code != 200:
-            program_details["课程费用"] = "该项目未显示，链接请求失败"
+            program_details[header.course_fee] = "该项目未显示，链接请求失败"
             return
 
         response_soup = BeautifulSoup(response.text, 'html.parser')
         tuition_div = response_soup.find('div', {'class': 'region-content', 'itemprop': 'mainContentOfPage'})
         if tuition_div:
             tuition_text = tuition_div.get_text(strip=True, separator='\n')
-            program_details["课程费用"] = tuition_text
+            program_details[header.course_fee] = tuition_text
         else:
-            program_details["课程费用"] = "该项目未显示，不存在该内容"
+            program_details[header.course_fee] = "该项目未显示，不存在该内容"
 
     def get_language_requirements(self, soup, program_details, extra_data=None):
-        h3_tag = soup.find('h3', text='English language requirements')
-        if not h3_tag:
-            program_details["雅思要求"] = "信息未找到"
-            return
+        # 查找包含IELTS的abbr标签
+        html_content = extra_data
 
-        # Find the next h3 or h2 tag
-        next_h3_or_h2 = h3_tag.find_next(['h3', 'h2'])
+        # 正则表达式匹配
+        match = re.search(r'<li><abbr title="International English Language Testing System">IELTS<\/abbr>([^<]+)<\/li>', html_content)
 
-        # Start from h3_tag and iterate until next_h3_or_h2
-        element = h3_tag.next_sibling
-        while element and element != next_h3_or_h2:
-            if element.name == 'li' and 'IELTS' in element.get_text():
-                program_details["雅思要求"] = element.get_text().strip()
-                return
-            element = element.next_sibling
-
-        program_details["雅思要求"] = "信息未找到"
+        if match:
+            ielts_info = match.group(1).strip()
+            program_details[header.ielts_requirement] = ielts_info
+        else:
+            program_details[header.ielts_requirement] = "信息未找到"
 
     def get_program_description(self, soup, program_details, extra_data=None):
         # 定位到程序描述所在的div标签
@@ -206,9 +202,9 @@ class EDProgramDetailsCrawler(BaseProgramDetailsCrawler):
         if description_div:
             # 提取div标签内的所有文本
             description_text = description_div.get_text(separator='\n', strip=True)
-            program_details["项目简介"] = description_text
+            program_details[header.project_intro] = description_text
         else:
-            program_details["项目简介"] = "信息不可用"
+            program_details[header.project_intro] = "信息不可用"
 
         school_span = soup.find('span', text='School: ')
         college_span = soup.find('span', text='College: ')
@@ -232,7 +228,7 @@ class EDProgramDetailsCrawler(BaseProgramDetailsCrawler):
             combined_info += " | "
         combined_info += college_info
 
-        program_details["学院"] = combined_info if combined_info else "信息不可用"
+        program_details[header.college] = combined_info if combined_info else "信息不可用"
 
 
     def judge_interview_preference(self, text):
@@ -270,10 +266,10 @@ class EDProgramDetailsCrawler(BaseProgramDetailsCrawler):
 
         # 将合并后的文本添加到program_details字典中
         if combined_text:
-            program_details["面/笔试要求"] = self.judge_interview_preference(combined_text)
-            program_details["面/笔试要求细则"] = combined_text
+            program_details[header.exam_requirements] = self.judge_interview_preference(combined_text)
+            program_details[header.exam_requirements_details] = combined_text
         else:
-            program_details["面/笔试要求"] = "未要求"
+            program_details[header.exam_requirements] = "未要求"
 
     def judge_portfolio_preference(self, text):
         required_phrases = ['may be', 'may also be', 'may be considered', 'may also be considered']
@@ -299,13 +295,13 @@ class EDProgramDetailsCrawler(BaseProgramDetailsCrawler):
             
             combined_text = self.extract_relevant_text(combined_text, phrases)
             if combined_text:
-                program_details["作品集"] = self.judge_portfolio_preference(
+                program_details[header.portfolio] = self.judge_portfolio_preference(
                     combined_text)
-                program_details["作品集细则"] = combined_text
+                program_details[header.portfolio_details] = combined_text
             else:
-                program_details["作品集"] = "未要求"
+                program_details[header.portfolio] = "未要求"
         else:
-            program_details["作品集"] = "未找到Entry requirements标签"
+            program_details[header.portfolio] = "未找到Entry requirements标签"
 
     def extract_relevant_text(self, text, keywords):
         # Extract sentences containing the phrase from the entry requirements section
@@ -361,10 +357,10 @@ class EDProgramDetailsCrawler(BaseProgramDetailsCrawler):
             
             combined_text = self.extract_relevant_text(combined_text, phrases)
             if combined_text:
-                program_details["工作经验（年）"] = self.judge_wrk_exp_preference(
+                program_details[header.work_experience_years] = self.judge_wrk_exp_preference(
                     combined_text)
-                program_details["工作经验细则"] = combined_text
+                program_details[header.work_experience_details] = combined_text
             else:
-                program_details["工作经验（年）"] = "未要求"
+                program_details[header.work_experience_years] = "未要求"
         else:
-            program_details["工作经验（年）"] = "未找到Entry requirements标签"
+            program_details[header.work_experience_years] = "未找到Entry requirements标签"

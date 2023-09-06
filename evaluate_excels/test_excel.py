@@ -19,11 +19,11 @@ def main():
     standard_path = "C:/Users/Lenovo/Desktop/test_data/data1.xlsx" # 人工爬的数据
     ourdata_path = "C:/Users/Lenovo/Desktop/test_data/data2.xlsx" # 机器爬的数据
     column_type = "simple" # general是总表，全部比对，simple是方便大家检查的表，只比对了一部分
-    general_names = ["专业ID","地区","学校英文名","学校中文名","QS排名2023","QS排名2022","学院",\
-                "学院中文","专业","专业中文","相关背景要求","相关背景要求中","课程简介中","课程列表中",\
-                "课程列表英","官网链接","课程时长1（学制）1","课程时长1（学制）2","课程时长21","课程时长22",\
-                "课程时长31","课程时长32","课程时长41","课程时长42","入学月1","入学月2","入学月3","入学月4",\
-                "课程费用","课程校区","雅思要求","雅思备注","托福要求","托福备注","面/笔试要求1","面/笔试要求2",\
+    general_names = [header.major_id,header.region,header.school_english_name,"学校中文名",header.qs_ranking_2023,header.qs_ranking_2022,header.college,\
+                "学院中文",header.major,header.major_chinese,header.background_requirements,"相关背景要求中","课程简介中","课程列表中",\
+                header.course_list_english,header.website_link,"课程时长1（学制）1","课程时长1（学制）2","课程时长21","课程时长22",\
+                "课程时长31","课程时长32","课程时长41","课程时长42",header.admission_month_1,"入学月2","入学月3","入学月4",\
+                header.course_fee,header.course_campus,header.ielts_requirement,header.ielts_remark,header.toefl_requirement,header.toefl_remark,"面/笔试要求1","面/笔试要求2",\
                 "工作经验（年）1","工作经验（年）2","作品集1","作品集2","GMAT1","GMAT2","GRE1","GRE2",
                 "该专业对本地学生要求","英国本地要求展示用"]
     simple_names = ["专业ID","学院","专业","相关背景要求","课程列表英","官网链接","课程时长1（学制）1","入学月1",\
@@ -46,10 +46,10 @@ def main():
     standard_data = standard_data[selected_col_names]
     ourdata = ourdata[selected_col_names]
 
-    # 3. merge on the basis of the column "官网链接"
-    ## 3.1 为 "官网链接" 列添加不同的后缀
-    standard_data = standard_data.rename(columns={"官网链接": "官网链接_人工"})
-    ourdata = ourdata.rename(columns={"官网链接": "官网链接_机器"})
+    # 3. merge on the basis of the column header.website_link
+    ## 3.1 为 header.website_link 列添加不同的后缀
+    standard_data = standard_data.rename(columns={header.website_link: "官网链接_人工"})
+    ourdata = ourdata.rename(columns={header.website_link: "官网链接_机器"})
 
     ## 3.2 merge 使用“官网链接”列进行内部连接，得到匹配的数据
     matched_df = pd.merge(ourdata, standard_data, left_on="官网链接_机器", right_on="官网链接_人工", how="inner", suffixes=('_机器', '_人工'))
@@ -76,7 +76,7 @@ def main():
 
     # 5.自定义操作
     ## 检查两个表的某些项是否一样，不一样输出到wrong_data.xlsx
-    examine_cols = ["专业ID","课程费用","雅思要求","该专业对本地学生要求","英国本地要求展示用","入学月1","课程时长1（学制）1"]
+    examine_cols = [header.major_id,header.course_fee,header.ielts_requirement,header.local_student_requirements,header.local_requirements_display,header.admission_month_1,"课程时长1（学制）1"]
     # 将不一样的数据提取出来
     different_data = final_df[final_df.apply(lambda x: any(x[col + "_机器"] != x[col + "_人工"] for col in examine_cols), axis=1)]
 

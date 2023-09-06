@@ -7,6 +7,7 @@ import requests
 from bs4 import BeautifulSoup
 from openpyxl import load_workbook, Workbook
 import concurrent.futures
+from config.program_details_header import header
 
 from tools.general import request_with_retry
 from tools.general import translate_text
@@ -167,10 +168,10 @@ class BaseProgramDetailsCrawler:
             return ' '.join(word.capitalize() for word in words)
 
         program_name, program_url, program_faculty, intro_text, *useful_links = row
-        program_details = {"专业": rearrange_program_name(program_name),
-                           "学院": program_faculty,
-                           "官网链接": program_url,
-                           "项目简介": intro_text,
+        program_details = {header.major: rearrange_program_name(program_name),
+                           header.college: program_faculty,
+                           header.website_link: program_url,
+                           header.project_intro: intro_text,
                            }
 
         self.get_data_from_main_url(program_url, program_details)
@@ -303,20 +304,20 @@ class BaseProgramDetailsCrawler:
         response.raise_for_status()
         soup = BeautifulSoup(response.text, 'html.parser')
         # self.get_program_intro(soup, program_details)
-        self.get_backgroud_requirements(soup, program_details)
-        self.get_course_intro_and_details(soup, program_details)
-        self.get_enrollment_deadlines(soup, program_details)
-        self.get_tuition(soup, program_details)
-        self.get_period(soup, program_details)
-        self.get_language_requirements(soup, program_details)
-        self.get_interview_requirements(soup, program_details)
-        self.get_work_experience_requirements(soup, program_details)
-        self.get_portfolio_requirements(soup, program_details)
-        self.get_GRE_GMAT_requirements(soup, program_details)
-        self.get_major_requirements_for_chinese_students(soup, program_details)
-        self.get_major_requirements_for_uk_students(soup, program_details)
-        self.get_major_specifications(soup, program_details)
-        self.get_program_description(soup, program_details)
+        self.get_backgroud_requirements(soup, program_details, response.text)
+        self.get_course_intro_and_details(soup, program_details, response.text)
+        self.get_enrollment_deadlines(soup, program_details, response.text)
+        self.get_tuition(soup, program_details, response.text)
+        self.get_period(soup, program_details, response.text)
+        self.get_language_requirements(soup, program_details, response.text)
+        self.get_interview_requirements(soup, program_details, response.text)
+        self.get_work_experience_requirements(soup, program_details, response.text)
+        self.get_portfolio_requirements(soup, program_details, response.text)
+        self.get_GRE_GMAT_requirements(soup, program_details, response.text)
+        self.get_major_requirements_for_chinese_students(soup, program_details, response.text)
+        self.get_major_requirements_for_uk_students(soup, program_details, response.text)
+        self.get_major_specifications(soup, program_details, response.text)
+        self.get_program_description(soup, program_details, response.text)
 
     def get_data_from_url(self, useful_links, program_details):
         # Here you can add more methods to process the soup based on the type of link_name.
@@ -334,7 +335,7 @@ class BaseProgramDetailsCrawler:
     # Add your methods like get_deadlines, get_language_requirements, etc...
 
     # def get_program_intro(self, soup, program_details, extra_data=None):
-    #     program_details["项目简介"] = program_details["项目简介"]
+    #     program_details[header.project_intro] = program_details[header.project_intro]
 
     def get_backgroud_requirements(self, soup, program_details, extra_data=None):
         pass
@@ -372,9 +373,9 @@ class BaseProgramDetailsCrawler:
 
         # 将合并后的文本添加到program_details字典中
         if combined_text:
-            program_details["面/笔试要求"] = combined_text
+            program_details[header.exam_requirements] = combined_text
         else:
-            program_details["面/笔试要求"] = "未要求"
+            program_details[header.exam_requirements] = "未要求"
 
     def get_work_experience_requirements(self, soup, program_details, extra_data=None):
         pass
