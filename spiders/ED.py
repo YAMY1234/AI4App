@@ -64,31 +64,39 @@ class EDProgramDetailsCrawler(BaseProgramDetailsCrawler):
         super().__init__(Uni_ID="ED",Uni_name="The University of Edinburgh", test=test, verbose=verbose)
 
     def get_backgroud_requirements(self, soup, program_details, extra_data=None):
-        # Locate the "Programme description" panel
-        panel_title = soup.find(
-            "h2", class_="panel-title", string="Programme description")
-        if not panel_title:
-            program_details[header.background_requirements] = "N/A"
-            return
+        '''
+        As of 2023-09-06, Entry requirements is still for 2023/24 academic year,
+        there is a paragraph stating "These entry requirements are for the 2023/24 academic year and requirements for future academic years may differ. Entry requirements for the 2024/25 academic year will be published on 2 October 2023." at the start
+        '''
+        combined_text = ""
+        program_entry_req = soup.find(id="proxy_collapseentry_req")
+        # Loop through the children of the 'div' tag to find the 'p' elements
+        if program_entry_req:
+            panel_body_tag = program_entry_req.find(
+                'div', {'class': 'panel-body'})
+            for child in panel_body_tag.children:
+                # Break if we encounter the 'h3' with "Students from China"
+                if child.string == 'Students from China':
+                    break
+                # Add the 'p' element to the list
+                if child.name == 'p':
+                    combined_text += child.get_text().lower() + " "
+                if child.name == 'h4' or child.name == 'h3':
+                    combined_text += "\n" + child.get_text().lower() + ": \n" 
+                if child.name == 'ul':
+                    for li in child.find_all('li'):  # Loop through list items
+                        for p in li.find_all('p'):  # Loop through p tags inside list items
+                            combined_text += p.get_text().lower() + " "
+                if child.name == 'a':
+                    link_text = child.string if child.string else 'Link'
+                    link_href = child['href'] if 'href' in child.attrs else '#'
+                    combined_text += f'[{link_text.lower()}]({link_href}) '  # Markdown format
+            program_details[header.background_requirements] = combined_text
+        else:
+            program_details[header.background_requirements] = "未找到Entry requirements标签"
 
-        # Navigate to the panel content div
-        panel_body = panel_title.find_next_sibling(
-            "div", class_="panel-collapse").find("div", class_="panel-body")
-        if not panel_body:
-            program_details[header.background_requirements] = "N/A"
-            return
 
-        # Extract all <p> and <h> tags within the panel content
-        texts = []
-        for tag in panel_body.children:
-            # if isinstance(tag, BeautifulSoup.Tag):  # Ensure we're looking at a tag, not a string
-            if tag.name.startswith('p') or tag.name.startswith('h'):
-                texts.append(tag.get_text(strip=True))
 
-        # Join the texts to form a single string
-        program_details[header.background_requirements] = ' '.join(texts)
-
-        from bs4 import BeautifulSoup
 
     def get_course_intro_and_details(self, soup, program_details, extra_data=None):
         # 定位到程序结构所在的div标签
@@ -303,19 +311,11 @@ class EDProgramDetailsCrawler(BaseProgramDetailsCrawler):
             for p_tag in program_description.find_all('p'):
                 combined_text += p_tag.get_text().lower() + " "
 
-        program_entry_req = soup.find(id="proxy_collapseentry_req")
-        # Loop through the children of the 'div' tag to find the 'p' elements
-        if program_entry_req:
-            panel_body_tag = program_entry_req.find(
-                'div', {'class': 'panel-body'})
-            for child in panel_body_tag.children:
-                # Break if we encounter the 'h3' with "Students from China"
-                if child.name == 'h3' and child.string == 'Students from China':
-                    break
-                # Add the 'p' element to the list
-                if child.name == 'p':
-                    combined_text += child.get_text().lower() + " "
-            combined_text = self.extract_relevant_text(combined_text, keywords)
+        if program_details[header.background_requirements] != "未找到Entry requirements标签":
+            combined_text += program_details[header.background_requirements].lower()
+        
+        combined_text = self.extract_relevant_text(combined_text, keywords)
+
 
         # 将合并后的文本添加到program_details字典中
         if combined_text:
@@ -335,20 +335,12 @@ class EDProgramDetailsCrawler(BaseProgramDetailsCrawler):
 
     def get_portfolio_requirements(self, soup, program_details, extra_data=None):
         phrases = ['written work', 'portfolio']
-        program_entry_req = soup.find(id="proxy_collapseentry_req")
+        # program_entry_req = soup.find(id="proxy_collapseentry_req")
         combined_text = ""
-        # Loop through the children of the 'div' tag to find the 'p' elements
-        if program_entry_req:
-            panel_body_tag = program_entry_req.find(
-                'div', {'class': 'panel-body'})
-            for child in panel_body_tag.children:
-                # Break if we encounter the 'h3' with "Students from China"
-                if child.name == 'h3' and child.string == 'Students from China':
-                    break
-                # Add the 'p' element to the list
-                if child.name == 'p':
-                    combined_text += child.get_text().lower() + " "
 
+        if program_details[header.background_requirements] != "未找到Entry requirements标签":
+            combined_text += program_details[header.background_requirements].lower()
+        
             combined_text = self.extract_relevant_text(combined_text, phrases)
             if combined_text:
                 program_details[header.portfolio] = self.judge_portfolio_preference(
@@ -379,7 +371,7 @@ class EDProgramDetailsCrawler(BaseProgramDetailsCrawler):
         return combined_text
 
     def judge_wrk_exp_preference(self, text):
-        required_phrases = ['minimum of', 'at least', 'Ideally', 'essential', 'must have', 'normally have',
+        required_phrases = ['minimum of', 'at least', 'Ideally', 'is essential', 'must have', 'normally have',
                             'should also have', 'should have', 'need to have']
         for phrase in required_phrases:
             if phrase in text:
@@ -394,24 +386,15 @@ class EDProgramDetailsCrawler(BaseProgramDetailsCrawler):
                    'years\' experience working', 'years of training in',
                    'extensive experience', 'relevant experience',
                    'relevant quantitative or qualitative research experience',
-                   'experience in', 'experience working', 'professional involvement',
-                   'experience of', 'with equivalent experience', 'industry experience', 'relevant work',
+                   'experience working', 'professional involvement',
+                   'with equivalent experience', 'industry experience', 'relevant work',
                    'field experience', 'relevant employment']
 
-        program_entry_req = soup.find(id="proxy_collapseentry_req")
         combined_text = ""
-        # Loop through the children of the 'div' tag to find the 'p' elements
-        if program_entry_req:
-            panel_body_tag = program_entry_req.find(
-                'div', {'class': 'panel-body'})
-            for child in panel_body_tag.children:
-                # Break if we encounter the 'h3' with "Students from China"
-                if child.name == 'h3' and child.string == 'Students from China':
-                    break
-                # Add the 'p' element to the list
-                if child.name == 'p':
-                    combined_text += child.get_text().lower() + " "
 
+        if program_details[header.background_requirements] != "未找到Entry requirements标签":
+            combined_text += program_details[header.background_requirements].lower()
+    
             combined_text = self.extract_relevant_text(combined_text, phrases)
             if combined_text:
                 program_details[header.work_experience_years] = self.judge_wrk_exp_preference(
