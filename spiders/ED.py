@@ -226,15 +226,25 @@ class EDProgramDetailsCrawler(BaseProgramDetailsCrawler):
         # 查找包含IELTS的abbr标签
         html_content = extra_data
 
-        # 正则表达式匹配
-        match = re.search(
-            r'<li><abbr title="International English Language Testing System">IELTS<\/abbr>([^<]+)<\/li>', html_content)
+        # Create a regex pattern to find the IELTS information and extract overall and component scores
+        pattern = r'<abbr title="International English Language Testing System">IELTS<\/abbr> Academic: total (\d+\.\d+) with at least (\d+\.\d+) in each component.<\/li>'
+
+        # Use re.search to find matches
+        match = re.search(pattern, html_content)
 
         if match:
-            ielts_info = match.group(1).strip()
-            program_details[header.ielts_requirement] = ielts_info
+            overall_score = match.group(1)  # Extract overall score
+            component_score = match.group(2)  # Extract component score
+
+            # Round down the component score to an integer (if needed)
+            component_score_int = int(float(component_score))
+
+            # Create the new formatted string
+            formatted_string = f"总分{overall_score}，小分{component_score_int}"
+            program_details[header.ielts_requirement] = formatted_string
         else:
-            program_details[header.ielts_requirement] = "信息未找到"
+            program_details[header.ielts_requirement] = "信息不可用"
+        
 
     def get_program_description(self, soup, program_details, extra_data=None):
         # 定位到程序描述所在的div标签
