@@ -19,13 +19,13 @@ def fetch_url_content(url):
 
 
 def request_with_retry(url, method='GET', headers=None, data=None, params=None, max_retries=3, delay=10,
-                       school_name=None):
+                       Uni_ID=None):
     retries = 0
 
     # 初始化logger
     logger = None
-    if school_name:
-        logger = setup_logger(school_name)
+    if Uni_ID:
+        logger = setup_logger(Uni_ID)
 
     while retries <= max_retries:
         try:
@@ -39,7 +39,8 @@ def request_with_retry(url, method='GET', headers=None, data=None, params=None, 
             response.raise_for_status()  # 如果返回的HTTP状态码不是200-399，它将引发一个HTTPError。
             return response
         except (requests.ConnectionError, requests.HTTPError) as e:
-            print(f"Warning: requests.ConnectionError raised {retries + 1} times for url: {url}")
+            print(
+                f"Warning: requests.ConnectionError raised {retries + 1} times for url: {url}")
             retries += 1
             if retries > max_retries:
                 error_msg = f"{method} request error for URL {url} after {max_retries} retries: {e}"
@@ -56,7 +57,8 @@ def translate_text(text, src_lang='en', dest_lang='zh-cn', max_retries=3, delay=
 
     while retries < max_retries:
         try:
-            translated = translator.translate(text, src=src_lang, dest=dest_lang)
+            translated = translator.translate(
+                text, src=src_lang, dest=dest_lang)
 
             if translated and translated.text and translated.text.strip() != "":
                 return translated.text

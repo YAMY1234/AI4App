@@ -11,8 +11,8 @@ UCL_BASE_URL = "https://www.ucl.ac.uk/prospective-students/graduate/taught-degre
 
 
 class UCLProgramURLCrawler(BaseProgramURLCrawler):
-    def __init__(self):
-        super().__init__(base_url=UCL_BASE_URL, school_name="UCL")
+    def __init__(self, verbose=True):
+        super().__init__(base_url=UCL_BASE_URL, Uni_ID="UCL", Uni_name="University College London", verbose=verbose)
 
     # Override any method if UCL's site has a different structure or logic
     def _parse_programs(self, soup, _):
@@ -39,7 +39,7 @@ class UCLProgramURLCrawler(BaseProgramURLCrawler):
 
 class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
     def __init__(self, test=False, verbose=True):
-        super().__init__(school_name="UCL", test=test, verbose=verbose)
+        super().__init__(Uni_ID="UCL", test=test, verbose=verbose)
 
     def process_row(self, row):
         link_bank = self.read_excel('data/url_bank.xlsx').active
@@ -114,7 +114,8 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
                 requirements.append(sibling.get_text(strip=True))
 
         # 将所有的<p>标签的文本内容合并成一个字符串，并保存到program_details字典中
-        program_details[header.background_requirements] = ' '.join(requirements)
+        program_details[header.background_requirements] = ' '.join(
+            requirements)
 
     def get_course_intro_and_details(self, soup, program_details, extra_data=None):
         courses = []
@@ -183,10 +184,11 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
                    'experience in', 'experience working', 'professional involvement',
                    'experience of', 'with equivalent experience', 'industry experience', 'relevant work',
                    'field experience', 'relevant employment']
-        
+
         entry_req_tag = soup.find(id="entry-requirements")
         if entry_req_tag:
-            entry_req_paragraph = entry_req_tag.find('h2').find_next_sibling('p')
+            entry_req_paragraph = entry_req_tag.find(
+                'h2').find_next_sibling('p')
             if entry_req_paragraph:
                 text = entry_req_paragraph.get_text().lower()
                 combined_text = self.extract_relevant_text(text, phrases)
@@ -200,7 +202,8 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
             program_details[header.work_experience_years] = "未找到Entry requirements标签"
 
     def judge_portfolio_preference(self, text):
-        required_phrases = ['may be', 'may also be', 'may be considered', 'may also be considered']
+        required_phrases = ['may be', 'may also be',
+                            'may be considered', 'may also be considered']
         for phrase in required_phrases:
             if phrase in text:
                 return "加分项"
@@ -210,7 +213,8 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
         phrases = ['written work', 'portfolio']
         entry_req_tag = soup.find(id="entry-requirements")
         if entry_req_tag:
-            entry_req_paragraph = entry_req_tag.find('h2').find_next_sibling('p')
+            entry_req_paragraph = entry_req_tag.find(
+                'h2').find_next_sibling('p')
             if entry_req_paragraph:
                 text = entry_req_paragraph.get_text().lower()
                 combined_text = self.extract_relevant_text(text, phrases)
@@ -242,7 +246,8 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
                 # 提取文本内容并去除多余的空白字符
                 tuition_fee = parttime_fee_div.get_text(
                     strip=True).replace('&#163;', '£')
-                program_details[header.course_fee] = tuition_fee + " (part-time)"
+                program_details[header.course_fee] = tuition_fee + \
+                    " (part-time)"
             else:
                 program_details[header.course_fee] = "未找到"
         else:
@@ -387,7 +392,7 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
             method='POST',
             headers=headers,
             data=data,
-            school_name="UCL",
+            Uni_ID="UCL",
             max_retries=10,
             delay=10
         )
@@ -421,7 +426,8 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
             elif percentage == 85:
                 program_details[header.local_student_requirements] = "2:1"
             else:
-                program_details[header.local_student_requirements] = str(percentage) + '%'
+                program_details[header.local_student_requirements] = str(
+                    percentage) + '%'
             return
         else:
             # Find the h4 element with the text 'Equivalent qualifications for China'
@@ -471,19 +477,20 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
 
     def is_second_class(self, text):
         second_phrases = ["lower second-class",
-                             "lower second class",
-                             "lower-second class",
-                             "good second class",
-                             "a second class",
-                             "a second-class",
-                             "2:2 or equivalent"
-                             ]
+                          "lower second class",
+                          "lower-second class",
+                          "good second class",
+                          "a second class",
+                          "a second-class",
+                          "2:2 or equivalent"
+                          ]
         return any(phrase in text for phrase in second_phrases)
 
     def get_major_requirements_for_uk_students(self, soup, program_details, extra_data=None):
         entry_req_tag = soup.find(id="entry-requirements")
         if entry_req_tag:
-            entry_req_paragraph = entry_req_tag.find('h2').find_next_sibling('p')
+            entry_req_paragraph = entry_req_tag.find(
+                'h2').find_next_sibling('p')
             if entry_req_paragraph:
                 text = entry_req_paragraph.get_text().lower()
                 if self.is_conditional_upper_second(text):
@@ -501,7 +508,8 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
             program_details[header.local_requirements_display] = "未找到Entry requirements标签"
 
     def judge_interview_preference(self, text):
-        required_phrases = ['may be', 'may also be', 'may be considered', 'may also be considered']
+        required_phrases = ['may be', 'may also be',
+                            'may be considered', 'may also be considered']
         for phrase in required_phrases:
             if phrase in text:
                 return "可能要求"
@@ -517,14 +525,16 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
         entry_req_tag = soup.find(id="entry-requirements")
         combined_text = ""
         if entry_req_tag:
-            entry_req_paragraph = entry_req_tag.find('h2').find_next_sibling('p')
+            entry_req_paragraph = entry_req_tag.find(
+                'h2').find_next_sibling('p')
             if entry_req_paragraph:
                 text = entry_req_paragraph.get_text().lower()
                 combined_text = self.extract_relevant_text(text, keywords)
 
         # 将合并后的文本添加到program_details字典中
         if combined_text:
-            program_details[header.exam_requirements] = self.judge_interview_preference(combined_text)
+            program_details[header.exam_requirements] = self.judge_interview_preference(
+                combined_text)
             program_details[header.exam_requirements_details] = combined_text
         else:
             program_details[header.exam_requirements] = "未要求"
