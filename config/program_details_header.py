@@ -41,8 +41,8 @@ class ProgramHeader:
         self.portfolio_details = ""
         self.gmat = ""
         self.gre = ""
-        self.local_student_requirements = ""
-        self.local_requirements_display = ""
+        self.cn_requirement = ""
+        self.uk_requirement = ""
         self.major_specialization_1 = ""
         self.major_specialization_2 = ""
         self.major_specialization_3 = ""
@@ -57,6 +57,7 @@ class ProgramHeader:
         self.major_specialization_12 = ""
         self.major_specialization_13 = ""
         self.major_specialization_14 = ""
+
 
 # 创建一个SchoolInfo对象
 header = ProgramHeader()
@@ -101,8 +102,8 @@ header.portfolio = "作品集"
 header.portfolio_details = "作品集细则"
 header.gmat = "GMAT"
 header.gre = "GRE"
-header.local_student_requirements = "该专业对本地学生要求"
-header.local_requirements_display = "英国本地要求展示用"
+header.cn_requirement = "该专业对本地学生要求"
+header.uk_requirement = "英国本地要求展示用"
 header.major_specialization_1 = "专业细分方向1"
 header.major_specialization_2 = "专业细分方向2"
 header.major_specialization_3 = "专业细分方向3"

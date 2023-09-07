@@ -77,8 +77,8 @@ program_details = {}
 if match:
     percentage = int(match.group(1))
     if percentage == 80:
-        program_details[header.local_student_requirements] = "2:2"
+        program_details[header.cn_requirement] = "2:2"
     elif percentage == 85:
-        program_details[header.local_student_requirements] = "2:1"
+        program_details[header.cn_requirement] = "2:1"
     else:
-        program_details[header.local_student_requirements] = "其他"
+        program_details[header.cn_requirement] = "其他"

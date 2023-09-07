@@ -12,7 +12,8 @@ UCL_BASE_URL = "https://www.ucl.ac.uk/prospective-students/graduate/taught-degre
 
 class UCLProgramURLCrawler(BaseProgramURLCrawler):
     def __init__(self, verbose=True):
-        super().__init__(base_url=UCL_BASE_URL, Uni_ID="UCL", Uni_name="University College London", verbose=verbose)
+        super().__init__(base_url=UCL_BASE_URL, Uni_ID="UCL",
+                         Uni_name="University College London", verbose=verbose)
 
     # Override any method if UCL's site has a different structure or logic
     def _parse_programs(self, soup, _):
@@ -403,7 +404,7 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
         try:
             json_data = response.json()
         except:
-            program_details[header.local_student_requirements] = "未找到，项目页面不可用或者正在更新"
+            program_details[header.cn_requirement] = "未找到，项目页面不可用或者正在更新"
 
         all_text = ""
 
@@ -422,11 +423,11 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
         if match:
             percentage = int(match.group(1))
             if percentage == 80:
-                program_details[header.local_student_requirements] = "2:2"
+                program_details[header.cn_requirement] = "2:2"
             elif percentage == 85:
-                program_details[header.local_student_requirements] = "2:1"
+                program_details[header.cn_requirement] = "2:1"
             else:
-                program_details[header.local_student_requirements] = str(
+                program_details[header.cn_requirement] = str(
                     percentage) + '%'
             return
         else:
@@ -436,10 +437,10 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
 
             if h4_tag:
                 # Find the next sibling <p> element after the h4 tag
-                program_details[header.local_student_requirements] = h4_tag.find_next_sibling(
+                program_details[header.cn_requirement] = h4_tag.find_next_sibling(
                     'p').get_text()
             else:
-                program_details[header.local_student_requirements] = "未找到"
+                program_details[header.cn_requirement] = "未找到"
 
     def is_conditional_upper_second(self, text):
         phrases_pt1 = ["with a lower than upper-second class",
@@ -494,18 +495,18 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
             if entry_req_paragraph:
                 text = entry_req_paragraph.get_text().lower()
                 if self.is_conditional_upper_second(text):
-                    program_details[header.local_requirements_display] = "有条件2:2"
+                    program_details[header.uk_requirement] = "有条件2:2"
                     return
                 elif self.is_upper_second_class(text):
-                    program_details[header.local_requirements_display] = "2:1"
+                    program_details[header.uk_requirement] = "2:1"
                     return
                 elif self.is_second_class(text):
-                    program_details[header.local_requirements_display] = "2:2"
+                    program_details[header.uk_requirement] = "2:2"
                     return
                 else:
-                    program_details[header.local_requirements_display] = "未要求"
+                    program_details[header.uk_requirement] = "未要求"
         else:
-            program_details[header.local_requirements_display] = "未找到Entry requirements标签"
+            program_details[header.uk_requirement] = "未找到Entry requirements标签"
 
     def judge_interview_preference(self, text):
         required_phrases = ['may be', 'may also be',

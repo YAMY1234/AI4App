@@ -435,15 +435,43 @@ class EDProgramDetailsCrawler(BaseProgramDetailsCrawler):
         if program_details[header.background_requirements] != "未找到Entry requirements标签":
             text = program_details[header.background_requirements].lower()
             if self.is_conditional_upper_second(text):
-                program_details[header.local_requirements_display] = "有条件2:2"
+                program_details[header.uk_requirement] = "有条件2:2"
                 return
             elif self.is_upper_second_class(text):
-                program_details[header.local_requirements_display] = "2:1"
+                program_details[header.uk_requirement] = "2:1"
                 return
             elif self.is_second_class(text):
-                program_details[header.local_requirements_display] = "2:2"
+                program_details[header.uk_requirement] = "2:2"
                 return
             else:
-                program_details[header.local_requirements_display] = "未要求"
+                program_details[header.uk_requirement] = "未要求"
         else:
-            program_details[header.local_requirements_display] = "未找到Entry requirements标签"
+            program_details[header.uk_requirement] = "未找到Entry requirements标签"
+
+    def get_major_requirements_for_chinese_students(self, soup, program_details, extra_data=None):
+        text = ""
+        program_entry_req = soup.find(id="proxy_collapseentry_req")
+        # Loop through the children of the 'div' tag to find the 'p' elements
+        if program_entry_req:
+            china_tag = program_entry_req.find("h3", text = "Students from China")
+            if china_tag:
+                # print(china_tag)
+                if china_tag.find_next_sibling():
+                    # print(china_tag.next_sibling)
+                    text = china_tag.find_next_sibling().get_text().lower()
+                    # print(text)
+                    pattern = r"band [a-z]"
+                    match = re.search(pattern, text)
+                    if match:
+                        if match.group() == "band a":
+                            program_details[header.cn_requirement] = "2:1"
+                        else:
+                            program_details[header.cn_requirement] = "2:2"
+                    else:
+                        program_details[header.cn_requirement] = "正则匹配错误"
+                else:
+                    print("未找到中国学生的要求")
+            else:
+                print("未找到中国学生的要求")
+        else:
+            program_details[header.cn_requirement] = "未找到Entry requirements标签"
