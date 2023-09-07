@@ -296,8 +296,10 @@ class BaseProgramDetailsCrawler:
 
     def scrape_program_details(self):
         # 从 program_detail_headers.txt 读取标题
-        with open('data/program_detail_headers.txt', 'r', encoding='utf-8') as file:
-            headers = [line.strip() for line in file.readlines()]
+        # with open('data/program_detail_headers.txt', 'r', encoding='utf-8') as file:
+        #     headers = [line.strip() for line in file.readlines()]
+        # 获取header的所有自定义成员变量的值
+        headers = header.ordered_list
 
         wb = self.read_excel(self.useful_link_path)
         sheet = wb.active
@@ -355,6 +357,7 @@ class BaseProgramDetailsCrawler:
             soup, program_details, response.text)
         self.get_major_specifications(soup, program_details, response.text)
         self.get_program_description(soup, program_details, response.text)
+        self.get_application_deadlines(soup, program_details, response.text)
 
     def get_data_from_url(self, useful_links, program_details):
         # Here you can add more methods to process the soup based on the type of link_name.
@@ -435,11 +438,13 @@ class BaseProgramDetailsCrawler:
     def get_program_description(self, soup, program_details, extra_data=None):
         pass
 
+    def get_application_deadlines(self, soup, program_details, extra_data=None):
+        pass
+
     # def get_campus(self, soup, program_details):
     #     pass
 
     # def British_local_requirements_for_display(self, soup, program_details):
     #     pass
 
-    # def get_application_deadlines(self, soup, program_details):
-    #     pass
+

@@ -27,6 +27,7 @@ class ProgramHeader:
         self.admission_month_2 = ""
         self.admission_month_3 = ""
         self.admission_month_4 = ""
+        self.application_deadlines = ""
         self.course_fee = ""
         self.course_campus = ""
         self.ielts_requirement = ""
@@ -57,64 +58,77 @@ class ProgramHeader:
         self.major_specialization_12 = ""
         self.major_specialization_13 = ""
         self.major_specialization_14 = ""
+        self.ordered_list = []
+
+    def initiate_headers(self, header_info):
+        for attr, value in header_info.items():
+            setattr(header, attr, value)
+        self.ordered_list = list(header_info.values())
+
+
+header_info = {
+    "major_id": "专业id",
+    "region": "地区",
+    "school_english_name": "学校英文名",
+    "school_chinese_name": "学校中文名",
+    "qs_ranking_2023": "QS排名2023",
+    "qs_ranking_2022": "QS排名2022",
+    "college": "学院",
+    "college_chinese": "学院中文",
+    "major": "专业",
+    "major_chinese": "专业中文",
+    "background_requirements": "相关背景要求",
+    "background_requirements_chinese": "相关背景要求中",
+    "project_intro": "项目简介",
+    "project_intro_chinese": "项目简介中",
+    "course_description_english": "课程介绍英",
+    "course_list_english": "课程列表英",
+    "course_list_chinese": "课程列表中",
+    "website_link": "官网链接",
+    "course_duration_1": "课程时长1(学制)",
+    "course_duration_2": "课程时长2",
+    "course_duration_3": "课程时长3",
+    "course_duration_4": "课程时长4",
+    "admission_month_1": "入学月1",
+    "admission_month_2": "入学月2",
+    "admission_month_3": "入学月3",
+    "admission_month_4": "入学月4",
+    "application_deadlines": "申请截止日期",
+    "course_fee": "课程费用",
+    "course_campus": "课程校区",
+    "ielts_requirement": "雅思要求",
+    "ielts_remark": "雅思备注",
+    "toefl_requirement": "托福要求",
+    "toefl_remark": "托福备注",
+    "exam_requirements": "面/笔试要求",
+    "exam_requirements_details": "面/笔试要求细则",
+    "work_experience_years": "工作经验（年）",
+    "work_experience_details": "工作经验细则",
+    "portfolio": "作品集",
+    "portfolio_details": "作品集细则",
+    "gmat": "GMAT",
+    "gre": "GRE",
+    "cn_requirement": "该专业对本地学生要求",
+    "uk_requirement": "英国本地要求展示用",
+    "major_specialization_1": "专业细分方向1",
+    "major_specialization_2": "专业细分方向2",
+    "major_specialization_3": "专业细分方向3",
+    "major_specialization_4": "专业细分方向4",
+    "major_specialization_5": "专业细分方向5",
+    "major_specialization_6": "专业细分方向6",
+    "major_specialization_7": "专业细分方向7",
+    "major_specialization_8": "专业细分方向8",
+    "major_specialization_9": "专业细分方向9",
+    "major_specialization_10": "专业细分方向10",
+    "major_specialization_11": "专业细分方向11",
+    "major_specialization_12": "专业细分方向12",
+    "major_specialization_13": "专业细分方向13",
+    "major_specialization_14": "专业细分方向14"
+}
 
 
 # 创建一个SchoolInfo对象
 header = ProgramHeader()
+header.initiate_headers(header_info)
 
-header.major_id = "专业id"
-header.region = "地区"
-header.school_english_name = "学校英文名"
-header.school_chinese_name = "学校中文名"
-header.qs_ranking_2023 = "QS排名2023"
-header.qs_ranking_2022 = "QS排名2022"
-header.college = "学院"
-header.college_chinese = "学院中文"
-header.major = "专业"
-header.major_chinese = "专业中文"
-header.background_requirements = "相关背景要求"
-header.background_requirements_chinese = "相关背景要求中"
-header.project_intro = "项目简介"
-header.project_intro_chinese = "项目简介中"
-header.course_description_english = "课程介绍英"
-header.course_list_english = "课程列表英"
-header.course_list_chinese = "课程列表中"
-header.website_link = "官网链接"
-header.course_duration_1 = "课程时长1(学制)"
-header.course_duration_2 = "课程时长2"
-header.course_duration_3 = "课程时长3"
-header.course_duration_4 = "课程时长4"
-header.admission_month_1 = "入学月1"
-header.admission_month_2 = "入学月2"
-header.admission_month_3 = "入学月3"
-header.admission_month_4 = "入学月4"
-header.course_fee = "课程费用"
-header.course_campus = "课程校区"
-header.ielts_requirement = "雅思要求"
-header.ielts_remark = "雅思备注"
-header.toefl_requirement = "托福要求"
-header.toefl_remark = "托福备注"
-header.exam_requirements = "面/笔试要求"
-header.exam_requirements_details = "面/笔试要求细则"
-header.work_experience_years = "工作经验（年）"
-header.work_experience_details = "工作经验细则"
-header.portfolio = "作品集"
-header.portfolio_details = "作品集细则"
-header.gmat = "GMAT"
-header.gre = "GRE"
-header.cn_requirement = "该专业对本地学生要求"
-header.uk_requirement = "英国本地要求展示用"
-header.major_specialization_1 = "专业细分方向1"
-header.major_specialization_2 = "专业细分方向2"
-header.major_specialization_3 = "专业细分方向3"
-header.major_specialization_4 = "专业细分方向4"
-header.major_specialization_5 = "专业细分方向5"
-header.major_specialization_6 = "专业细分方向6"
-header.major_specialization_7 = "专业细分方向7"
-header.major_specialization_8 = "专业细分方向8"
-header.major_specialization_9 = "专业细分方向9"
-header.major_specialization_10 = "专业细分方向10"
-header.major_specialization_11 = "专业细分方向11"
-header.major_specialization_12 = "专业细分方向12"
-header.major_specialization_13 = "专业细分方向13"
-header.major_specialization_14 = "专业细分方向14"
+# print(header.ordered_list)

@@ -494,3 +494,35 @@ class EDProgramDetailsCrawler(BaseProgramDetailsCrawler):
         result = '. '.join(matched_sentences) + '.' if matched_sentences else "未要求"
 
         program_details[header.gre] = result
+
+    def get_application_deadlines(self, soup, program_details, extra_data=None):
+        # 查找标题为'Selection Deadlines'的h3标签
+        h3_tag = soup.find('h3', string='Selection Deadlines')
+        if not h3_tag:
+            program_details[header.application_deadlines] = 'No Selection Deadlines found.'
+            return
+
+        # 找到h3标签后面的表格
+        table = h3_tag.find_next('table')
+        if not table:
+            program_details[header.application_deadlines] = 'No table found after Selection Deadlines.'
+            return
+
+        # 获取tbody标签
+        tbody = table.find('tbody')
+        if not tbody:
+            program_details[header.application_deadlines] = 'No tbody found in the table.'
+            return
+
+        # 遍历每一行
+        rows = tbody.find_all('tr')
+        results = []
+        for row in rows:
+            cells = row.find_all('td')
+            if len(cells) != 3:  # 期望每一行有3个单元格
+                continue
+            round_info = f"Round {cells[0].text}: Application Deadline: {cells[1].text}, Decisions made or applications rolled to next deadline: {cells[2].text}"
+            results.append(round_info)
+
+        # 结果存放到program_details中
+        program_details[header.application_deadlines] = '. '.join(results)
