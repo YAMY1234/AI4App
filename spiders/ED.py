@@ -395,7 +395,7 @@ class EDProgramDetailsCrawler(BaseProgramDetailsCrawler):
 
     def get_GRE_GMAT_requirements(self, soup, program_details, extra_data=None):
         # 正则表达式模式
-        pattern = r'\bGRE\b'  # 查找包含大写"GRE"的片段
+        pattern = r'\bGRE'  # 查找包含大写"GRE"的片段
 
         # 提取extra_data中的所有文本内容
         content_matches = re.findall(r'<[^>]+>([^<]+)<', extra_data)
