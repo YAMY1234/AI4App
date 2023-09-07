@@ -392,3 +392,22 @@ class EDProgramDetailsCrawler(BaseProgramDetailsCrawler):
                 program_details[header.work_experience_years] = "未要求"
         else:
             program_details[header.work_experience_years] = "未找到Entry requirements标签"
+
+    def get_GRE_GMAT_requirements(self, soup, program_details, extra_data=None):
+        # 正则表达式模式
+        pattern = r'\bGRE\b'  # 查找包含大写"GRE"的片段
+
+        # 提取extra_data中的所有文本内容
+        content_matches = re.findall(r'<[^>]+>([^<]+)<', extra_data)
+        all_content = ' '.join(content_matches)
+
+        matched_sentences = []
+
+        for sentence in re.split(r'[.;!\n]', all_content):
+            if re.search(pattern, sentence, re.IGNORECASE):
+                matched_sentences.append(sentence.strip())
+
+        # 将匹配到的句子合并成字符串
+        result = '. '.join(matched_sentences) + '.' if matched_sentences else "未要求"
+
+        program_details[header.gre] = result
