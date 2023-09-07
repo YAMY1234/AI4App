@@ -1,19 +1,15 @@
 from spiders import UCL, ED
 
 def UCL_caller():
-    print("crawling program details...")
-    ucl_program_crawler = UCL.UCLProgramURLCrawler()
+    ucl_program_crawler = UCL.UCLProgramURLCrawler(verbose=True)
     ucl_program_crawler.crawl()
-    print("crawling UCL details...")
     ucl_detail_crawler = UCL.UCLProgramDetailsCrawler(test=False, verbose=False)
     # ucl_detail_crawler.get_program_useful_links()
     ucl_detail_crawler.generate_program_details(translate=True)
 
 def ED_caller():
-    print("crawling program details...")
-    # program_crawler = ED.EDProgramURLCrawler()
-    # program_crawler.crawl()
-    print("crawling UCL details...")
+    program_crawler = ED.EDProgramURLCrawler(verbose=True)
+    program_crawler.crawl()
     detail_crawler = ED.EDProgramDetailsCrawler(test=True, verbose=True)
     detail_crawler.get_program_useful_links()
     detail_crawler.generate_program_details(translate=False)

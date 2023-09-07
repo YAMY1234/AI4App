@@ -15,15 +15,23 @@ from utils.logger import setup_logger
 
 
 class BaseProgramURLCrawler:
-    def __init__(self, base_url, school_name):
+    def __init__(self, base_url, Uni_ID, Uni_name=None, verbose=False):
         self.base_url = base_url
         self.data_folder = "data"
-        self.school_name = school_name
+        self.Uni_ID = Uni_ID
+        if not Uni_name:
+            self.Uni_name = Uni_ID
+        else:
+            self.Uni_name = Uni_name
+        self.verbose = verbose
 
         if not os.path.exists(self.data_folder):
             os.makedirs(self.data_folder)
+        
 
     def crawl(self):
+        if self.verbose:
+            print(f"crawling program urls for {self.Uni_name}...")
         program_words = self._load_program_words()
         soup = self._fetch_html(self.base_url)
         program_url_pairs = self._parse_programs(soup, program_words)
@@ -46,8 +54,8 @@ class BaseProgramURLCrawler:
             "Each specific crawler should implement this method!")
 
     def _store_results(self, program_url_pairs):
-        school_name = self.school_name
-        school_data_folder = os.path.join(self.data_folder, school_name)
+        Uni_ID = self.Uni_ID
+        school_data_folder = os.path.join(self.data_folder, Uni_ID)
 
         if not os.path.exists(school_data_folder):
             os.makedirs(school_data_folder)
@@ -67,37 +75,44 @@ class BaseProgramURLCrawler:
 
         # Save the file
         try:
-            new_wb.save(os.path.join(school_data_folder, 'program_url_pair.xlsx'))
+            new_wb.save(os.path.join(
+                school_data_folder, 'program_url_pair.xlsx'))
         except PermissionError:
             # save the file with a time stamp: YYYY-MM-DD_HH-MM-SS
-            new_wb.save(os.path.join(school_data_folder, f'program_url_pair_{time.strftime("%Y-%m-%d_%H-%M-%S")}.xlsx'))
-            print(f"PermissionError: failed to save program_url_pair.xlsx. Saved as program_url_pair_{time.strftime('%Y-%m-%d_%H-%M-%S')}.xlsx instead.")
-        
+            new_wb.save(os.path.join(
+                school_data_folder, f'program_url_pair_{time.strftime("%Y-%m-%d_%H-%M-%S")}.xlsx'))
+            print(
+                f"PermissionError: failed to save program_url_pair.xlsx. Saved as program_url_pair_{time.strftime('%Y-%m-%d_%H-%M-%S')}.xlsx instead.")
+
         return
 
 
 class BaseProgramDetailsCrawler:
-    def __init__(self, school_name, test=False, verbose=True):
-        self.school_name = school_name
+    def __init__(self, Uni_ID, Uni_name=None, test=False, verbose=True):
+        self.Uni_ID = Uni_ID
+        if not Uni_name:
+            self.Uni_name = Uni_ID
+        else:
+            self.Uni_name = Uni_name
         self.test = test
         self.verbose = verbose
         if self.test:
-            self.useful_link_path = f'data/{self.school_name}/program_useful_link_sample.xlsx'
-            self.details_path = f'data/{self.school_name}/program_details_sample.xlsx'
+            self.useful_link_path = f'data/{self.Uni_ID}/program_useful_link_sample.xlsx'
+            self.details_path = f'data/{self.Uni_ID}/program_details_sample.xlsx'
         else:
-            self.useful_link_path = f'data/{self.school_name}/program_useful_link.xlsx'
-            self.details_path = f'data/{self.school_name}/program_details.xlsx'
+            self.useful_link_path = f'data/{self.Uni_ID}/program_useful_link.xlsx'
+            self.details_path = f'data/{self.Uni_ID}/program_details.xlsx'
 
     def read_excel(self, path):
         return load_workbook(path)
 
     def get_program_useful_links(self):
-        url_pair_path = f'data/{self.school_name}/program_url_pair.xlsx'
+        url_pair_path = f'data/{self.Uni_ID}/program_url_pair.xlsx'
         if self.test:
-            url_pair_path = f'data/{self.school_name}/program_url_pair_sample.xlsx'
+            url_pair_path = f'data/{self.Uni_ID}/program_url_pair_sample.xlsx'
             # generate a sample based on first 10 rows of program_url_pair.xlsx
             if not os.path.exists(url_pair_path):
-                original_ = f'data/{self.school_name}/program_url_pair.xlsx'
+                original_ = f'data/{self.Uni_ID}/program_url_pair.xlsx'
                 wb = self.read_excel(original_)
                 sheet = wb.active
                 new_wb = Workbook()
@@ -107,7 +122,9 @@ class BaseProgramDetailsCrawler:
                     new_sheet.append(row)
                 new_wb.save(url_pair_path)
 
-        print("reading url pairs from " + url_pair_path)
+        if self.verbose:
+            print(f"generating useful links for {self.Uni_name}...")
+            print("reading url pairs from " + url_pair_path)
         wb = self.read_excel(url_pair_path)
         sheet = wb.active
 
@@ -127,8 +144,10 @@ class BaseProgramDetailsCrawler:
             print("useful links saved to " + self.useful_link_path)
         except PermissionError:
             # save the file with a time stamp: YYYY-MM-DD_HH-MM-SS
-            new_wb.save(os.path.join(f'data/{self.school_name}/program_useful_link_{time.strftime("%Y-%m-%d_%H-%M-%S")}.xlsx'))
-            print(f"PermissionError: failed to save program_useful_link.xlsx. Saved as program_useful_link_{time.strftime('%Y-%m-%d_%H-%M-%S')}.xlsx instead.")
+            new_wb.save(os.path.join(
+                f'data/{self.Uni_ID}/program_useful_link_{time.strftime("%Y-%m-%d_%H-%M-%S")}.xlsx'))
+            print(
+                f"PermissionError: failed to save program_useful_link.xlsx. Saved as program_useful_link_{time.strftime('%Y-%m-%d_%H-%M-%S')}.xlsx instead.")
 
     def process_row(self, row):
         link_bank = self.read_excel('data/url_bank.xlsx').active
@@ -163,7 +182,8 @@ class BaseProgramDetailsCrawler:
                     # Insert the last word at the beginning
                     words.insert(0, last_word)
                 else:
-                    words.insert(0, "Master's")  # the specific master program not identified
+                    # the specific master program not identified
+                    words.insert(0, "Master's")
             # Join the words back together and capitalize each word
             return ' '.join(word.capitalize() for word in words)
 
@@ -188,19 +208,22 @@ class BaseProgramDetailsCrawler:
             new_sheet.append(data_row)
 
     def generate_program_details(self, verbose=True, translate=False):
+        if verbose:
+            print(f"crawling program details for {self.Uni_name}...")
         self.scrape_program_details()
         self.write_program_constants()
         if translate:
             self.translate()
         if verbose:
-            print(f"{self.school_name} updated successfully.")
+            print(f"{self.Uni_ID} updated successfully.")
 
     def write_program_constants(self):
         # 从university_constants.csv中读取headers和数据
         with open('data/Constants/university_constants.csv', 'r', encoding='utf-8') as file:
             lines = [line.strip() for line in file.readlines()]
             headers = lines[0].split(sep=',')
-            data = lines[1].split(sep=',')
+            # All the following lines are data, each line is a university
+            data = [line.split(sep=',') for line in lines[1:]]
 
         # open program_details.xlsx
         wb = self.read_excel(self.details_path)
@@ -208,6 +231,12 @@ class BaseProgramDetailsCrawler:
 
         # 获取现有的headers
         existing_headers = [cell.value for cell in sheet[1]]
+
+        # get data for current university
+        data = [row for row in data if row[0] == self.Uni_ID][0]
+        if not data:
+            print(f"Failed to get constant for {self.Uni_ID}. Please add it to university_constants.csv first.")
+            return
 
         # write constants to program_details.xlsx
         for header in headers:
@@ -219,13 +248,14 @@ class BaseProgramDetailsCrawler:
                                value=data[headers.index(header)])
 
         # Save the file
-        # Todo: Error handling (Permission Error)
         try:
             wb.save(self.details_path)
         except PermissionError:
             # save the file with a time stamp: YYYY-MM-DD_HH-MM-SS
-            wb.save(os.path.join(f'data/{self.school_name}/program_details_{time.strftime("%Y-%m-%d_%H-%M-%S")}.xlsx'))
-            print(f"PermissionError: failed to save program_details.xlsx. Saved as program_details_{time.strftime('%Y-%m-%d_%H-%M-%S')}.xlsx instead.")
+            wb.save(os.path.join(
+                f'data/{self.Uni_ID}/program_details_{time.strftime("%Y-%m-%d_%H-%M-%S")}.xlsx'))
+            print(
+                f"PermissionError: failed to save program_details.xlsx. Saved as program_details_{time.strftime('%Y-%m-%d_%H-%M-%S')}.xlsx instead.")
 
     def translate(self):
         # open program_details.xlsx
@@ -238,7 +268,8 @@ class BaseProgramDetailsCrawler:
         # 找出特定列名所在的列号
         col_institute_idx = existing_headers.index(header.college) + 1
         col_program_idx = existing_headers.index('专业') + 1
-        col_background_idx = existing_headers.index(header.background_requirements) + 1
+        col_background_idx = existing_headers.index(
+            header.background_requirements) + 1
 
         # 翻译特定列并写入相应的中文列
         for row in range(2, sheet.max_row + 1):
@@ -258,8 +289,10 @@ class BaseProgramDetailsCrawler:
             wb.save(self.details_path)
         except PermissionError:
             # save the file with a time stamp: YYYY-MM-DD_HH-MM-SS
-            wb.save(os.path.join(f'data/{self.school_name}/program_details_{time.strftime("%Y-%m-%d_%H-%M-%S")}.xlsx'))
-            print(f"PermissionError: failed to save program_details.xlsx. Saved as program_details_{time.strftime('%Y-%m-%d_%H-%M-%S')}.xlsx instead.")
+            wb.save(os.path.join(
+                f'data/{self.Uni_ID}/program_details_{time.strftime("%Y-%m-%d_%H-%M-%S")}.xlsx'))
+            print(
+                f"PermissionError: failed to save program_details.xlsx. Saved as program_details_{time.strftime('%Y-%m-%d_%H-%M-%S')}.xlsx instead.")
 
     def scrape_program_details(self):
         # 从 program_detail_headers.txt 读取标题
@@ -287,9 +320,10 @@ class BaseProgramDetailsCrawler:
             new_wb.save(self.details_path)
         except PermissionError:
             # save the file with a time stamp: YYYY-MM-DD_HH-MM-SS
-            new_wb.save(os.path.join(f'data/{self.school_name}/program_details_{time.strftime("%Y-%m-%d_%H-%M-%S")}.xlsx'))
-            print(f"PermissionError: failed to save program_details.xlsx. Saved as program_details_{time.strftime('%Y-%m-%d_%H-%M-%S')}.xlsx instead.")
-    
+            new_wb.save(os.path.join(
+                f'data/{self.Uni_ID}/program_details_{time.strftime("%Y-%m-%d_%H-%M-%S")}.xlsx'))
+            print(
+                f"PermissionError: failed to save program_details.xlsx. Saved as program_details_{time.strftime('%Y-%m-%d_%H-%M-%S')}.xlsx instead.")
 
     def get_data_from_main_url(self, program_url, program_details):
         # try:
@@ -299,7 +333,7 @@ class BaseProgramDetailsCrawler:
         #     return
         response = request_with_retry(
             url=program_url,
-            school_name=self.school_name
+            Uni_ID=self.Uni_ID
         )
         response.raise_for_status()
         soup = BeautifulSoup(response.text, 'html.parser')
@@ -311,11 +345,14 @@ class BaseProgramDetailsCrawler:
         self.get_period(soup, program_details, response.text)
         self.get_language_requirements(soup, program_details, response.text)
         self.get_interview_requirements(soup, program_details, response.text)
-        self.get_work_experience_requirements(soup, program_details, response.text)
+        self.get_work_experience_requirements(
+            soup, program_details, response.text)
         self.get_portfolio_requirements(soup, program_details, response.text)
         self.get_GRE_GMAT_requirements(soup, program_details, response.text)
-        self.get_major_requirements_for_chinese_students(soup, program_details, response.text)
-        self.get_major_requirements_for_uk_students(soup, program_details, response.text)
+        self.get_major_requirements_for_chinese_students(
+            soup, program_details, response.text)
+        self.get_major_requirements_for_uk_students(
+            soup, program_details, response.text)
         self.get_major_specifications(soup, program_details, response.text)
         self.get_program_description(soup, program_details, response.text)
 

@@ -3,9 +3,10 @@
 import logging
 import os
 
-def setup_logger(school_name, log_dir="./data/"):
+
+def setup_logger(Uni_ID, log_dir="./data/"):
     # 设置日志文件路径
-    log_file_path = os.path.join(log_dir, f"{school_name}/errors.log")
+    log_file_path = os.path.join(log_dir, f"{Uni_ID}/errors.log")
     # 确保目录存在
     os.makedirs(os.path.dirname(log_file_path), exist_ok=True)
 
