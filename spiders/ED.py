@@ -267,7 +267,13 @@ class EDProgramDetailsCrawler(BaseProgramDetailsCrawler):
                 separator='\n', strip=True)
             program_details[header.project_intro] = description_text
         else:
-            program_details[header.project_intro] = "信息不可用"
+            research_profile = soup.find('div', id='proxy_collapseresearch_profile')
+            if research_profile:
+                profile_text = research_profile.get_text(
+                    separator='\n', strip=True)
+                program_details[header.project_intro] = profile_text
+            else:
+                program_details[header.project_intro] = "信息不可用"
 
         school_span = soup.find('span', text='School: ')
         college_span = soup.find('span', text='College: ')
