@@ -234,8 +234,13 @@ class EDProgramDetailsCrawler(BaseProgramDetailsCrawler):
         # Create a regex pattern to find the IELTS information and extract overall and component scores
         pattern = r'<abbr title="International English Language Testing System">IELTS<\/abbr> Academic: total (\d+\.\d+) with at least (\d+\.\d+) in each component.<\/li>'
 
+        pattern_vague = r'(?<=<abbr title="International English Language Testing System">IELTS</abbr>).*(?=</li>)'
+        
+
         # Use re.search to find matches
         match = re.search(pattern, html_content)
+        if not match:
+            match_vague = re.search(pattern_vague, html_content)
 
         if match:
             overall_score = match.group(1)  # Extract overall score
@@ -247,6 +252,8 @@ class EDProgramDetailsCrawler(BaseProgramDetailsCrawler):
             # Create the new formatted string
             formatted_string = f"总分{overall_score}，小分{component_score_int}"
             program_details[header.ielts_requirement] = formatted_string
+        elif match_vague:
+            program_details[header.ielts_requirement] = match_vague.group()
         else:
             program_details[header.ielts_requirement] = "信息不可用"
         
