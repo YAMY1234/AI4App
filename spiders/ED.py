@@ -427,8 +427,8 @@ class EDProgramDetailsCrawler(BaseProgramDetailsCrawler):
                              "a good 2.1",
                              "2:1 or equivalent",
                              "dental qualification",
-                             "a uk 2:1 honours degree",
-                             "uk first-class"
+                             "uk first-class",
+                             "uk 2:1"
                              ]
         return any(phrase in text for phrase in upper_2nd_phrases)
 
