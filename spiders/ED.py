@@ -125,7 +125,6 @@ class EDProgramDetailsCrawler(BaseProgramDetailsCrawler):
     参考网页代码,
      <h2>Applying</h2>
     
-     <p>Select your programme and preferred start date to begin your application.</p><div class="row finderSearch"><div class="col-xs-12"><h5>MSc Accounting and Finance - 1 Year (Full-time)</h5><div class="input-group input-group-lg"><select name="code2" class="form-control" required=""><option value="">Select your start date</option><option value="https://www.star.euclid.ed.ac.uk/public/urd/sits.urd/run/siw_ipp_lgn.login?process=siw_ipp_app&amp;code1=PTMSCACFIN1F&amp;code2=0017">9 September 2024</option></select><span class="input-group-btn"><input type="button" value="Apply" class="btn btn-uoe btn-apply btn-euclid-apply" title="Apply: MSc Accounting and Finance - 1 Year (Full-time)" /></span></div></div></div> </div>
     
      </div>
      BUG:   File "/Users/liyangmin/PycharmProjects/AI4App/spiders/ED.py", line 117, in get_period
@@ -491,7 +490,8 @@ class EDProgramDetailsCrawler(BaseProgramDetailsCrawler):
 
     def get_GRE_GMAT_requirements(self, soup, program_details, extra_data=None):
         # 正则表达式模式
-        pattern = r'\bGRE'  # 查找包含大写"GRE"的片段
+        # pattern = r'\bGRE'  # 查找包含大写"GRE"的片段
+        pattern = r'GRE'  # 查找包含大写"GRE"的片段
 
         # 提取extra_data中的所有文本内容
         content_matches = re.findall(r'<[^>]+>([^<]+)<', extra_data)
@@ -500,7 +500,7 @@ class EDProgramDetailsCrawler(BaseProgramDetailsCrawler):
         matched_sentences = []
 
         for sentence in re.split(r'[.;!\n]', all_content):
-            if re.search(pattern, sentence, re.IGNORECASE):
+            if re.search(pattern, sentence):
                 matched_sentences.append(sentence.strip())
 
         # 将匹配到的句子合并成字符串
@@ -509,33 +509,24 @@ class EDProgramDetailsCrawler(BaseProgramDetailsCrawler):
         program_details[header.gre] = result
 
     def get_application_deadlines(self, soup, program_details, extra_data=None):
-        # 查找标题为'Selection Deadlines'的h3标签
-        h3_tag = soup.find('h3', string='Selection Deadlines')
-        if not h3_tag:
+        # 正则表达式匹配日期格式
+        date_pattern = re.compile(
+            r'<td>(\d+\s(?:January|February|March|April|May|June|July|August|September|October|November|December)\s\d{4})</td>')
+        dates = date_pattern.findall(extra_data)
+
+        if len(dates) == 0:
             program_details[header.application_deadlines] = 'No Selection Deadlines found.'
             return
 
-        # 找到h3标签后面的表格
-        table = h3_tag.find_next('table')
-        if not table:
-            program_details[header.application_deadlines] = 'No table found after Selection Deadlines.'
-            return
+        # 根据日期的数量进行判断和提取
+        if len(dates) > 2 and len(dates) % 2 == 0:
+            deadlines = [dates[i] for i in range(0, len(dates), 2)]
+        else:
+            deadlines = dates
 
-        # 获取tbody标签
-        tbody = table.find('tbody')
-        if not tbody:
-            program_details[header.application_deadlines] = 'No tbody found in the table.'
-            return
+        round_infos = []
+        for i, date in enumerate(deadlines):
+            round_infos.append(f"Round {i + 1}: Application Deadline: {date}")
 
-        # 遍历每一行
-        rows = tbody.find_all('tr')
-        results = []
-        for row in rows:
-            cells = row.find_all('td')
-            if len(cells) != 3:  # 期望每一行有3个单元格
-                continue
-            round_info = f"Round {cells[0].text}: Application Deadline: {cells[1].text}, Decisions made or applications rolled to next deadline: {cells[2].text}"
-            results.append(round_info)
+        program_details[header.application_deadlines] = '. '.join(round_infos)
 
-        # 结果存放到program_details中
-        program_details[header.application_deadlines] = '. '.join(results)

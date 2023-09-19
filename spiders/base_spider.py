@@ -11,7 +11,6 @@ from config.program_details_header import header
 
 from tools.general import request_with_retry
 from tools.general import translate_text
-from utils.logger import setup_logger
 
 
 class BaseProgramURLCrawler:
@@ -27,7 +26,7 @@ class BaseProgramURLCrawler:
 
         if not os.path.exists(self.data_folder):
             os.makedirs(self.data_folder)
-        
+
 
     def crawl(self):
         if self.verbose:
@@ -174,18 +173,46 @@ class BaseProgramDetailsCrawler:
 
     def thread_task(self, row, headers, new_sheet, lock):
         def rearrange_program_name(name):
-            words = name.split()  # Split the name into individual words
-            if len(words) > 1:  # Check if there's more than one word
-                last_word = words[-1]  # Get the last word
-                if last_word.lower().startswith('m'):  # Check if the last word starts with 'm' or 'M'
-                    words.pop(-1)  # Remove the last word
-                    # Insert the last word at the beginning
-                    words.insert(0, last_word)
-                else:
-                    # the specific master program not identified
-                    words.insert(0, "Master's")
-            # Join the words back together and capitalize each word
-            return ' '.join(word.capitalize() for word in words)
+            conjunctions = ["and", "but", "or", "nor", "for", "so", "yet"]
+            prepositions = ["about", "above", "across", "after", "against", "along", "amid", "among", "around", "as",
+                            "at", "before", "behind", "below", "beneath", "beside", "between", "beyond", "but", "by",
+                            "concerning", "considering", "despite", "down", "during", "except", "for", "from", "in",
+                            "inside", "into", "like", "near", "of", "on", "onto", "out", "outside", "over", "past",
+                            "regarding", "round", "since", "through", "to", "toward", "under", "underneath", "until",
+                            "unto", "up", "upon", "with", "within", "without"]
+            abbreviations = ["MSc", "MA", "MBA", "MRes", "MPhil", "LLM", "MFA", "MMus", "MEd", "MEng", "MPH", "MSW",
+                             "MCouns", "PHD", "MScR"]
+
+            # Split by comma first
+            parts = name.split(',')
+
+            # Function to handle each individual part
+            def handle_part(part):
+                # Split the part into individual words
+                part = part.lower().strip()
+                words = part.split()
+
+                # Check if any abbreviation exists in the part
+                for abbreviation in abbreviations:
+                    if abbreviation.lower() in words:
+                        words.remove(abbreviation.lower())
+                        words.insert(0, abbreviation)
+                        break
+
+                # Handle capitalization
+                res_words = []
+                for word in words:
+                    if word.lower() in conjunctions + prepositions:
+                        res_words.append(word.lower())
+                    elif word in abbreviations:
+                        res_words.append(word)
+                    else:
+                        res_words.append(word.capitalize())
+
+                return ' '.join(res_words)
+
+            # Handle each part and join them back
+            return ', '.join([handle_part(part) for part in parts])
 
         program_name, program_url, program_faculty, intro_text, *useful_links = row
         program_details = {header.major: rearrange_program_name(program_name),

@@ -1,7 +1,6 @@
 import requests
 from config.settings import HEADERS, TIMEOUT
 import time
-from utils.logger import setup_logger
 from googletrans import Translator, LANGUAGES
 
 
@@ -23,9 +22,6 @@ def request_with_retry(url, method='GET', headers=None, data=None, params=None, 
     retries = 0
 
     # 初始化logger
-    logger = None
-    if Uni_ID:
-        logger = setup_logger(Uni_ID)
 
     while retries <= max_retries:
         try:
@@ -45,8 +41,6 @@ def request_with_retry(url, method='GET', headers=None, data=None, params=None, 
             if retries > max_retries:
                 error_msg = f"{method} request error for URL {url} after {max_retries} retries: {e}"
                 print(error_msg)
-                if logger:
-                    logger.error(error_msg)
                 return
             time.sleep(delay)
 
