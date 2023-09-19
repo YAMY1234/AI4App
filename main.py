@@ -1,4 +1,4 @@
-from spiders import UCL
+from spiders import UCL, GLA
 from spiders import ED
 from postprocessing import replace_constant
 from config.program_details_header import header
@@ -20,9 +20,17 @@ def ED_caller():
     detail_crawler.generate_program_details(translate=False)
     replace_constant.replace_from_standard(school_abbr="ED", col_name=header.college)
 
+def GLA_caller():
+    program_crawler = GLA.GLAProgramURLCrawler(verbose=True)
+    program_crawler.crawl()
+    detail_crawler = GLA.GLAProgramDetailsCrawler(test=False, verbose=False)
+    detail_crawler.get_program_useful_links()
+    detail_crawler.generate_program_details(translate=False)
+    # replace_constant.replace_from_standard(school_abbr="ED", col_name=header.college)
+
 
 def main():
-    ED_caller()
+    GLA_caller()
 
 
 if __name__ == "__main__":
