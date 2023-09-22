@@ -21,9 +21,9 @@ def ED_caller():
     replace_constant.replace_from_standard(school_abbr="ED", col_name=header.college)
 
 def GLA_caller():
-    program_crawler = GLA.GLAProgramURLCrawler(verbose=True)
-    program_crawler.crawl()
-    detail_crawler = GLA.GLAProgramDetailsCrawler(test=False, verbose=False)
+    # program_crawler = GLA.GLAProgramURLCrawler(verbose=True)
+    # program_crawler.crawl()
+    detail_crawler = GLA.GLAProgramDetailsCrawler(test=True, verbose=False)
     detail_crawler.get_program_useful_links()
     detail_crawler.generate_program_details(translate=False)
     # replace_constant.replace_from_standard(school_abbr="ED", col_name=header.college)

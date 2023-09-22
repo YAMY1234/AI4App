@@ -338,13 +338,17 @@ class BaseProgramDetailsCrawler:
         lock = threading.Lock()
         threads = []
         for row in sheet.iter_rows(min_row=2, values_only=True):
-            t = threading.Thread(target=self.thread_task,
-                                 args=(row, headers, new_sheet, lock))
-            threads.append(t)
-            t.start()
-
-        for t in threads:
-            t.join()
+            if self.test:
+                # Execute the task without threading if self.test is True
+                self.thread_task(row, headers, new_sheet, lock)
+            else:   
+                t = threading.Thread(target=self.thread_task,
+                                    args=(row, headers, new_sheet, lock))
+                threads.append(t)
+                t.start()
+        if not self.test:
+            for t in threads:
+                t.join()
         try:
             new_wb.save(self.details_path)
         except PermissionError:
