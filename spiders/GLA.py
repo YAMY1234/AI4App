@@ -29,6 +29,10 @@ class GLAProgramURLCrawler(BaseProgramURLCrawler):
                 link_url = 'https://www.gla.ac.uk/' + link_url
                 # Extract the program name from the link and its next sibling span
                 program_name = link.get_text().strip()
+
+                # get rid of unwanted program names
+                if program_name in ["Taught degree programmes A‑Z", "Contact us"]:
+                    continue
                 link_name = program_name.replace("[", "").replace("]", "")
                 program_url_pairs[link_name] = [link_url, ""]
 
@@ -41,6 +45,67 @@ class GLAProgramDetailsCrawler(BaseProgramDetailsCrawler):
         self.entry_requirements = None
 
     # Todo: add all rewrite logic here
+
+    # <meta name="description"
+    def get_program_description(self, soup, program_details, extra_data=None):
+        # 首先，定位到<meta name="description">标签
+        meta_description = soup.find('meta', attrs={'name': 'description'})
+
+        if meta_description and meta_description.has_attr('content'):
+            # 如果找到了该标签并且它有'content'属性，则提取该属性的内容
+            program_details[header.project_intro] = meta_description['content']
+        else:
+            program_details[header.project_intro] = "没有meta_description内容"
+
+    def get_backgroud_requirements(self, soup, program_details, extra_data=None):
+        '''
+        <h2 class="alt">Entry requirements</h2>
+                <p>2.1 Honours degree or non-UK equivalent in any subject.</p>
+        '''
+        # 定位到<h2 class="alt">Entry requirements</h2>标签
+        h2_tag = soup.find('h2', class_='alt', text='Entry requirements')
+
+        if h2_tag:
+            # 找到其后的第一个<p>标签
+            p_tag = h2_tag.find_next('p')
+
+            if p_tag:
+                # 提取<p>标签内的文字内容
+                program_details[header.background_requirements] = p_tag.get_text(strip=True)
+            else:
+                program_details[header.background_requirements] = '信息不可用'
+        else:
+            program_details[header.background_requirements] = '信息不可用'
+
+    def get_course_intro_and_details(self, soup, program_details, extra_data=None):
+        '''
+        <h2 class="alt">Programme structure</h2>
+        '''
+        # 定位到<h2 class="alt">Programme structure</h2>标签
+        h2_tag = soup.find('h2', class_='alt', text='Programme structure')
+
+        if h2_tag:
+            # 获取h2_tag之后的所有内容，直到下一个<h2>标签
+            subsequent_tags = h2_tag.find_all_next(limit=None)
+
+            # 用于存放<li>标签的文本内容的列表
+            li_texts = []
+
+            for tag in subsequent_tags:
+                # 如果遇到另一个<h2>标签，停止抓取
+                if tag.name == 'h2':
+                    break
+
+                # 如果是<li>标签，抓取其文本内容
+                if tag.name == 'li':
+                    li_texts.append(tag.get_text(strip=True))
+
+            # 使用换行符拼接所有<li>标签的文本内容
+            program_details[header.course_list_english] = '\n'.join(li_texts)
+        else:
+            program_details[header.course_list_english] = '信息不可用'
+
+
 
     def get_language_requirements(self, soup, program_details, extra_data=None):
         # IELTS
