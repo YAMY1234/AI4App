@@ -1,5 +1,6 @@
 import json
 import os
+import re
 import threading
 import time
 
@@ -426,33 +427,119 @@ class BaseProgramDetailsCrawler:
     def get_language_requirements(self, soup, program_details, extra_data=None):
         pass
 
+    def _judge_interview_preference(self, text):
+        required_phrases = ['may be', 'may also be',
+                            'may be considered', 'may also be considered']
+        for phrase in required_phrases:
+            if phrase in text:
+                return "可能要求"
+        return "需要"
+
     def get_interview_requirements(self, soup, program_details, extra_data=None):
         # 定义关键词列表
-        keywords = ['interview', 'qualifying examination', 'qualifying essay',
-                    'qualifying assessment', 'written examination', 'oral examination', 'oral test']
+        keywords = ['interview', 'special qualifying examination', 'qualifying essay',
+                    'qualifying assessment', 'written examination', 'oral examination',
+                    'oral test', 'required to pass a test', 'written examination', 'written test', 'written assessment']
 
+        combined_text = ""
         # 搜索包含这些关键词的<p>标签
-        matching_paragraphs = []
-        for keyword in keywords:
-            # matching_paragraphs.extend(soup.find_all('p', string=lambda text: keyword in text.lower()))
-            matching_paragraphs.extend(soup.find_all(
-                string=lambda text: keyword in text.lower()))
+        program_description = soup.find(id="proxy_collapseprogramme")
+        if program_description:
+            for p_tag in program_description.find_all('p'):
+                combined_text += p_tag.get_text().lower() + " "
 
-        # 合并所有匹配的段落的文本内容
-        combined_text = ' '.join([p.get_text(strip=True)
-                                 for p in matching_paragraphs])
+        if program_details[header.background_requirements] != "未找到Entry requirements标签":
+            combined_text += program_details[header.background_requirements].lower()
+
+        combined_text = self._extract_relevant_text(combined_text, keywords)
 
         # 将合并后的文本添加到program_details字典中
         if combined_text:
-            program_details[header.exam_requirements] = combined_text
+            program_details[header.exam_requirements] = self._judge_interview_preference(
+                combined_text)
+            program_details[header.exam_requirements_details] = combined_text
         else:
             program_details[header.exam_requirements] = "未要求"
 
-    def get_work_experience_requirements(self, soup, program_details, extra_data=None):
-        pass
+    def _judge_portfolio_preference(self, text):
+        required_phrases = ['may be', 'may also be',
+                            'may be considered', 'may also be considered']
+        for phrase in required_phrases:
+            if phrase in text:
+                return "加分项"
+        return "需要"
 
     def get_portfolio_requirements(self, soup, program_details, extra_data=None):
-        pass
+        phrases = ['written work', 'portfolio']
+        # program_entry_req = soup.find(id="proxy_collapseentry_req")
+        combined_text = ""
+
+        if program_details[header.background_requirements] != "未找到Entry requirements标签":
+            combined_text += program_details[header.background_requirements].lower()
+
+            combined_text = self._extract_relevant_text(combined_text, phrases)
+            if combined_text:
+                program_details[header.portfolio] = self._judge_portfolio_preference(
+                    combined_text)
+                program_details[header.portfolio_details] = combined_text
+            else:
+                program_details[header.portfolio] = "未要求"
+        else:
+            program_details[header.portfolio] = "未找到Entry requirements标签"
+
+    def _extract_relevant_text(self, text, keywords):
+        # Extract sentences containing the phrase from the entry requirements section
+        sentences = []
+        line_sentences = re.split(r'(?<=[.!?])\s+', text)
+        found = False
+        for keyword in keywords:
+            for sentence in line_sentences:
+                if keyword in sentence:
+                    sentences.append(sentence)
+                    found = True
+            # Avoid adding duplicate sentences when multiple keywords are matched
+            if found:
+                break
+
+        # Combine the extracted sentences into one
+        combined_text = ' '.join(sentences).strip()
+
+        return combined_text
+
+    def _judge_wrk_exp_preference(self, text):
+        required_phrases = ['minimum of', 'at least', 'Ideally', 'is essential', 'must have', 'normally have',
+                            'should also have', 'should have', 'need to have']
+        for phrase in required_phrases:
+            if phrase in text:
+                return "需要"
+        return "加分项"
+
+    def get_work_experience_requirements(self, soup, program_details, extra_data=None):
+        phrases = ['work experience', 'professional experience', 'industrial experience',
+                   'existing engineering and design skills', 'practical experience',
+                   'experience as a professional', ' who can demonstrate aptitude and experience',
+                   'years of relevant experience', 'clinical experience', 'teaching experience',
+                   'years\' experience working', 'years of training in',
+                   'extensive experience', 'relevant experience',
+                   'relevant quantitative or qualitative research experience',
+                   'experience working', 'professional involvement',
+                   'with equivalent experience', 'industry experience', 'relevant work',
+                   'field experience', 'relevant employment']
+
+        combined_text = ""
+
+        if program_details[header.background_requirements] != "未找到Entry requirements标签":
+            combined_text += program_details[header.background_requirements].lower()
+
+            combined_text = self._extract_relevant_text(combined_text, phrases)
+            if combined_text:
+                program_details[header.work_experience_years] = self._judge_wrk_exp_preference(
+                    combined_text)
+                program_details[header.work_experience_details] = combined_text
+            else:
+                program_details[header.work_experience_years] = "未要求"
+        else:
+            program_details[header.work_experience_years] = "未找到Entry requirements标签"
 
     def get_GRE_GMAT_requirements(self, soup, program_details, extra_data=None):
         pass

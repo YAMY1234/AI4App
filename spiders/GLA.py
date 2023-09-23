@@ -26,7 +26,7 @@ class GLAProgramURLCrawler(BaseProgramURLCrawler):
                 link_url = link.get('href')
                 if '/postgraduate/taught/' not in link_url:
                     continue
-                link_url = 'https://www.gla.ac.uk/' + link_url
+                link_url = 'https://www.gla.ac.uk' + link_url
                 # Extract the program name from the link and its next sibling span
                 program_name = link.get_text().strip()
 
@@ -105,7 +105,69 @@ class GLAProgramDetailsCrawler(BaseProgramDetailsCrawler):
         else:
             program_details[header.course_list_english] = '信息不可用'
 
+    def extract_requirements_info(self, soup, program_details, extra_data=None):
+        # 定位到<h2 class="alt">Entry requirements</h2>标签
+        h2_tag = soup.find('h2', class_='alt', text='Entry requirements')
+        if not h2_tag:
+            program_details[header.cn_requirement] = "未找到Entry requirements标签"
+            program_details[header.uk_requirement] = "未找到Entry requirements标签"
+            return
 
+        # 获取h2_tag之后的所有内容，直到下一个<h2>标签
+        subsequent_tags = h2_tag.find_all_next()
+
+        texts = []
+        for tag in subsequent_tags:
+            # 如果遇到另一个<h2>标签，停止抓取
+            if tag.name == 'h2':
+                break
+            texts.append(tag.get_text(strip=True))
+
+        program_details[header.cn_requirement] = "2:1"
+        program_details[header.uk_requirement] = "2:1"
+        # 通过正则表达式查找2:1和2:2的条件
+        for text in texts:
+            text_lower = text.lower()
+            if re.search(r'2\.1|2:1', text_lower):
+                program_details[header.cn_requirement] = "2:1"
+                program_details[header.uk_requirement] = "2:1"
+            elif re.search(r'2\.2|2:2', text_lower):
+                # 查找"may"、"could"等表示可能性的词汇
+                if re.search(r'\b(may|could)\b', text_lower):
+                    program_details[header.uk_requirement] = "有条件2:2"
+                else:
+                    program_details[header.cn_requirement] = "2:2"
+                    program_details[header.uk_requirement] = "2:2"
+
+
+    def get_GRE_GMAT_requirements(self, soup, program_details, extra_data=None):
+        # 正则表达式模式
+
+        # 提取extra_data中的所有文本内容
+        content_matches = re.findall(r'<[^>]+>([^<]+)<', extra_data)
+        all_content = ' '.join(content_matches)
+
+        matched_sentences = []
+        pattern = r'GRE'  # 查找包含大写"GRE"的片段
+        for sentence in re.split(r'[.;!\n]', all_content):
+            if re.search(pattern, sentence):
+                if re.search('GREAT', sentence):
+                    matched_sentences = []
+                    break
+                matched_sentences.append(sentence.strip())
+        result = '. '.join(matched_sentences) + '.' if matched_sentences else "官网没有明确说明"
+        program_details[header.gre] = result
+
+        pattern = r'GMAT'  # 查找包含大写"GRE"的片段
+        matched_sentences = []
+        for sentence in re.split(r'[.;!\n]', all_content):
+            if re.search(pattern, sentence):
+                matched_sentences.append(sentence.strip())
+        result = '. '.join(matched_sentences) + '.' if matched_sentences else "官网没有明确说明"
+        program_details[header.gmat] = result
+
+    def get_major_requirements_for_chinese_students(self, soup, program_details, extra_data=None):
+        self.extract_requirements_info(soup, program_details, extra_data)
 
     def get_language_requirements(self, soup, program_details, extra_data=None):
         # IELTS
@@ -151,7 +213,7 @@ class GLAProgramDetailsCrawler(BaseProgramDetailsCrawler):
         except ValueError as e:
             print(e)
         
-    def extract_relevant_text(self, text, keywords):
+    def _extract_relevant_text(self, text, keywords):
         # Extract sentences containing the phrase from the entry requirements section
         sentences = []
         line_sentences = re.split(r'(?<=[.!?])\s+', text)
@@ -191,7 +253,7 @@ class GLAProgramDetailsCrawler(BaseProgramDetailsCrawler):
         else:
             self.entry_requirements = "No entry requirements found"
 
-    def judge_interview_preference(self, text):
+    def _judge_interview_preference(self, text):
         required_phrases = ['may be', 'may also be',
                             'may be considered', 'may also be considered']
         for phrase in required_phrases:
@@ -212,18 +274,18 @@ class GLAProgramDetailsCrawler(BaseProgramDetailsCrawler):
             return
         combined_text = self.entry_requirements.lower()
         
-        combined_text = self.extract_relevant_text(combined_text, keywords)
+        combined_text = self._extract_relevant_text(combined_text, keywords)
 
 
         # 将合并后的文本添加到program_details字典中
         if combined_text:
-            program_details[header.exam_requirements] = self.judge_interview_preference(
+            program_details[header.exam_requirements] = self._judge_interview_preference(
                 combined_text)
             program_details[header.exam_requirements_details] = combined_text
         else:
             program_details[header.exam_requirements] = "未要求"
 
-    def judge_wrk_exp_preference(self, text):
+    def _judge_wrk_exp_preference(self, text):
         required_phrases = ['minimum of', 'at least', 'Ideally', 'is essential', 'must have', 'normally have',
                             'should also have', 'should have', 'need to have']
         for phrase in required_phrases:
@@ -249,9 +311,9 @@ class GLAProgramDetailsCrawler(BaseProgramDetailsCrawler):
         combined_text = self.entry_requirements.lower()
 
         if combined_text:
-            combined_text = self.extract_relevant_text(combined_text, phrases)
+            combined_text = self._extract_relevant_text(combined_text, phrases)
             if combined_text:
-                program_details[header.work_experience_years] = self.judge_wrk_exp_preference(
+                program_details[header.work_experience_years] = self._judge_wrk_exp_preference(
                     combined_text)
                 program_details[header.work_experience_details] = combined_text
             else:
@@ -259,7 +321,7 @@ class GLAProgramDetailsCrawler(BaseProgramDetailsCrawler):
         else:
             program_details[header.work_experience_years] = "未找到Entry requirements标签"
 
-    def judge_portfolio_preference(self, text):
+    def _judge_portfolio_preference(self, text):
         required_phrases = ['may be', 'may also be',
                             'may be considered', 'may also be considered']
         for phrase in required_phrases:
@@ -277,9 +339,9 @@ class GLAProgramDetailsCrawler(BaseProgramDetailsCrawler):
         combined_text = self.entry_requirements.lower()
 
         if combined_text:
-            combined_text = self.extract_relevant_text(combined_text, phrases)
+            combined_text = self._extract_relevant_text(combined_text, phrases)
             if combined_text:
-                program_details[header.portfolio] = self.judge_portfolio_preference(
+                program_details[header.portfolio] = self._judge_portfolio_preference(
                     combined_text)
                 program_details[header.portfolio_details] = combined_text
             else:
@@ -307,26 +369,47 @@ class GLAProgramDetailsCrawler(BaseProgramDetailsCrawler):
             # For each <li> tag, check if 'months' is present in the text
             for tag in li_tags:
                 if 'Teaching start:' in tag.text:
-                    program_details[header.admission_month_1] = tag.text.strip()
+                    program_details[header.admission_month_1] = tag.text.strip().split(':')[1]
 
     def get_application_deadlines(self, soup, program_details, extra_data=None):
         h3_tag = soup.find('h3', text='Application deadlines')
-        # Initialize a list to store the extracted content
+        # Initialize a list to store the extracted text content
         content_list = []
 
         if h3_tag is None:
             program_details[header.application_deadlines] = "No application deadlines found"
             return
-        
+
         # Loop through siblings of the h3 tag until you reach the <a> tag
         for sibling in h3_tag.find_next_siblings():
             if sibling.name == 'a':
                 break
-            content_list.append(str(sibling))
+            # Instead of adding the entire tag, we just add its text content
+            content_list.append(sibling.get_text(strip=True))
 
-        # Convert the list to a string
-        content_str = ''.join(content_list)
+        # Convert the list to a string using join.
+        # Adding a newline between each content for better readability.
+        content_str = '\n'.join(content_list)
 
         program_details[header.application_deadlines] = content_str
 
-                
+    def get_tuition(self, soup, program_details, extra_data=None):
+        # 定位到<h4>International & EU</h4>标签
+        h4_tag = soup.find('h4', text='International & EU')
+
+        if h4_tag:
+            # 从<h4>标签开始，查找其后的<li>标签
+            li_tag = h4_tag.find_next_sibling('ul').find('li') if h4_tag.find_next_sibling('ul') else None
+
+            if li_tag:
+                # 提取费用信息（使用正则表达式来确保只提取数字）
+                import re
+                fee = re.search(r'(\d+)', li_tag.get_text())
+                if fee:
+                    program_details[header.course_fee] = fee.group(1)
+                else:
+                    program_details[header.course_fee] = "费用信息不可用"
+            else:
+                program_details[header.course_fee] = "费用信息不可用"
+        else:
+            program_details[header.course_fee] = "费用信息不可用"

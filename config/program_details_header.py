@@ -67,7 +67,7 @@ class ProgramHeader:
 
 
 header_info = {
-    "major_id": "专业id",
+    "major_id": "专业ID",
     "region": "地区",
     "school_english_name": "学校英文名",
     "school_chinese_name": "学校中文名",

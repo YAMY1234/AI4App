@@ -298,7 +298,7 @@ class EDProgramDetailsCrawler(BaseProgramDetailsCrawler):
 
         program_details[header.college] = combined_info if combined_info else "信息不可用"
 
-    def judge_interview_preference(self, text):
+    def _judge_interview_preference(self, text):
         required_phrases = ['may be', 'may also be',
                             'may be considered', 'may also be considered']
         for phrase in required_phrases:
@@ -322,18 +322,18 @@ class EDProgramDetailsCrawler(BaseProgramDetailsCrawler):
         if program_details[header.background_requirements] != "未找到Entry requirements标签":
             combined_text += program_details[header.background_requirements].lower()
         
-        combined_text = self.extract_relevant_text(combined_text, keywords)
+        combined_text = self._extract_relevant_text(combined_text, keywords)
 
 
         # 将合并后的文本添加到program_details字典中
         if combined_text:
-            program_details[header.exam_requirements] = self.judge_interview_preference(
+            program_details[header.exam_requirements] = self._judge_interview_preference(
                 combined_text)
             program_details[header.exam_requirements_details] = combined_text
         else:
             program_details[header.exam_requirements] = "未要求"
 
-    def judge_portfolio_preference(self, text):
+    def _judge_portfolio_preference(self, text):
         required_phrases = ['may be', 'may also be',
                             'may be considered', 'may also be considered']
         for phrase in required_phrases:
@@ -349,9 +349,9 @@ class EDProgramDetailsCrawler(BaseProgramDetailsCrawler):
         if program_details[header.background_requirements] != "未找到Entry requirements标签":
             combined_text += program_details[header.background_requirements].lower()
         
-            combined_text = self.extract_relevant_text(combined_text, phrases)
+            combined_text = self._extract_relevant_text(combined_text, phrases)
             if combined_text:
-                program_details[header.portfolio] = self.judge_portfolio_preference(
+                program_details[header.portfolio] = self._judge_portfolio_preference(
                     combined_text)
                 program_details[header.portfolio_details] = combined_text
             else:
@@ -359,7 +359,7 @@ class EDProgramDetailsCrawler(BaseProgramDetailsCrawler):
         else:
             program_details[header.portfolio] = "未找到Entry requirements标签"
 
-    def extract_relevant_text(self, text, keywords):
+    def _extract_relevant_text(self, text, keywords):
         # Extract sentences containing the phrase from the entry requirements section
         sentences = []
         line_sentences = re.split(r'(?<=[.!?])\s+', text)
@@ -378,7 +378,7 @@ class EDProgramDetailsCrawler(BaseProgramDetailsCrawler):
 
         return combined_text
 
-    def judge_wrk_exp_preference(self, text):
+    def _judge_wrk_exp_preference(self, text):
         required_phrases = ['minimum of', 'at least', 'Ideally', 'is essential', 'must have', 'normally have',
                             'should also have', 'should have', 'need to have']
         for phrase in required_phrases:
@@ -403,9 +403,9 @@ class EDProgramDetailsCrawler(BaseProgramDetailsCrawler):
         if program_details[header.background_requirements] != "未找到Entry requirements标签":
             combined_text += program_details[header.background_requirements].lower()
     
-            combined_text = self.extract_relevant_text(combined_text, phrases)
+            combined_text = self._extract_relevant_text(combined_text, phrases)
             if combined_text:
-                program_details[header.work_experience_years] = self.judge_wrk_exp_preference(
+                program_details[header.work_experience_years] = self._judge_wrk_exp_preference(
                     combined_text)
                 program_details[header.work_experience_details] = combined_text
             else:
