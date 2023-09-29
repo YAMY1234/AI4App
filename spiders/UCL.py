@@ -96,7 +96,7 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
         if len(start_terms) == 0:
             program_details[f"入学月{1}"] = "未找到"
 
-    def get_backgroud_requirements(self, soup, program_details, extra_data=None):
+    def get_background_requirements(self, soup, program_details, extra_data=None):
         # 定位标题为“Entry requirements”的<h2>标签
         h2_tag = soup.find('h2', string='Entry requirements')
 

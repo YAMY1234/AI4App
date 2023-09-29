@@ -182,23 +182,23 @@ class BaseProgramDetailsCrawler:
                             "regarding", "round", "since", "through", "to", "toward", "under", "underneath", "until",
                             "unto", "up", "upon", "with", "within", "without"]
             abbreviations = ["MSc", "MA", "MBA", "MRes", "MPhil", "LLM", "MFA", "MMus", "MEd", "MEng", "MPH", "MSW",
-                             "MCouns", "PHD", "MScR"]
+                             "MCouns", "PHD", "MScR", "Mth", "Pgdip", "Pgcert"]
 
             # Split by comma first
             parts = name.split(',')
 
-            # Function to handle each individual part
             def handle_part(part):
-                # Split the part into individual words
                 part = part.lower().strip()
                 words = part.split()
 
-                # Check if any abbreviation exists in the part
-                for abbreviation in abbreviations:
-                    if abbreviation.lower() in words:
-                        words.remove(abbreviation.lower())
-                        words.insert(0, abbreviation)
-                        break
+                # Extract and handle abbreviations separated by '/'
+                extracted_abbrs = [word for word in words if any(abbr.lower() in word for abbr in abbreviations)]
+                for item in extracted_abbrs:
+                    words.remove(item)
+                split_abbrs = [abbr for sublist in [item.split('/') for item in extracted_abbrs] for abbr in sublist]
+                matched_abbrs = [abbr for abbr in abbreviations if abbr.lower() in split_abbrs]
+
+                words = matched_abbrs + words
 
                 # Handle capitalization
                 res_words = []
@@ -372,7 +372,7 @@ class BaseProgramDetailsCrawler:
         response.raise_for_status()
         soup = BeautifulSoup(response.text, 'html.parser')
         # self.get_program_intro(soup, program_details)
-        self.get_backgroud_requirements(soup, program_details, response.text)
+        self.get_background_requirements(soup, program_details, response.text)
         self.get_course_intro_and_details(soup, program_details, response.text)
         self.get_enrollment_deadlines(soup, program_details, response.text)
         self.get_tuition(soup, program_details, response.text)
@@ -409,7 +409,7 @@ class BaseProgramDetailsCrawler:
     # def get_program_intro(self, soup, program_details, extra_data=None):
     #     program_details[header.project_intro] = program_details[header.project_intro]
 
-    def get_backgroud_requirements(self, soup, program_details, extra_data=None):
+    def get_background_requirements(self, soup, program_details, extra_data=None):
         pass
 
     def get_course_intro_and_details(self, soup, program_details, extra_data=None):

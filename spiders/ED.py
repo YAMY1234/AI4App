@@ -63,7 +63,7 @@ class EDProgramDetailsCrawler(BaseProgramDetailsCrawler):
     def __init__(self, test=False, verbose=True):
         super().__init__(Uni_ID="ED",Uni_name="The University of Edinburgh", test=test, verbose=verbose)
 
-    def get_backgroud_requirements(self, soup, program_details, extra_data=None):
+    def get_background_requirements(self, soup, program_details, extra_data=None):
         '''
         As of 2023-09-06, Entry requirements is still for 2023/24 academic year,
         there is a paragraph stating "These entry requirements are for the 2023/24 academic year and requirements for future academic years may differ. Entry requirements for the 2024/25 academic year will be published on 2 October 2023." at the start
@@ -104,7 +104,7 @@ class EDProgramDetailsCrawler(BaseProgramDetailsCrawler):
             course_intro_texts = [p.get_text()
                                   for p in structure_div.find_all('p')]
             course_intro = '\n'.join(course_intro_texts).strip()
-            program_details[header.course_description_english] = course_intro
+            # program_details[header.course_description_english] = course_intro
 
             # 提取所有<li>标签的文本内容
             course_list_texts = [li.get_text()
@@ -245,11 +245,10 @@ class EDProgramDetailsCrawler(BaseProgramDetailsCrawler):
             overall_score = match.group(1)  # Extract overall score
             component_score = match.group(2)  # Extract component score
 
-            # Round down the component score to an integer (if needed)
-            component_score_int = int(float(component_score))
+            component_score_float = round(float(component_score), 1)
 
             # Create the new formatted string
-            formatted_string = f"总分{overall_score}，小分{component_score_int}"
+            formatted_string = f"总分{overall_score}，小分{component_score_float}"
             program_details[header.ielts_requirement] = formatted_string
         elif match_vague:
             program_details[header.ielts_requirement] = match_vague.group()
@@ -478,8 +477,12 @@ class EDProgramDetailsCrawler(BaseProgramDetailsCrawler):
                         if match.group() == "band a":
                             program_details[header.cn_requirement] = "2:1"
                         else:
-                            program_details[header.cn_requirement] = "2:2"
+                            # program_details[header.cn_requirement] = "2:2"
+                            program_details[header.cn_requirement] = "2:1"
+                    # 根据ck的说法， 表格里有“该专业对本地学生要求”，展示的是2:2；“英国本地要求展示用”，展示的是2:1
+                    # 但是这几个专业都是要求2:1的，没有2:2哈
                     else:
+
                         program_details[header.cn_requirement] = "正则匹配错误"
                 else:
                     print("未找到中国学生的要求")
