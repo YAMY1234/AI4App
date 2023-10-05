@@ -1,4 +1,6 @@
-from postprocessing.ask_chatgpt import replace_from_GPT
+from postprocessing.ask_chatgpt import replace_from_GPT, ask_GPT_to_translate
+from postprocessing.ask_google_translate import ask_api_to_translate
+from postprocessing.replace_constant import replace_unwanted
 from spiders import UCL, GLA
 from spiders import ED
 from postprocessing import replace_constant, major_displose
@@ -47,7 +49,7 @@ def ED_caller():
 def GLA_caller():
     # program_crawler = GLA.GLAProgramURLCrawler(verbose=True)
     # program_crawler.crawl()
-
+    #
     # detail_crawler = GLA.GLAProgramDetailsCrawler(test=False, verbose=False)
     # detail_crawler.get_program_useful_links()
     # detail_crawler.generate_program_details(translate=False)
@@ -72,9 +74,15 @@ def GLA_caller():
     # replace_constant.replace_from_standard(school_abbr="GLA", col_name=header.major_specialization_9)
     # replace_constant.replace_from_standard(school_abbr="GLA", col_name=header.major_specialization_10)
     # replace_constant.replace_from_standard(school_abbr="GLA", col_name=header.major_specialization_11)
+    #
+    # replace_from_GPT(school_abbr="GLA", col_name=header.application_deadlines)
+    # replace_from_GPT(school_abbr="GLA", col_name=header.course_list_english)
 
-    replace_from_GPT(school_abbr="GLA", col_name=header.application_deadlines)
+    # ask_api_to_translate(school_abbr="GLA", col_name=header.course_list_english, translated_col_name=header.course_list_chinese)
+    # ask_api_to_translate(school_abbr="GLA", col_name=header.project_intro, translated_col_name=header.project_intro_chinese)
 
+    replace_unwanted(school_abbr="GLA", col_name=header.course_list_english)
+    replace_unwanted(school_abbr="GLA", col_name=header.course_list_chinese)
 
 def main():
     # ED_caller()

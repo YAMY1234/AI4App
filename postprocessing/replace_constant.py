@@ -1,3 +1,6 @@
+import os
+import re
+
 import pandas as pd
 from config.program_details_header import header
 
@@ -42,3 +45,35 @@ def replace_from_standard(school_abbr, col_name):
 
     # 保存更新后的数据到原文件
     df_program_details.to_excel(program_details_path, index=False)
+
+
+def replace_unwanted_character_and_empty_line(text):
+    if isinstance(text, str):
+        if len(text) == 0:
+            return ""
+    else:
+        print("ERROR, not a text type")
+        return ""
+    text = re.sub(r'\[\[\[.*?\]\]\]', '', text)
+    data = text.split("\n")
+    new_data = ""
+    for line in data:
+        if len(line) > 0 and (line[0].isalpha() or line[0].isdigit()):
+            new_data += f"{line}\n"
+    return new_data
+
+def replace_unwanted(school_abbr, col_name, func=replace_unwanted_character_and_empty_line):
+    # Load the Excel file into a DataFrame
+    program_details_path = f"data/{school_abbr}/program_details.xlsx"
+    program_details_gpt_path = f"data/{school_abbr}/program_details_gpt.xlsx"
+
+    if "program_details_gpt.xlsx" in os.listdir(f'data/{school_abbr}'):
+        df_program_details = pd.read_excel(program_details_gpt_path)
+    else:
+        df_program_details = pd.read_excel(program_details_path)
+
+    # df_program_details.loc[:1, translated_col_name] = df_program_details.loc[:1, col_name].apply(translate_text)
+    df_program_details[col_name] = df_program_details[col_name].apply(func)
+
+    # Save the modified DataFrame back to the Excel file
+    df_program_details.to_excel(program_details_gpt_path, index=False)
