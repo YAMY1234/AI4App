@@ -4,6 +4,14 @@ import pandas as pd
 import requests
 import time
 
+def is_null(text):
+    if isinstance(text, str):
+        if len(text) == 0:
+            return True
+    else:
+        print("not a text type")
+        return True
+
 def translate_text(text, target_language="zh", source_language="en", api_key="AIzaSyAmnp8pnz8QKRvnPfLKhl5aPA3teKE122o"):
     """
     Translates the input text using Google Cloud Translation API.
@@ -17,11 +25,7 @@ def translate_text(text, target_language="zh", source_language="en", api_key="AI
     Returns:
         str: Translated text.
     """
-    if isinstance(text, str):
-        if len(text) == 0:
-            return ""
-    else:
-        print("ERROR, not a text type")
+    if is_null(text):
         return ""
 
     base_url = "https://translation.googleapis.com/language/translate/v2"
@@ -56,16 +60,20 @@ def translate_text(text, target_language="zh", source_language="en", api_key="AI
 
 def ask_api_to_translate(school_abbr, col_name, translated_col_name):
     # Load the Excel file into a DataFrame
-    program_details_path = f"data/{school_abbr}/program_details.xlsx"
-    program_details_gpt_path = f"data/{school_abbr}/program_details_gpt.xlsx"
+    program_details_stage1_path = f"data/{school_abbr}/program_details_stage1.xlsx"
+    program_details_stage2_path = f"data/{school_abbr}/program_details_stage2.xlsx"
 
-    if "program_details_gpt.xlsx" in os.listdir(f'data/{school_abbr}'):
-        df_program_details = pd.read_excel(program_details_gpt_path)
+    if "program_details_stage2.xlsx" in os.listdir(f'data/{school_abbr}'):
+        df_program_details = pd.read_excel(program_details_stage2_path)
     else:
-        df_program_details = pd.read_excel(program_details_path)
+        df_program_details = pd.read_excel(program_details_stage1_path)
 
-    # df_program_details.loc[:1, translated_col_name] = df_program_details.loc[:1, col_name].apply(translate_text)
-    df_program_details[translated_col_name] = df_program_details[col_name].apply(translate_text)
+    for index, row in df_program_details.iterrows():
+        original_text = row[col_name]
+        # 如果是空的话才转换
+        if is_null(row[translated_col_name]):
+            translated_text = translate_text(original_text)
+            df_program_details.at[index, translated_col_name] = translated_text
 
     # Save the modified DataFrame back to the Excel file
-    df_program_details.to_excel(program_details_gpt_path, index=False)
+    df_program_details.to_excel(program_details_stage2_path, index=False)

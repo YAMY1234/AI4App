@@ -13,8 +13,6 @@ EDINBURGH_BASE_URLS = [
     "https://www.ed.ac.uk/studying/postgraduate/degrees/index.php?r=site/research"
 ]
 
-
-
 class EDProgramURLCrawler(BaseProgramURLCrawler):
     def __init__(self, verbose=True):
         super().__init__(base_url=None, Uni_ID="ED", Uni_name="The University of Edinburgh", verbose=verbose)
@@ -148,7 +146,6 @@ class EDProgramDetailsCrawler(BaseProgramDetailsCrawler):
             r'(?:(?:\d+)-months?)',
             r'(?:(?:\d+) months?)',
         ]
-
         # 提取extra_data中的所有文本内容
         content_matches = re.findall(r'<[^>]+>([^<]+)<', extra_data)
         all_content = ' '.join(content_matches)
@@ -298,8 +295,7 @@ class EDProgramDetailsCrawler(BaseProgramDetailsCrawler):
         program_details[header.college] = combined_info if combined_info else "信息不可用"
 
     def _judge_interview_preference(self, text):
-        required_phrases = ['may be', 'may also be',
-                            'may be considered', 'may also be considered']
+        required_phrases = self.required_keywords
         for phrase in required_phrases:
             if phrase in text:
                 return "可能要求"
@@ -307,10 +303,7 @@ class EDProgramDetailsCrawler(BaseProgramDetailsCrawler):
 
     def get_interview_requirements(self, soup, program_details, extra_data=None):
         # 定义关键词列表
-        keywords = ['interview', 'special qualifying examination', 'qualifying essay',
-                    'qualifying assessment', 'written examination', 'oral examination',
-                    'oral test', 'required to pass a test', 'written examination', 'written test', 'written assessment']
-
+        keywords = self.interview_keywords
         combined_text = ""
         # 搜索包含这些关键词的<p>标签
         program_description = soup.find(id="proxy_collapseprogramme")
@@ -333,15 +326,14 @@ class EDProgramDetailsCrawler(BaseProgramDetailsCrawler):
             program_details[header.exam_requirements] = "未要求"
 
     def _judge_portfolio_preference(self, text):
-        required_phrases = ['may be', 'may also be',
-                            'may be considered', 'may also be considered']
+        required_phrases = self.maybe_keywords
         for phrase in required_phrases:
             if phrase in text:
                 return "加分项"
         return "需要"
 
     def get_portfolio_requirements(self, soup, program_details, extra_data=None):
-        phrases = ['written work', 'portfolio']
+        phrases = self.portfolio_keywords
         # program_entry_req = soup.find(id="proxy_collapseentry_req")
         combined_text = ""
 
@@ -378,24 +370,14 @@ class EDProgramDetailsCrawler(BaseProgramDetailsCrawler):
         return combined_text
 
     def _judge_wrk_exp_preference(self, text):
-        required_phrases = ['minimum of', 'at least', 'Ideally', 'is essential', 'must have', 'normally have',
-                            'should also have', 'should have', 'need to have']
+        required_phrases = self.required_keywords
         for phrase in required_phrases:
             if phrase in text:
                 return "需要"
         return "加分项"
 
     def get_work_experience_requirements(self, soup, program_details, extra_data=None):
-        phrases = ['work experience', 'professional experience', 'industrial experience',
-                   'existing engineering and design skills', 'practical experience',
-                   'experience as a professional', ' who can demonstrate aptitude and experience',
-                   'years of relevant experience', 'clinical experience', 'teaching experience',
-                   'years\' experience working', 'years of training in',
-                   'extensive experience', 'relevant experience',
-                   'relevant quantitative or qualitative research experience',
-                   'experience working', 'professional involvement',
-                   'with equivalent experience', 'industry experience', 'relevant work',
-                   'field experience', 'relevant employment']
+        phrases = self.word_experience_keywords
 
         combined_text = ""
 

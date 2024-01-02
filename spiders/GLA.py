@@ -33,8 +33,7 @@ class GLAProgramURLCrawler(BaseProgramURLCrawler):
                 # get rid of unwanted program names
                 if program_name in ["Taught degree programmes A‑Z", "Contact us"] or "contact" in link_url:
                     continue
-                link_name = program_name.replace("[", "").replace("]", "")
-                program_url_pairs[link_name] = [link_url, ""]
+                program_url_pairs[program_name] = [link_url, ""]
 
         return program_url_pairs
 
@@ -273,21 +272,17 @@ class GLAProgramDetailsCrawler(BaseProgramDetailsCrawler):
             self.entry_requirements = "No entry requirements found"
 
     def _judge_interview_preference(self, text):
-        required_phrases = ['may be', 'may also be',
-                            'may be considered', 'may also be considered']
-        for phrase in required_phrases:
+        maybe_phrases = self.maybe_keywords
+        for phrase in maybe_phrases:
             if phrase in text:
                 return "可能要求"
         return "需要"
 
     def get_interview_requirements(self, soup, program_details, extra_data=None):
         # 定义关键词列表
-        keywords = ['interview', 'special qualifying examination', 'qualifying essay',
-                    'qualifying assessment', 'written examination', 'oral examination',
-                    'oral test', 'required to pass a test', 'written examination', 'written test', 'written assessment']
+        keywords = self.interview_keywords
 
-        if self.entry_requirements is None:
-            self.get_entry_requirements(soup)
+        self.get_entry_requirements(soup)
 
         if self.entry_requirements == "No entry requirements found":
             return
@@ -304,27 +299,15 @@ class GLAProgramDetailsCrawler(BaseProgramDetailsCrawler):
             program_details[header.exam_requirements] = "未要求"
 
     def _judge_wrk_exp_preference(self, text):
-        required_phrases = ["may", "preferably", 'minimum of', 'at least', 'Ideally', 'is essential', 'must have',
-                            'normally have',
-                            'should also have', 'should have', 'need to have']
+        required_phrases = self.required_keywords
         for phrase in required_phrases:
             if phrase in text:
                 return "需要"
         return "加分项"
 
     def get_work_experience_requirements(self, soup, program_details, extra_data=None):
-        phrases = ['work experience', 'professional experience', 'industrial experience',
-                   'existing engineering and design skills', 'practical experience',
-                   'experience as a professional', ' who can demonstrate aptitude and experience',
-                   'years of relevant experience', 'clinical experience', 'teaching experience',
-                   'years\' experience working', 'years of training in',
-                   'extensive experience', 'relevant experience',
-                   'relevant quantitative or qualitative research experience',
-                   'experience working', 'professional involvement',
-                   'with equivalent experience', 'industry experience', 'relevant work',
-                   'field experience', 'relevant employment']
-        if self.entry_requirements is None:
-            self.get_entry_requirements(soup)
+        phrases = self.word_experience_keywords
+        self.get_entry_requirements(soup)
         if self.entry_requirements == "No entry requirements found":
             return
         combined_text = self.entry_requirements.lower()
@@ -341,18 +324,16 @@ class GLAProgramDetailsCrawler(BaseProgramDetailsCrawler):
             program_details[header.work_experience_years] = "未找到Entry requirements标签"
 
     def _judge_portfolio_preference(self, text):
-        required_phrases = ["may", "preferably", 'may be', 'may also be',
-                            'may be considered', 'may also be considered']
+        required_phrases = self.maybe_keywords
         for phrase in required_phrases:
             if phrase in text:
                 return "加分项"
         return "需要"
 
     def get_portfolio_requirements(self, soup, program_details, extra_data=None):
-        phrases = ['written work', 'portfolio']
+        phrases = self.portfolio_keywords
         # program_entry_req = soup.find(id="proxy_collapseentry_req")
-        if self.entry_requirements is None:
-            self.get_entry_requirements(soup)
+        self.get_entry_requirements(soup)
         if self.entry_requirements == "No entry requirements found":
             return
         combined_text = self.entry_requirements.lower()
@@ -487,24 +468,3 @@ class GLAProgramDetailsCrawler(BaseProgramDetailsCrawler):
                         program_details[header.course_fee] = "费用信息不可用"
             else:
                 program_details[header.course_fee] = "费用信息不可用"
-
-
-'''
-
-<p>UK/EU and non-EU programme countries</p>
-
-<ul>
-	<li><strong>Full time fee</strong>:&nbsp;&pound;9,000&nbsp;per annum or&nbsp;&euro;10,178&nbsp;per annum</li>
-</ul>
-
-
-<p><strong>Fees for the 2 year programme:</strong></p>
-
-<p><strong>International:&nbsp;&nbsp;</strong></p>
-
-<ul>
-	<li>&pound;18,060&nbsp;per annum</li>
-</ul>
-
-
-'''

@@ -1,5 +1,7 @@
 import re
 import time
+from datetime import datetime
+
 import requests
 from bs4 import BeautifulSoup
 from config.program_details_header import header
@@ -248,7 +250,7 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
                 tuition_fee = parttime_fee_div.get_text(
                     strip=True).replace('&#163;', '£')
                 program_details[header.course_fee] = tuition_fee + \
-                    " (part-time)"
+                                                     " (part-time)"
             else:
                 program_details[header.course_fee] = "未找到"
         else:
@@ -274,21 +276,21 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
                     strip=True)
                 if fulltime_period != "Not applicable":
                     program_details[headers[index]] = fulltime_period + \
-                        " (full-time)"
+                                                      " (full-time)"
                     index += 1
             if parttime_div:
                 parttime_period = parttime_div.get_text(
                     strip=True)
                 if parttime_period != "Not applicable":
                     program_details[headers[index]] = parttime_period + \
-                        " (part-time)"
+                                                      " (part-time)"
                     index += 1
             if flexible_div:
                 flexible_period = flexible_div.get_text(
                     strip=True)
                 if flexible_period != "Not applicable":
                     program_details[headers[index]] = flexible_period + \
-                        " (flexible)"
+                                                      " (flexible)"
                     index += 1
 
             if index == 0:
@@ -520,7 +522,8 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
         # 定义关键词列表
         keywords = ['interview', 'special qualifying examination', 'qualifying essay',
                     'qualifying assessment', 'written examination', 'oral examination',
-                    'oral test', 'required to pass a test', 'written examination', 'written test', 'written assessment']
+                    'oral test', 'required to pass a test', 'written examination', 'written test', 'written assessment',
+                    'pieces of writing']
 
         # 搜索包含这些关键词的<p>标签
         entry_req_tag = soup.find(id="entry-requirements")
@@ -563,3 +566,26 @@ class UCLProgramDetailsCrawler(BaseProgramDetailsCrawler):
                 break  # Break the loop once the URL is found
 
         return program_details
+
+    def get_application_deadlines(self, soup, program_details, extra_data=None):
+        # 寻找<h5>标签
+        h5_tag = soup.find('h5', string='Applications accepted')
+
+        if h5_tag:
+            deadlines = []
+            for sibling in h5_tag.find_next_siblings():
+                # 如果遇到非<div>标签，则停止
+                if sibling.name != 'div':
+                    break
+
+                # 提取和格式化日期
+                div_text = sibling.get_text()
+                # 寻找月份，日期和年份
+                pattern = r'(\d{1,2})\s(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s(\d{4})?'
+                dates = re.findall(pattern, div_text)
+                dates_pair = ' - '.join([' '.join(date) for date in dates])
+                deadlines.append(dates_pair)
+            deadlines = '\n'.join(deadlines)
+            print(deadlines)
+
+            program_details[header.application_deadlines] = deadlines

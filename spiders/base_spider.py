@@ -87,6 +87,28 @@ class BaseProgramURLCrawler:
         return
 
 
+intervew_keywords = ['interview', 'special qualifying examination', 'qualifying essay',
+            'qualifying assessment', 'written examination', 'oral examination',
+            'oral test', 'required to pass a test', 'written examination', 'written test', 'written assessment',
+            'pieces of writing']
+
+portfolio_keywords = ['written work', 'portfolio', "writing sample"]
+
+maybe_keywords = ["may", "preferably", 'minimum of']
+
+required_keywords = ['minimum of', 'at least', 'Ideally', 'is essential', 'must have', 'normally have',
+                    'should also have', 'should have', 'need to have']
+
+word_experience_keywords = ['work experience', 'professional experience', 'industrial experience',
+                   'existing engineering and design skills', 'practical experience',
+                   'experience as a professional', ' who can demonstrate aptitude and experience',
+                   'years of relevant experience', 'clinical experience', 'teaching experience',
+                   'years\' experience working', 'years of training in',
+                   'extensive experience', 'relevant experience',
+                   'relevant quantitative or qualitative research experience',
+                   'experience working', 'professional involvement',
+                   'with equivalent experience', 'industry experience', 'relevant work',
+                   'field experience', 'relevant employment']
 class BaseProgramDetailsCrawler:
     def __init__(self, Uni_ID, Uni_name=None, test=False, verbose=True):
         self.Uni_ID = Uni_ID
@@ -96,6 +118,13 @@ class BaseProgramDetailsCrawler:
             self.Uni_name = Uni_name
         self.test = test
         self.verbose = verbose
+
+        self.interview_keywords = intervew_keywords
+        self.portfolio_keywords = portfolio_keywords
+        self.maybe_keywords = maybe_keywords
+        self.required_keywords = required_keywords
+        self.word_experience_keywords = word_experience_keywords
+
         if self.test:
             self.useful_link_path = f'data/{self.Uni_ID}/program_useful_link_sample.xlsx'
             self.details_path = f'data/{self.Uni_ID}/program_details_sample.xlsx'
@@ -173,50 +202,9 @@ class BaseProgramDetailsCrawler:
         return [program_name, url, faculty, intro_text] + useful_links
 
     def thread_task(self, row, headers, new_sheet, lock):
-        def rearrange_program_name(name):
-            conjunctions = ["and", "but", "or", "nor", "for", "so", "yet"]
-            prepositions = ["about", "above", "across", "after", "against", "along", "amid", "among", "around", "as",
-                            "at", "before", "behind", "below", "beneath", "beside", "between", "beyond", "but", "by",
-                            "concerning", "considering", "despite", "down", "during", "except", "for", "from", "in",
-                            "inside", "into", "like", "near", "of", "on", "onto", "out", "outside", "over", "past",
-                            "regarding", "round", "since", "through", "to", "toward", "under", "underneath", "until",
-                            "unto", "up", "upon", "with", "within", "without"]
-            abbreviations = ["MSc", "MA", "MBA", "MRes", "MPhil", "LLM", "MFA", "MMus", "MEd", "MEng", "MPH", "MSW",
-                             "MCouns", "PHD", "MScR", "Mth", "Pgdip", "Pgcert"]
-
-            # Split by comma first
-            parts = name.split(',')
-
-            def handle_part(part):
-                part = part.lower().strip()
-                words = part.split()
-
-                # Extract and handle abbreviations separated by '/'
-                extracted_abbrs = [word for word in words if any(abbr.lower() in word for abbr in abbreviations)]
-                for item in extracted_abbrs:
-                    words.remove(item)
-                split_abbrs = [abbr for sublist in [item.split('/') for item in extracted_abbrs] for abbr in sublist]
-                matched_abbrs = [abbr for abbr in abbreviations if abbr.lower() in split_abbrs]
-
-                words = matched_abbrs + words
-
-                # Handle capitalization
-                res_words = []
-                for word in words:
-                    if word.lower() in conjunctions + prepositions:
-                        res_words.append(word.lower())
-                    elif word in abbreviations:
-                        res_words.append(word)
-                    else:
-                        res_words.append(word.capitalize())
-
-                return ' '.join(res_words)
-
-            # Handle each part and join them back
-            return ', '.join([handle_part(part) for part in parts])
 
         program_name, program_url, program_faculty, intro_text, *useful_links = row
-        program_details = {header.major: rearrange_program_name(program_name),
+        program_details = {header.major: program_name,
                            header.college: program_faculty,
                            header.website_link: program_url,
                            header.project_intro: intro_text,
@@ -277,6 +265,7 @@ class BaseProgramDetailsCrawler:
 
         # Save the file
         try:
+            wb.save(self.details_path)
             wb.save(self.details_path)
         except PermissionError:
             # save the file with a time stamp: YYYY-MM-DD_HH-MM-SS
@@ -369,6 +358,8 @@ class BaseProgramDetailsCrawler:
             url=program_url,
             Uni_ID=self.Uni_ID
         )
+        if not response:
+            print(f"ERROR: program_url: {program_url} returned badly!!!")
         response.raise_for_status()
         soup = BeautifulSoup(response.text, 'html.parser')
         # self.get_program_intro(soup, program_details)

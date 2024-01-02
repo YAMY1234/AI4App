@@ -111,13 +111,13 @@ def query_gpt_translate(data):
 
 def ask_GPT_to_translate(school_abbr, col_name, translated_col_name):
     # Load the Excel file into a DataFrame
-    program_details_path = f"data/{school_abbr}/program_details.xlsx"
-    program_details_gpt_path = f"data/{school_abbr}/program_details_gpt.xlsx"
+    program_details_stage1_path = f"data/{school_abbr}/program_details_stage1.xlsx"
+    program_details_stage2_path = f"data/{school_abbr}/program_details_stage2.xlsx"
 
-    if program_details_gpt_path in os.listdir(f'data/{school_abbr}'):
-        df_program_details = pd.read_excel(program_details_gpt_path)
+    if "program_details_stage2.xlsx" in os.listdir(f'data/{school_abbr}'):
+        df_program_details = pd.read_excel(program_details_stage2_path)
     else:
-        df_program_details = pd.read_excel(program_details_path)
+        df_program_details = pd.read_excel(program_details_stage1_path)
 
     # Iterate over the specified column and replace its content
     func = query_gpt_translate
@@ -125,17 +125,17 @@ def ask_GPT_to_translate(school_abbr, col_name, translated_col_name):
     df_program_details[translated_col_name] = df_program_details[col_name].apply(func)
 
     # Save the modified DataFrame back to the Excel file
-    df_program_details.to_excel(program_details_gpt_path, index=False)
+    df_program_details.to_excel(program_details_stage2_path, index=False)
 
 def replace_from_GPT(school_abbr, col_name):
     # Load the Excel file into a DataFrame
-    program_details_path = f"data/{school_abbr}/program_details.xlsx"
-    program_details_gpt_path = f"data/{school_abbr}/program_details_gpt.xlsx"
+    program_details_stage1_path = f"data/{school_abbr}/program_details_stage1.xlsx"
+    program_details_stage2_path = f"data/{school_abbr}/program_details_stage2.xlsx"
 
-    if program_details_gpt_path in os.listdir(f'data/{school_abbr}'):
-        df_program_details = pd.read_excel(program_details_gpt_path)
+    if "program_details_stage2.xlsx" in os.listdir(f'data/{school_abbr}'):
+        df_program_details = pd.read_excel(program_details_stage2_path)
     else:
-        df_program_details = pd.read_excel(program_details_path)
+        df_program_details = pd.read_excel(program_details_stage1_path)
 
     # Iterate over the specified column and replace its content
     func = None
@@ -148,5 +148,5 @@ def replace_from_GPT(school_abbr, col_name):
     df_program_details[col_name] = df_program_details[col_name].apply(func)
 
     # Save the modified DataFrame back to the Excel file
-    df_program_details.to_excel(program_details_gpt_path, index=False)
+    df_program_details.to_excel(program_details_stage2_path, index=False)
 
