@@ -3,17 +3,19 @@ import requests
 from bs4 import BeautifulSoup
 import os
 from DDLNotifier.email_sender import send_email  # Replace with your actual email module
+from DDLNotifier.HKUST.program_url_crawler import crawl
 
 # Constants
 PROGRAM_DATA_EXCEL = 'programs.xlsx'  # CSV file with current program data
 
-recipient_email = 'yamy12344@gmail.com'  # Replace with your actual email for notifications
 recipient_email = 'suki@itongzhuo.com'  # Replace with your actual email for notifications
 SAVE_PATH_OLD_XLSX = 'program_deadlines.xlsx'  # Save path for the old Excel file
 SAVE_PATH_NEW_XLSX = 'program_deadlines.xlsx'  # Save path for the new Excel file
 SAVE_PATH_TMP_XLSX = 'program_deadlines_temp.xlsx'  # Save path for the new Excel file
-
-
+BASE_PATH = os.path.dirname(os.path.abspath(__file__))
+SAVE_PATH_OLD_XLSX = os.path.join(BASE_PATH, SAVE_PATH_OLD_XLSX)  # Save path for the HTML
+SAVE_PATH_NEW_XLSX = os.path.join(BASE_PATH, SAVE_PATH_NEW_XLSX)  # Save path for the CSV
+SAVE_PATH_TMP_XLSX = os.path.join(BASE_PATH, SAVE_PATH_TMP_XLSX)  # Save path for the CSV
 
 def get_deadline(url):
     # 发送GET请求
@@ -32,26 +34,6 @@ def get_deadline(url):
 def get_current_programs_and_urls():
     return pd.read_excel(PROGRAM_DATA_EXCEL)
 
-
-# def compare_and_notify(old_data, new_data):
-#     if old_data.empty:
-#         print("No old data to compare with. Skipping comparison.")
-#         return False
-#
-#     changes_detected = False
-#     for index, new_row in new_data.iterrows():
-#         program_name = new_row['ProgramName']
-#         old_row = old_data[old_data['ProgramName'] == program_name]
-#         if not old_row.empty and old_row['DeadlineText'].values[0] != new_row['DeadlineText']:
-#             changes_detected = True
-#             subject = f"Change Detected in Deadline for {program_name}"
-#             body = (f"Program: {program_name}\n"
-#                     f"Old Deadline: {old_row['DeadlineText'].values[0]}\n"
-#                     f"New Deadline: {new_row['DeadlineText']}\n\n")
-#             send_email(subject, body, recipient_email)  # Implement this function in your email module
-#
-#     return changes_detected
-
 def compare_and_notify(old_data, new_data):
     if old_data.empty:
         print("No old data to compare with. Skipping comparison.")
@@ -59,6 +41,7 @@ def compare_and_notify(old_data, new_data):
 
     changes_detected = False
     new_programs_detected = False
+    print("Comparing old and new data...")
     for index, new_row in new_data.iterrows():
         program_name = new_row['ProgramName']
         old_row = old_data[old_data['ProgramName'] == program_name]
@@ -68,14 +51,14 @@ def compare_and_notify(old_data, new_data):
             if old_row['DeadlineText'].values[0] != new_row['DeadlineText']:
                 changes_detected = True
                 subject = f"Change Detected in Deadline for {program_name}"
-                body = (f"Program: {program_name}\n"
+                body = (f"School: HKUST, Program: {program_name}\n"
                         f"Old Deadline: {old_row['DeadlineText'].values[0]}\n"
                         f"New Deadline: {new_row['DeadlineText']}\n\n")
                 send_email(subject, body, recipient_email)  # Implement this function in your email module
         else:
             # If the program does not exist in old data, it's a new addition
             new_programs_detected = True
-            subject = f"New Program Added: {program_name}"
+            subject = f"School: HKUST, New Program Added: {program_name}"
             body = (f"New Program: {program_name}\n"
                     f"Deadline: {new_row['DeadlineText']}\n\n")
             send_email(subject, body, recipient_email)  # Implement this function in your email module
@@ -83,6 +66,7 @@ def compare_and_notify(old_data, new_data):
     return changes_detected or new_programs_detected
 
 def main():
+    crawl()
     # Read current program data
     current_program_data = get_current_programs_and_urls()
 
@@ -124,3 +108,5 @@ def main():
 # Run the main function
 if __name__ == "__main__":
     main()
+
+

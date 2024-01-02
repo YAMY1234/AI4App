@@ -6,9 +6,9 @@ from DDLNotifier.email_sender import send_email
 
 # Constants
 URL = 'https://www.gs.cuhk.edu.hk/admissions/admissions/application-deadline'
-SAVE_PATH_HTML = 'previous_page.html'  # Save path for the HTML
-SAVE_PATH_CSV = 'taught_programmes_data.csv'  # Save path for the CSV
-recipient_email = 'yamy12344@gmail.com'  # Replace with your actual email for testing
+BASE_PATH = os.path.dirname(os.path.abspath(__file__))
+SAVE_PATH_HTML = os.path.join(BASE_PATH, 'previous_page.html')  # Save path for the HTML
+SAVE_PATH_CSV = os.path.join(BASE_PATH, 'taught_programmes_data.csv')  # Save path for the CSV
 recipient_email = 'suki@itongzhuo.com'  # Replace with your actual email for testing
 
 
@@ -117,14 +117,14 @@ def compare_and_notify(old_data, new_data):
         if changes_detected:
             body += "Deadline changes detected:\n\n"
             for change in changes_detected:
-                body += (f"Programme: {change['Programme']}\n"
+                body += (f"School: CUHK, Programme: {change['Programme']}\n"
                          f"Old Deadline: {change['Old Deadline']}\n"
                          f"New Deadline: {change['New Deadline']}\n\n")
 
         if new_rows_detected:
             body += "New programmes added:\n\n"
             for new_row in new_rows_detected:
-                body += (f"Programme: {new_row['Programme']}\n"
+                body += (f"School: CUHK, Programme: {new_row['Programme']}\n"
                          f"Deadline: {new_row['Deadline']}\n\n")
 
         # Sending the email if there are any changes
@@ -160,4 +160,4 @@ def main():
 
 
 # Run the main function
-main()
+# main()

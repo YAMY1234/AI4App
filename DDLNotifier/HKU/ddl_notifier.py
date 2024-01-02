@@ -6,9 +6,9 @@ import os
 
 # Constants
 URL = 'https://admissions.hku.hk/tpg/programme-list'
-SAVE_PATH_HTML = 'previous_page.html'  # Save path for the HTML
-SAVE_PATH_CSV = 'programme_data.csv'  # Save path for the CSV
-recipient_email = 'yamy12344@gmail.com'
+BASE_PATH = os.path.dirname(os.path.abspath(__file__))
+SAVE_PATH_HTML = os.path.join(BASE_PATH, 'previous_page.html')  # Save path for the HTML
+SAVE_PATH_CSV = os.path.join(BASE_PATH, 'programme_data.csv')  # Save path for the CSV
 recipient_email = 'suki@itongzhuo.com'
 
 
@@ -48,43 +48,6 @@ def parse_html(html):
 
     return pd.DataFrame(programme_data, columns=headers)
 
-
-# def compare_and_notify(old_data, new_data):
-#     # Assuming the 'Programme' column has unique values that can be used as an identifier
-#     if not old_data.equals(new_data):
-#         print("Data differences detected...")
-#
-#         # Identifying changes between old and new data
-#         changes_detected = []
-#         for programme in new_data['Programme'].unique():
-#             old_row = old_data[old_data['Programme'] == programme]
-#             new_row = new_data[new_data['Programme'] == programme]
-#
-#             # If there's a change in the 'Deadline' column for a 'Full Time' programme
-#             if not old_row.equals(new_row) and 'Full Time' in new_row['Apply'].values[0]:
-#                 old_deadline = old_row['Deadline'].values[0] if not old_row.empty else 'N/A'
-#                 new_deadline = new_row['Deadline'].values[0] if not new_row.empty else 'N/A'
-#                 changes_detected.append({
-#                     'Programme': programme,
-#                     'Old Deadline': old_deadline,
-#                     'New Deadline': new_deadline
-#                 })
-#
-#         # Sending a consolidated email if changes were detected
-#         if changes_detected:
-#             subject = "Changes Detected in Programmes"
-#             body = "The following changes have been detected:\n\n"
-#             for change in changes_detected:
-#                 body += (f"Programme: {change['Programme']}\n"
-#                          f"Old Deadline: {change['Old Deadline']}\n"
-#                          f"New Deadline: {change['New Deadline']}\n\n")
-#
-#             send_email(subject, body, recipient_email)
-#             print("Email notification sent for the detected changes.")
-#         else:
-#             print("No changes detected in the data table with 'Full Time' in Apply column.")
-#     else:
-#         print("No changes detected in the data content.")
 def compare_and_notify(old_data, new_data):
     if not old_data.equals(new_data):
         print("Data differences detected...")
@@ -122,14 +85,14 @@ def compare_and_notify(old_data, new_data):
         if changes_detected:
             body += "Deadline changes detected:\n\n"
             for change in changes_detected:
-                body += (f"Programme: {change['Programme']}\n"
+                body += (f"School: HKU, Programme: {change['Programme']}\n"
                          f"Old Deadline: {change['Old Deadline']}\n"
                          f"New Deadline: {change['New Deadline']}\n\n")
 
         if new_programmes_detected:
             body += "New programmes added:\n\n"
             for new_programme in new_programmes_detected:
-                body += (f"Programme: {new_programme['Programme']}\n"
+                body += (f"School: HKU, Programme: {new_programme['Programme']}\n"
                          f"Deadline: {new_programme['Deadline']}\n\n")
 
         # Sending the email if there are any changes
@@ -162,4 +125,4 @@ def main():
 
 
 # Run the main function
-main()
+# main()
