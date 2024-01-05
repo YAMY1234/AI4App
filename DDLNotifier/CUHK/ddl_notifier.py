@@ -11,7 +11,6 @@ SAVE_PATH_HTML = os.path.join(BASE_PATH, 'previous_page.html')  # Save path for 
 SAVE_PATH_CSV = os.path.join(BASE_PATH, 'taught_programmes_data.csv')  # Save path for the CSV
 recipient_email = 'suki@itongzhuo.com'  # Replace with your actual email for testing
 
-
 def download_html(url):
     response = requests.get(url)
     response.raise_for_status()
@@ -44,43 +43,6 @@ def parse_html(html):
             taught_programmes_data.append([programme_name, '\n'.join(ddls)])
 
     return pd.DataFrame(taught_programmes_data, columns=['Programme', 'Deadline'])
-
-#
-# def compare_and_notify(old_data, new_data):
-#     if old_data.empty:
-#         print("No old data to compare with. Saving new data.")
-#         return
-#
-#     # Assuming the 'Programme' column has unique values that can be used as an identifier
-#     if not old_data.equals(new_data):
-#         print("Data differences detected...")
-#
-#         # Identifying changes between old and new data
-#         changes_detected = []
-#         for index, new_row in new_data.iterrows():
-#             old_row = old_data.loc[old_data['Programme'] == new_row['Programme']]
-#             if not old_row.empty and old_row['Deadline'].values[0] != new_row['Deadline']:
-#                 changes_detected.append({
-#                     'Programme': new_row['Programme'],
-#                     'Old Deadline': old_row['Deadline'].values[0],
-#                     'New Deadline': new_row['Deadline']
-#                 })
-#
-#         # Sending a consolidated email if changes were detected
-#         if changes_detected:
-#             subject = "Changes Detected in Taught Programmes Deadlines"
-#             body = "The following changes have been detected:\n\n"
-#             for change in changes_detected:
-#                 body += (f"Programme: {change['Programme']}\n"
-#                          f"Old Deadline: {change['Old Deadline']}\n"
-#                          f"New Deadline: {change['New Deadline']}\n\n")
-#
-#             send_email(subject, body, recipient_email)
-#             print("Email notification sent for the detected changes.")
-#         else:
-#             print("No changes detected in the deadlines.")
-#     else:
-#         print("No changes detected in the data content.")
 
 def compare_and_notify(old_data, new_data):
     if old_data.empty:

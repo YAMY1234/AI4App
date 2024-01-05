@@ -8,7 +8,7 @@ import os
 URL = 'https://admissions.hku.hk/tpg/programme-list'
 BASE_PATH = os.path.dirname(os.path.abspath(__file__))
 SAVE_PATH_HTML = os.path.join(BASE_PATH, 'previous_page.html')  # Save path for the HTML
-SAVE_PATH_CSV = os.path.join(BASE_PATH, 'programme_data.csv')  # Save path for the CSV
+SAVE_PATH_EXCEL = os.path.join(BASE_PATH, 'programme_data.xlsx')  # Save path for the CSV
 recipient_email = 'suki@itongzhuo.com'
 
 
@@ -113,16 +113,13 @@ def main():
     new_data = parse_html(new_html)
 
     # Read old data if it exists
-    if os.path.exists(SAVE_PATH_CSV):
-        old_data = pd.read_csv(SAVE_PATH_CSV)
+    if os.path.exists(SAVE_PATH_EXCEL):
+        old_data = pd.read_excel(SAVE_PATH_EXCEL)
     else:
         old_data = pd.DataFrame()
 
     # Compare and notify
     compare_and_notify(old_data, new_data)
 
-    new_data.to_csv(SAVE_PATH_CSV, index=False)
+    new_data.to_excel(SAVE_PATH_EXCEL, index=False)
 
-
-# Run the main function
-# main()
