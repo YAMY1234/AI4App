@@ -6,13 +6,14 @@ from DDLNotifier.email_sender import send_email  # Replace with your actual emai
 from DDLNotifier.HKUST.program_url_crawler import crawl
 
 # Constants
+BASE_PATH = os.path.dirname(os.path.abspath(__file__))
 PROGRAM_DATA_EXCEL = 'programs.xlsx'  # CSV file with current program data
+PROGRAM_DATA_EXCEL = os.path.join(BASE_PATH, 'programs.xlsx')  # CSV file with current program data
 
 recipient_email = 'suki@itongzhuo.com'  # Replace with your actual email for notifications
 SAVE_PATH_OLD_XLSX = 'program_deadlines.xlsx'  # Save path for the old Excel file
 SAVE_PATH_NEW_XLSX = 'program_deadlines.xlsx'  # Save path for the new Excel file
 SAVE_PATH_TMP_XLSX = 'program_deadlines_temp.xlsx'  # Save path for the new Excel file
-BASE_PATH = os.path.dirname(os.path.abspath(__file__))
 SAVE_PATH_OLD_XLSX = os.path.join(BASE_PATH, SAVE_PATH_OLD_XLSX)  # Save path for the HTML
 SAVE_PATH_NEW_XLSX = os.path.join(BASE_PATH, SAVE_PATH_NEW_XLSX)  # Save path for the CSV
 SAVE_PATH_TMP_XLSX = os.path.join(BASE_PATH, SAVE_PATH_TMP_XLSX)  # Save path for the CSV
@@ -108,5 +109,3 @@ def main():
 # Run the main function
 if __name__ == "__main__":
     main()
-
-

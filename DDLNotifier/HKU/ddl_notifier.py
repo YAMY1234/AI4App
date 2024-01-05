@@ -49,6 +49,10 @@ def parse_html(html):
     return pd.DataFrame(programme_data, columns=headers)
 
 def compare_and_notify(old_data, new_data):
+    if old_data.empty:
+        print("No old data to compare with. Saving new data.")
+        return
+
     if not old_data.equals(new_data):
         print("Data differences detected...")
 
@@ -56,6 +60,7 @@ def compare_and_notify(old_data, new_data):
         new_programmes_detected = []
 
         for programme in new_data['Programme'].unique():
+            print(old_data['Programme'])
             old_row = old_data[old_data['Programme'] == programme]
             new_row = new_data[new_data['Programme'] == programme]
 

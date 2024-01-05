@@ -3,6 +3,7 @@ import os
 import sys
 # Get the current directory
 current_directory = os.path.dirname(os.path.abspath(__file__))
+current_directory = os.path.join(current_directory, '..')
 # Append the current directory to sys.path
 sys.path.append(current_directory)
 
