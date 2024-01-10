@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import requests
 from bs4 import BeautifulSoup
 from DDLNotifier.email_sender import send_email
@@ -49,6 +51,9 @@ def parse_html(html):
     return pd.DataFrame(programme_data, columns=headers)
 
 def compare_and_notify(old_data, new_data):
+    with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "notification_log.txt"), "a") as log_file:
+        log_file.write(f"Function called at {datetime.now()}\n")
+
     if old_data.empty:
         print("No old data to compare with. Saving new data.")
         return
@@ -99,9 +104,10 @@ def compare_and_notify(old_data, new_data):
             for new_programme in new_programmes_detected:
                 body += (f"School: HKU, Programme: {new_programme['Programme']}\n"
                          f"Deadline: {new_programme['Deadline']}\n\n")
-
         # Sending the email if there are any changes
         if changes_detected or new_programmes_detected:
+            with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "notification_log.txt"), "a") as log_file:
+                log_file.write(f"Email sent: {subject} | {body}\n")
             send_email(subject, body, recipient_email)
             print("Email notification sent for the detected changes.")
         else:
@@ -128,3 +134,5 @@ def main():
 
     new_data.to_excel(SAVE_PATH_EXCEL, index=False)
 
+if __name__ == '__main__':
+    main()

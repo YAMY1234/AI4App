@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from bs4 import BeautifulSoup
 import requests
 import pandas as pd
@@ -45,6 +47,9 @@ def parse_html(html):
     return pd.DataFrame(taught_programmes_data, columns=['Programme', 'Deadline'])
 
 def compare_and_notify(old_data, new_data):
+    with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "notification_log.txt"), "a") as log_file:
+        log_file.write(f"Function called at {datetime.now()}\n")
+
     if old_data.empty:
         print("No old data to compare with. Saving new data.")
         return
@@ -91,6 +96,8 @@ def compare_and_notify(old_data, new_data):
 
         # Sending the email if there are any changes
         if changes_detected or new_rows_detected:
+            with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "notification_log.txt"), "a") as log_file:
+                log_file.write(f"Email sent: {subject} | {body}\n")
             send_email(subject, body, recipient_email)
             print("Email notification sent for the detected changes.")
         else:

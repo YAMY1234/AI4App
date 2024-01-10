@@ -1,13 +1,17 @@
+from datetime import datetime
+
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 import os
 from DDLNotifier.email_sender import send_email  # Replace with your actual email module
-from DDLNotifier.HKUST.program_url_crawler import crawl
+
+BASE_PATH = os.path.dirname(os.path.abspath(__file__))
+
+from DDLNotifier.P003_HKUST.program_url_crawler import crawl
 
 # Constants
-BASE_PATH = os.path.dirname(os.path.abspath(__file__))
-PROGRAM_DATA_EXCEL = 'programs.xlsx'  # CSV file with current program data
+
 PROGRAM_DATA_EXCEL = os.path.join(BASE_PATH, 'programs.xlsx')  # CSV file with current program data
 
 recipient_email = 'suki@itongzhuo.com'  # Replace with your actual email for notifications
@@ -36,6 +40,8 @@ def get_current_programs_and_urls():
     return pd.read_excel(PROGRAM_DATA_EXCEL)
 
 def compare_and_notify(old_data, new_data):
+    with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "notification_log.txt"), "a") as log_file:
+        log_file.write(f"Function called at {datetime.now()}\n")
     if old_data.empty:
         print("No old data to compare with. Skipping comparison.")
         return False
@@ -55,6 +61,8 @@ def compare_and_notify(old_data, new_data):
                 body = (f"School: HKUST, Program: {program_name}\n"
                         f"Old Deadline: {old_row['DeadlineText'].values[0]}\n"
                         f"New Deadline: {new_row['DeadlineText']}\n\n")
+                with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "notification_log.txt"), "a") as log_file:
+                    log_file.write(f"Email sent: {subject} | {body}\n")
                 send_email(subject, body, recipient_email)  # Implement this function in your email module
         else:
             # If the program does not exist in old data, it's a new addition
@@ -63,6 +71,8 @@ def compare_and_notify(old_data, new_data):
             body = (f"New Program: {program_name}\n"
                     f"Deadline: {new_row['DeadlineText']}\n\n")
             send_email(subject, body, recipient_email)  # Implement this function in your email module
+            with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "notification_log.txt"), "a") as log_file:
+                log_file.write(f"Email sent: {subject} | {body}\n")
 
     return changes_detected or new_programs_detected
 

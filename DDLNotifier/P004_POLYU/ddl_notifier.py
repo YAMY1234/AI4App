@@ -1,14 +1,15 @@
+import os
+
 from bs4 import BeautifulSoup
 import requests
 import pandas as pd
+from datetime import datetime
 from DDLNotifier.email_sender import send_email
-import os
 
 # Constants
-URL = 'https://www.cityu.edu.hk/pg/taught-postgraduate-programmes/list'
-SAVE_PATH_HTML = 'previous_page.html'  # Save path for the HTML
-SAVE_PATH_CSV = 'taught_programmes_data.csv'  # Save path for the CSV
-recipient_email = 'yamy12344@gmail.com'  # Replace with your actual email for testing
+URL = 'https://www.polyu.edu.hk/study/pg/taught-postgraduate'
+SAVE_PATH_EXCEL = 'taught_programmes_data_polyu.xlsx'
+recipient_email = 'suki@itongzhuo.com'  # Replace with your actual email for notifications
 
 def download_html(url):
     headers = {
@@ -19,22 +20,35 @@ def download_html(url):
 
 def parse_html(html):
     soup = BeautifulSoup(html, 'html.parser')
-    rows = soup.find_all('tr', class_='CB')
+    programme_blocks = soup.find_all('div', class_='views-row')
     programmes_data = []
-    for row in rows:
-        columns = row.find_all('td')
-        if columns:
-            prog_code = columns[0].get_text(strip=True)
-            prog_title = columns[1].get_text(strip=True).split('\n')[0]
-            local_deadline = columns[3].get_text(strip=True)
-            non_local_deadline = columns[4].get_text(strip=True)
-            deadline = "local: " + local_deadline + "\n" + "non-local: " + non_local_deadline + "\n"
-            programmes_data.append([prog_code, prog_title, deadline])
+
+    for block in programme_blocks:
+        study_mode_and_duration = block.find('div', class_='study-mode-and-duration')
+        # Skip part-time programmes
+        if not ('Full-time' in study_mode_and_duration.get_text(strip=True)):
+            continue
+
+        programme_code_and_entry = block.find('div', class_='programmes-code-and-entry-description').get_text(strip=True).split('|')[0].strip()
+        title = block.find('div', class_='title').get_text(strip=True)
+        subtitle = block.find('div', class_='subtitle').get_text(strip=True)
+        deadlines = block.find_all('div', class_='early-deadline')
+        print(f"programme_code_and_entry: {programme_code_and_entry}, title: {title}, subtitle: {subtitle}")
+        if len(deadlines) == 0:
+            deadline = "empty"
+        else:
+            local_deadline = deadlines[0].get_text(strip=True).replace('Application Deadline:', '').strip()
+            non_local_deadline = deadlines[1].get_text(strip=True).replace('Non Local Application Deadline:', '').strip()
+            deadline = f"local: {local_deadline}, non-local: {non_local_deadline}"
+        programmes_data.append([programme_code_and_entry, title + ' ' + subtitle, deadline])
+
     return pd.DataFrame(programmes_data, columns=['Code', 'Programme Title', 'Deadline'])
 
 
 # Function to compare old and new programme data and notify if there are differences
 def compare_and_notify(old_data, new_data, recipient_email=recipient_email):
+    with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "notification_log.txt"), "a") as log_file:
+        log_file.write(f"Function called at {datetime.now()}\n")
     if old_data.empty:
         print("No old data to compare with. Saving new data.")
         return
@@ -69,7 +83,7 @@ def compare_and_notify(old_data, new_data, recipient_email=recipient_email):
 
         # Preparing email content
         subject = "Changes Detected in Taught Programmes"
-        body = ""
+        body = "school : {school_name}\n\n".format(school_name="PolyU")
 
         if changes_detected:
             body += "Deadline changes detected:\n\n"
@@ -86,8 +100,10 @@ def compare_and_notify(old_data, new_data, recipient_email=recipient_email):
 
         # Sending the email if there are any changes
         if changes_detected or new_rows_detected:
+            with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "notification_log.txt"), "a") as log_file:
+                log_file.write(f"Email sent: {subject} | {body}\n")
             send_email(subject, body, recipient_email)
-            print("Email notification sent for the detected changes.")
+            print(f"Email notification sent for the detected changes: {body}")
         else:
             print("No changes detected.")
 
@@ -102,8 +118,8 @@ def main():
     new_data = parse_html(new_html)
 
     # Read old data if it exists
-    if os.path.exists(SAVE_PATH_CSV):
-        old_data = pd.read_csv(SAVE_PATH_CSV)
+    if os.path.exists(SAVE_PATH_EXCEL):
+        old_data = pd.read_excel(SAVE_PATH_EXCEL)
     else:
         old_data = pd.DataFrame()
 
@@ -111,7 +127,7 @@ def main():
     compare_and_notify(old_data, new_data)
 
     # Save the new data for future comparisons
-    new_data.to_csv(SAVE_PATH_CSV, index=False)
+    new_data.to_excel(SAVE_PATH_EXCEL, index=False)
 
 if __name__ == "__main__":
     main()
