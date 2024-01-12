@@ -50,7 +50,7 @@ def parse_html(html):
             # 找到截止日期所在的列
             deadline_col_2 = row.find('td', class_='column-2')
             deadline_col_3 = row.find('td', class_='column-3')
-            deadlines = []
+            deadlines = ["begin:"]
 
             if deadline_col_2:
                 deadlines.append(deadline_col_2.get_text(strip=True))
@@ -100,7 +100,7 @@ def compare_and_notify(old_data, new_data):
         if changes_detected:
             body += "Deadline changes detected:\n\n"
             for change in changes_detected:
-                body += (f"School: CUHK, Programme: {change['Programme']}\n"
+                body += (f"School: {school_name}, Programme: {change['Programme']}\n"
                          f"Old Deadline: {change['Old Deadline']}\n"
                          f"New Deadline: {change['New Deadline']}\n\n")
 

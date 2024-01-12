@@ -7,36 +7,59 @@ import pandas as pd
 import os
 
 # Constants
-URL = 'https://gs.hksyu.edu/en/Prospective-Students/Application'
+URL = 'https://admission.hsu.edu.hk/taught-postgraduate-admissions/programme-information/'
 BASE_PATH = os.path.dirname(os.path.abspath(__file__))
 SAVE_PATH_HTML = os.path.join(BASE_PATH, 'previous_page.html')  # Save path for the HTML
 SAVE_PATH_EXCEL = os.path.join(BASE_PATH, 'programme_data.xlsx')  # Save path for the CSV
 recipient_email = 'suki@itongzhuo.com'
 # recipient_email = 'yamy12344@gmail.com'
 
-school_name = 'hksyu'
+school_name = 'HSU'
 
 
 def download_html(url):
-    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'}
+    # headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'}
+    headers = None
     response = requests.get(url, headers=headers)
     response.raise_for_status()
     return response.text
 
+
 def parse_html(html):
     soup = BeautifulSoup(html, 'html.parser')
+
+    # 找到所有包含项目信息的行
     rows = soup.find_all('tr')
+
     programmes_data = []
 
-    for row in rows[1:]:  # 跳过表头
-        columns = row.find_all('td')
-        if len(columns) >= 3:  # 确保有足够的列
-            programme_name = columns[0].get_text(strip=True)
-            deadlines = columns[2].get_text(strip=True)
-            programmes_data.append([programme_name, deadlines])
+    # 遍历每一行提取项目名称和截止日期
+    for row in rows:
+        # 找到项目名称所在的列
+        name_col = row.find('td', class_='column-1')
+        if name_col and name_col.a:
+            programme_name = name_col.a.text.strip()
 
-    return pd.DataFrame(programmes_data, columns=['Programme', 'Deadlines'])
+            continue_flag = False
+            for program in programmes_data:
+                if programme_name == program[0]:
+                    continue_flag = True
+            if continue_flag:
+                continue
 
+            # 找到截止日期所在的列
+            deadline_col_2 = row.find('td', class_='column-2')
+            deadline_col_3 = row.find('td', class_='column-3')
+            deadlines = []
+
+            if deadline_col_2:
+                deadlines.append(deadline_col_2.get_text(strip=True))
+            if deadline_col_3:
+                deadlines.append(deadline_col_3.get_text(strip=True))
+
+            programmes_data.append([programme_name, ' and '.join(deadlines)])
+
+    return pd.DataFrame(programmes_data, columns=['Programme', 'Deadline'])
 
 
 def compare_and_notify(old_data, new_data):

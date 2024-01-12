@@ -86,7 +86,7 @@ def compare_and_notify(old_data, new_data):
         if changes_detected:
             body += "Deadline changes detected:\n\n"
             for change in changes_detected:
-                body += (f"School: CUHK, Programme: {change['Programme']}\n"
+                body += (f"School: {school_name}, Programme: {change['Programme']}\n"
                          f"Old Deadline: {change['Old Deadline']}\n"
                          f"New Deadline: {change['New Deadline']}\n\n")
 

@@ -7,35 +7,46 @@ import pandas as pd
 import os
 
 # Constants
-URL = 'https://gs.hksyu.edu/en/Prospective-Students/Application'
+URL = 'https://wis.ntu.edu.sg/webexe/owa/coal_main.notice'
 BASE_PATH = os.path.dirname(os.path.abspath(__file__))
 SAVE_PATH_HTML = os.path.join(BASE_PATH, 'previous_page.html')  # Save path for the HTML
 SAVE_PATH_EXCEL = os.path.join(BASE_PATH, 'programme_data.xlsx')  # Save path for the CSV
-recipient_email = 'suki@itongzhuo.com'
-# recipient_email = 'yamy12344@gmail.com'
+# recipient_email = 'suki@itongzhuo.com'
+recipient_email = 'yamy12344@gmail.com'
 
-school_name = 'hksyu'
-
+school_name = BASE_PATH.split('_')[-1]
 
 def download_html(url):
-    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'}
+    # headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'}
+    headers = None
     response = requests.get(url, headers=headers)
     response.raise_for_status()
     return response.text
 
+
 def parse_html(html):
+    # 解析 HTML
     soup = BeautifulSoup(html, 'html.parser')
     rows = soup.find_all('tr')
+
+    # 用于存储提取的数据
     programmes_data = []
 
-    for row in rows[1:]:  # 跳过表头
+    # 遍历每一行
+    for row in rows:
         columns = row.find_all('td')
-        if len(columns) >= 3:  # 确保有足够的列
-            programme_name = columns[0].get_text(strip=True)
-            deadlines = columns[2].get_text(strip=True)
-            programmes_data.append([programme_name, deadlines])
+        if len(columns) == 5:
+            # 提取所需数据
+            program_name = columns[2].get_text(strip=True)
+            opening_date = columns[3].get_text(strip=True)
+            closing_date = columns[4].get_text(strip=True)
+            deadline = f"{opening_date} to {closing_date}"
 
-    return pd.DataFrame(programmes_data, columns=['Programme', 'Deadlines'])
+            # 添加到列表
+            programmes_data.append([program_name, deadline])
+
+    # 创建 DataFrame
+    return pd.DataFrame(programmes_data, columns=['Program Name', 'Deadline'])
 
 
 
