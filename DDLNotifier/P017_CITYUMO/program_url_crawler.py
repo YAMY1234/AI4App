@@ -1,8 +1,8 @@
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
-
-
+import os
+PROGRAM_DATA_EXCEL = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'programs.xlsx')
 def crawl():
     # 设置复杂的请求头
     headers = {
@@ -47,7 +47,7 @@ def crawl():
     df = pd.DataFrame(data)
 
     # 将数据保存到Excel文件
-    df.to_excel("programs.xlsx", index=False)
+    df.to_excel(PROGRAM_DATA_EXCEL, index=False)
 
 
 # 运行爬虫

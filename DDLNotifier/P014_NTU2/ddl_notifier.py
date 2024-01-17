@@ -3,15 +3,16 @@ from datetime import datetime
 import requests
 from bs4 import BeautifulSoup
 from DDLNotifier.email_sender import send_email
+from DDLNotifier.config import CONFIG
 import pandas as pd
 import os
 
 # Constants
-URL = 'https://wis.ntu.edu.sg/webexe/owa/coal_main.notice'
+URL = 'https://wis.ntu.edu.sg/webexe/owa/pgr$adm_main.notice'
 BASE_PATH = os.path.dirname(os.path.abspath(__file__))
 SAVE_PATH_HTML = os.path.join(BASE_PATH, 'previous_page.html')  # Save path for the HTML
 SAVE_PATH_EXCEL = os.path.join(BASE_PATH, 'programme_data.xlsx')  # Save path for the CSV
-# recipient_email = 'suki@itongzhuo.com'
+# recipient_email = CONFIG.RECIPEINT_EMAIL
 recipient_email = 'yamy12344@gmail.com'
 
 school_name = BASE_PATH.split('_')[-1]
@@ -35,18 +36,22 @@ def parse_html(html):
     # 遍历每一行
     for row in rows:
         columns = row.find_all('td')
-        if len(columns) == 5:
+        if len(columns) == 7:
             # 提取所需数据
-            program_name = columns[2].get_text(strip=True)
-            opening_date = columns[3].get_text(strip=True)
-            closing_date = columns[4].get_text(strip=True)
-            deadline = f"{opening_date} to {closing_date}"
+            program_name = columns[1].get_text(strip=True)
+            local_opening_date = columns[2].get_text(strip=True)
+            local_closing_date = columns[3].get_text(strip=True)
+            overseas_opening_date = columns[4].get_text(strip=True)
+            overseas_closing_date = columns[5].get_text(strip=True)
+            deadline = f"Local: {local_opening_date} to {local_closing_date}, " \
+                       f"Overseas: {overseas_opening_date} to {overseas_closing_date}"
 
             # 添加到列表
             programmes_data.append([program_name, deadline])
 
     # 创建 DataFrame
     return pd.DataFrame(programmes_data, columns=['Program Name', 'Deadline'])
+
 
 
 

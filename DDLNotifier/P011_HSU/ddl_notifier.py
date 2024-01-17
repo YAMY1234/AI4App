@@ -3,6 +3,7 @@ from datetime import datetime
 import requests
 from bs4 import BeautifulSoup
 from DDLNotifier.email_sender import send_email
+from DDLNotifier.config import CONFIG
 import pandas as pd
 import os
 
@@ -11,10 +12,10 @@ URL = 'https://admission.hsu.edu.hk/taught-postgraduate-admissions/programme-inf
 BASE_PATH = os.path.dirname(os.path.abspath(__file__))
 SAVE_PATH_HTML = os.path.join(BASE_PATH, 'previous_page.html')  # Save path for the HTML
 SAVE_PATH_EXCEL = os.path.join(BASE_PATH, 'programme_data.xlsx')  # Save path for the CSV
-recipient_email = 'suki@itongzhuo.com'
+recipient_email = CONFIG.RECIPEINT_EMAIL
 # recipient_email = 'yamy12344@gmail.com'
 
-school_name = 'HSU'
+school_name = BASE_PATH.split('_')[-1]
 
 
 def download_html(url):

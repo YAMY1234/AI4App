@@ -2,7 +2,7 @@ import requests
 import json
 import pandas as pd
 
-
+import os
 def download_html(url):
     url = "https://vis90prd.hkmu.edu.hk/psc/s90prdp/EMPLOYEE/SA/s/WEBLIB_WPREG.ISCRIPT1.FieldFormula.IScript_GetPGProgrammes?&sm=non_local&sm=ft&"
 
@@ -38,7 +38,7 @@ def download_html(url):
     else:
         print("获取数据失败，状态码：", response.status_code)
 
-
+PROGRAM_DATA_EXCEL = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'programs.xlsx')
 def crawl():
     # 网址
     url = "https://vis90prd.hkmu.edu.hk/psc/s90prdp/EMPLOYEE/SA/s/WEBLIB_WPREG.ISCRIPT1.FieldFormula.IScript_GetPGProgrammes?&sm=non_local&sm=ft&"
@@ -61,7 +61,7 @@ def crawl():
     df = pd.DataFrame(program_list)
 
     # 保存到Excel
-    df.to_excel("programs.xlsx", index=False)
+    df.to_excel(PROGRAM_DATA_EXCEL, index=False)
 
     print("Excel file 'programs.xlsx' has been created with the program names and URLs.")
 

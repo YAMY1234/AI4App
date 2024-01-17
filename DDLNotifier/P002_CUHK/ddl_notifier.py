@@ -5,13 +5,16 @@ import requests
 import pandas as pd
 import os
 from DDLNotifier.email_sender import send_email
+from DDLNotifier.config import CONFIG
 
 # Constants
 URL = 'https://www.gs.cuhk.edu.hk/admissions/admissions/application-deadline'
 BASE_PATH = os.path.dirname(os.path.abspath(__file__))
 SAVE_PATH_HTML = os.path.join(BASE_PATH, 'previous_page.html')  # Save path for the HTML
 SAVE_PATH_CSV = os.path.join(BASE_PATH, 'taught_programmes_data.csv')  # Save path for the CSV
-recipient_email = 'suki@itongzhuo.com'  # Replace with your actual email for testing
+recipient_email = CONFIG.RECIPEINT_EMAIL  # Replace with your actual email for testing
+
+school_name = BASE_PATH.split('_')[-1]
 
 def download_html(url):
     response = requests.get(url)
@@ -127,6 +130,6 @@ def main():
     new_data.to_csv(SAVE_PATH_CSV, index=False)
 
 
-
 # Run the main function
-# main()
+if __name__ == "__main__":
+    main()

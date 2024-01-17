@@ -19,6 +19,13 @@ from DDLNotifier.P010_HKMU import ddl_notifier as HKMU
 from DDLNotifier.P011_HSU import ddl_notifier as HSU
 from DDLNotifier.P012_CHUHAI import ddl_notifier as CHUHAI
 
+from DDLNotifier.P014_NTU import ddl_notifier as NTU
+from DDLNotifier.P014_NTU2 import ddl_notifier as NTU2
+from DDLNotifier.P015_SMU import ddl_notifier as SMU
+# from DDLNotifier.P017_CITYUMO import ddl_notifier as CITYUMO
+from DDLNotifier.P018_MPU import ddl_notifier as MPU
+from DDLNotifier.P019_MUST import ddl_notifier as MUST
+
 import threading
 import logging
 
@@ -35,8 +42,8 @@ def run_program(program):
 
 
 def main():
-    programs = [CITYU, HKBU, EDUHK, HKSYU, HKMU, HSU, CHUHAI]
-    # programs = [CUHK, HKU, HKUST, POLYU, CITYU, HKBU, EDUHK, HKSYU, HKMU, HSU, CHUHAI]
+    # programs = [CITYU, HKBU, EDUHK, HKSYU, HKMU, HSU, CHUHAI]
+    programs = [CUHK, HKU, HKUST, POLYU, CITYU, HKBU, EDUHK, HKSYU, HKMU, HSU, CHUHAI, NTU, NTU2, SMU, MPU, MUST]
     threads = []
 
     for program in programs:

@@ -5,11 +5,12 @@ import requests
 import pandas as pd
 from datetime import datetime
 from DDLNotifier.email_sender import send_email
+from DDLNotifier.config import CONFIG
 
 # Constants
 URL = 'https://www.polyu.edu.hk/study/pg/taught-postgraduate'
 SAVE_PATH_EXCEL = 'taught_programmes_data_polyu.xlsx'
-recipient_email = 'suki@itongzhuo.com'  # Replace with your actual email for notifications
+recipient_email = CONFIG.RECIPEINT_EMAIL  # Replace with your actual email for notifications
 
 def download_html(url):
     headers = {

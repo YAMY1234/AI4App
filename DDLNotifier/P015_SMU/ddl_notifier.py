@@ -4,16 +4,17 @@ import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 import os
-from DDLNotifier.email_sender import send_email  # Replace with your actual email module
-from DDLNotifier.P012_CHUHAI.program_url_crawler import crawl
-
-school_name = "CHUHAI"
+from DDLNotifier.email_sender import send_email
+from DDLNotifier.config import CONFIG  # Replace with your actual email module
+from DDLNotifier.P015_SMU.program_url_crawler import crawl
 
 # Constants
 BASE_PATH = os.path.dirname(os.path.abspath(__file__))
+
+school_name = BASE_PATH.split('_')[-1]
 PROGRAM_DATA_EXCEL = os.path.join(BASE_PATH, 'programs.xlsx')  # CSV file with current program data
 
-recipient_email = 'suki@itongzhuo.com'  # Replace with your actual email for notifications
+recipient_email = CONFIG.RECIPEINT_EMAIL  # Replace with your actual email for notifications
 # recipient_email = 'yamy12344@gmail.com'  # Replace with your actual email for notifications
 SAVE_PATH_OLD_XLSX = 'program_deadlines.xlsx'  # Save path for the old Excel file
 SAVE_PATH_NEW_XLSX = 'program_deadlines.xlsx'  # Save path for the new Excel file
@@ -25,21 +26,7 @@ SAVE_PATH_TMP_XLSX = os.path.join(BASE_PATH, SAVE_PATH_TMP_XLSX)  # Save path fo
 
 def get_deadline(url):
     # 发送GET请求
-    response = requests.get(url)
-    response.encoding = 'utf-8'
-    soup = BeautifulSoup(response.text, 'html.parser')
-
-    # 查找“Study Mode”标签
-    study_mode_tag = soup.find('span', class_="icon-title-txt__title", text='Study Mode')
-    if study_mode_tag:
-        # 检查是否包含“Full-time”
-        if 'Full-time' in study_mode_tag.parent.get_text():
-            # 存在“Full-time”时，继续查找截止日期标签
-            deadline_tag = soup.find('span', class_="icon-title-txt__title", text='Cut Off Date')
-            if deadline_tag and deadline_tag.next_sibling:
-                return deadline_tag.next_sibling.get_text(strip=True)
-            return 'Deadline not found'
-    return 'No Full-time program found'
+    return "default deadline"
 
 
 def get_current_programs_and_urls():
@@ -66,7 +53,7 @@ def compare_and_notify(old_data, new_data):
             if old_row['DeadlineText'].values[0] != new_row['DeadlineText']:
                 changes_detected = True
                 subject = f"Change Detected in Deadline for {program_name}"
-                body = (f"School: HKUST, Program: {program_name}\n"
+                body = (f"School: {school_name}, Program: {program_name}\n"
                         f"Old Deadline: {old_row['DeadlineText'].values[0]}\n"
                         f"New Deadline: {new_row['DeadlineText']}\n\n")
                 send_email(subject, body, recipient_email)  # Implement this function in your email module

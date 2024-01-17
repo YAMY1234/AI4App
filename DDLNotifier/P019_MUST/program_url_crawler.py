@@ -1,11 +1,12 @@
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
-import os
+import osfrom urllib.parse import urljoin
+
 PROGRAM_DATA_EXCEL = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'programs.xlsx')
 def crawl():
     # 发送GET请求并获取网页内容
-    url = "https://gs.hkbu.edu.hk/programmes?type%5B%5D=taught-postgraduate-programmes"
+    url = "https://www.must.edu.mo/cn/sgs/admission/master"
     response = requests.get(url)
 
     # 使用BeautifulSoup解析网页内容
@@ -19,17 +20,19 @@ def crawl():
 
     # 遍历每个课程元素并提取信息
     for course_element in course_elements:
-        program_name = course_element.text.strip()
-        if not ("/programmes/" in course_element["href"]):
-            continue
-        url_link = "https://gs.hkbu.edu.hk" + course_element["href"]
+        if "/programme/m" in course_element['href']:
+            program_name = course_element.text.strip()
+            url_link = "https://www.must.edu.mo" + course_element['href']
 
-        # 将信息添加到DataFrame中
-        data["ProgramName"].append(program_name)
-        data["URL Link"].append(url_link)
+            # 将信息添加到DataFrame中
+            data["ProgramName"].append(program_name)
+            data["URL Link"].append(url_link)
 
     # 创建DataFrame
     df = pd.DataFrame(data)
 
     # 将数据保存到Excel文件
     df.to_excel(PROGRAM_DATA_EXCEL, index=False)
+
+# 调用爬虫函数
+crawl()

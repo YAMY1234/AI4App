@@ -6,17 +6,16 @@ from bs4 import BeautifulSoup
 import os
 from DDLNotifier.email_sender import send_email
 from DDLNotifier.config import CONFIG  # Replace with your actual email module
-from DDLNotifier.P010_HKMU.program_url_crawler import crawl
-
-BASE_PATH = os.path.dirname(os.path.abspath(__file__))
-school_name = BASE_PATH.split('_')[-1]
+from DDLNotifier.P019_MUST.program_url_crawler import crawl
 
 # Constants
+BASE_PATH = os.path.dirname(os.path.abspath(__file__))
 
+school_name = BASE_PATH.split('_')[-1]
 PROGRAM_DATA_EXCEL = os.path.join(BASE_PATH, 'programs.xlsx')  # CSV file with current program data
 
-recipient_email = CONFIG.RECIPEINT_EMAIL  # Replace with your actual email for notifications
-# recipient_email = 'yamy12344@gmail.com'  # Replace with your actual email for notifications
+# recipient_email = CONFIG.RECIPEINT_EMAIL  # Replace with your actual email for notifications
+recipient_email = 'yamy12344@gmail.com'  # Replace with your actual email for notifications
 SAVE_PATH_OLD_XLSX = 'program_deadlines.xlsx'  # Save path for the old Excel file
 SAVE_PATH_NEW_XLSX = 'program_deadlines.xlsx'  # Save path for the new Excel file
 SAVE_PATH_TMP_XLSX = 'program_deadlines_temp.xlsx'  # Save path for the new Excel file
@@ -25,38 +24,35 @@ SAVE_PATH_NEW_XLSX = os.path.join(BASE_PATH, SAVE_PATH_NEW_XLSX)  # Save path fo
 SAVE_PATH_TMP_XLSX = os.path.join(BASE_PATH, SAVE_PATH_TMP_XLSX)  # Save path for the CSV
 
 
-def extract_dates_from_hkmu():
-    url = "https://admissions.hkmu.edu.hk/sc/tpg/online-application/"
+def constant_deadline():
+    url = "https://www.must.edu.mo/cn/sgs/admission/oas/important-dates"
     response = requests.get(url)
-    soup = BeautifulSoup(response.content, 'html.parser')
+    soup = BeautifulSoup(response.text, 'html.parser')
 
-    # Extracting specific parts of the webpage
-    extracted_text = []
+    # 查找包含“报名期”文本的<strong>标签
+    registration_period_heading = soup.find('strong', text='报名期')
 
-    # Extracting the dates for the first table
-    table1_texts = soup.select('.jet-table__body-row.elementor-repeater-item-27f0b06 .jet-table__cell-text')
-    for text in table1_texts:
-        extracted_text.append(text.get_text(strip=True))
+    # 如果找到了这个标签，继续查找下一个<tr>标签
+    if registration_period_heading:
+        tr = registration_period_heading.find_parent('tr')
+        if tr:
+            # 在<tr>标签中查找包含日期的<td>标签
+            date_cells = tr.find_all('td')
+            dates = [date_cell.text.strip() for date_cell in date_cells[1:4]]
 
-    # Extracting the dates for the second table
-    table2_texts = soup.select('.jet-table__body-row.elementor-repeater-item-27f0b06 .jet-table__cell-text')
-    for text in table2_texts:
-        extracted_text.append(text.get_text(strip=True))
+            # 拼接成一个字符串返回
+            return ', '.join(dates)
 
-    return '\n'.join(extracted_text)
+    return "日期未找到"
 
 
-GLOBAL_DEADLINE = extract_dates_from_hkmu()
-
+global_deadline = constant_deadline()
 
 def get_deadline(url):
-    # 发送GET请求
-    return GLOBAL_DEADLINE
-
+    return global_deadline
 
 def get_current_programs_and_urls():
     return pd.read_excel(PROGRAM_DATA_EXCEL)
-
 
 def compare_and_notify(old_data, new_data):
     with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "notification_log.txt"), "a") as log_file:

@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup
 import requests
 import pandas as pd
 from DDLNotifier.email_sender import send_email
+from DDLNotifier.config import CONFIG
 import os
 
 # Constants
@@ -11,7 +12,7 @@ URL = 'https://www.cityu.edu.hk/pg/taught-postgraduate-programmes/list'
 SAVE_PATH_HTML = 'previous_page.html'  # Save path for the HTML
 SAVE_PATH_CSV = 'taught_programmes_data.csv'  # Save path for the CSV
 # recipient_email = 'yamy12344@gmail.com'  # Replace with your actual email for testing
-recipient_email = 'suki@itongzhuo.com'  # Replace with your actual email for testing
+recipient_email = CONFIG.RECIPEINT_EMAIL  # Replace with your actual email for testing
 
 
 def download_html(url):

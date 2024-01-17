@@ -14,9 +14,8 @@ import os.path
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
-
+import os
 PROGRAM_DATA_EXCEL = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'programs.xlsx')
-
 def crawl():
     # 网页 URL
     url = "https://prog-crs.hkust.edu.hk/pgprog/print_result.php?t=1703812719852&token_post=8551fa5718176bc683d62dbeaaf9f305&is_s=Y&keyword=&check-all-degree-option=undefined&check-allsub-degree-option1=undefined&check-allsub-degree-option2=Y&school[]=SSCI&school[]=SENG&school[]=SBM&school[]=SHSS&school[]=IPO&area[]=1&area[]=7&area[]=11&area[]=12&area[]=3&area[]=13&area[]=14&area[]=8&area[]=9&area[]=10&degree[]=DBA&degree[]=MBA&degree[]=MSC&degree[]=MA&degree[]=MPM&degree[]=MPP&degree[]=PGD&year=2024-25"
