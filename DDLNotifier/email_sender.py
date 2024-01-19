@@ -4,6 +4,8 @@ from email.mime.text import MIMEText
 
 
 def send_email(subject, body, recipient_email):
+    if recipient_email is None:
+        return
     try:
         sender_email = "yamy1234@foxmail.com"
         sender_password = "ryhattpwdsgedjha"

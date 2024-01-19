@@ -7,7 +7,7 @@ import os
 from DDLNotifier.email_sender import send_email
 from DDLNotifier.config import CONFIG  # Replace with your actual email module
 from DDLNotifier.P012_CHUHAI.program_url_crawler import crawl
-
+import re
 # Constants
 BASE_PATH = os.path.dirname(os.path.abspath(__file__))
 school_name = BASE_PATH.split('_')[-1]
@@ -31,17 +31,22 @@ def get_deadline(url):
     response.encoding = 'utf-8'
     soup = BeautifulSoup(response.text, 'html.parser')
 
-    # 查找“Study Mode”标签
-    study_mode_tag = soup.find('span', class_="icon-title-txt__title", text='Study Mode')
-    if study_mode_tag:
-        # 检查是否包含“Full-time”
-        if 'Full-time' in study_mode_tag.parent.get_text():
-            # 存在“Full-time”时，继续查找截止日期标签
-            deadline_tag = soup.find('span', class_="icon-title-txt__title", text='Cut Off Date')
-            if deadline_tag and deadline_tag.next_sibling:
-                return deadline_tag.next_sibling.get_text(strip=True)
-            return 'Deadline not found'
-    return 'No Full-time program found'
+    # 使用正则表达式进行灵活匹配
+    start_tag = soup.find('h3', text=re.compile('Application Periods|報名日期'))
+    end_tag = soup.find('h3', text=re.compile('How to Apply|報名方法'))
+
+    if start_tag and end_tag:
+        content = []
+        current_tag = start_tag.next_sibling
+        while current_tag and current_tag != end_tag:
+            if current_tag.name and current_tag.name not in ['h3', 'script', 'style']:
+                content.append(current_tag.get_text(strip=True))
+            current_tag = current_tag.next_sibling
+
+        return '\n'.join(content)
+    else:
+        return 'Application Periods or How to Apply section not found'
+
 
 
 def get_current_programs_and_urls():
