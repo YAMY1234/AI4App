@@ -42,7 +42,7 @@ def constant_deadline():
 
     return "日期未找到"
 
-global_deadline = constant_deadline()
+global_deadline = "日期未找到"
 
 def get_deadline(url):
     return global_deadline
@@ -90,6 +90,8 @@ def compare_and_notify(old_data, new_data):
 
 
 def main():
+    global global_deadline
+    global_deadline = constant_deadline()
     crawl()
     # Read current program data
     current_program_data = get_current_programs_and_urls()
