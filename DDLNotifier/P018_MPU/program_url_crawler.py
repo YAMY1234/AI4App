@@ -1,7 +1,8 @@
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
-import osfrom urllib.parse import urljoin
+import os
+from urllib.parse import urljoin
 
 PROGRAM_DATA_EXCEL = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'programs.xlsx')
 def crawl():
