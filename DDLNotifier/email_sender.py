@@ -2,6 +2,7 @@ import smtplib
 from email.mime.text import MIMEText
 
 
+
 def send_email(subject, body, recipient_email):
     try:
         sender_email = "yamy1234@foxmail.com"
