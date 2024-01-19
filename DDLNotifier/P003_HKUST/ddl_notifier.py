@@ -26,7 +26,7 @@ SAVE_PATH_TMP_XLSX = os.path.join(BASE_PATH, SAVE_PATH_TMP_XLSX)  # Save path fo
 
 def get_deadline(url):
     # 发送GET请求
-    response = requests.get(url)
+    response = requests.get(url, verify=False)
     response.encoding = 'utf-8'  # 根据网页实际编码调整
     # 使用BeautifulSoup解析HTML
     soup = BeautifulSoup(response.text, 'html.parser')

@@ -5,7 +5,7 @@ url = 'https://prog-crs.hkust.edu.hk/pgprog/2024-25/mpm'  # 在这里填入你�
 
 def get_deadline(url):
     # 发送GET请求
-    response = requests.get(url)
+    response = requests.get(url, verify=False)
     response.encoding = 'utf-8'  # 根据网页实际编码调整
 
     # 使用BeautifulSoup解析HTML

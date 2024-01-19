@@ -41,7 +41,7 @@ def constant_deadline():
         'Upgrade-Insecure-Requests': '1'
     }
 
-    response = requests.get(url)
+    response = requests.get(url, verify=False)
     
     soup = BeautifulSoup(response.text, 'html.parser')
 

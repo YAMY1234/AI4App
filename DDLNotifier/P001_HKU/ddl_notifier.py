@@ -15,7 +15,7 @@ recipient_email = CONFIG.RECIPEINT_EMAIL
 
 
 def download_html(url):
-    response = requests.get(url)
+    response = requests.get(url, verify=False)
     response.raise_for_status()
     return response.text
 

@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 
 def extract_dates_from_hkmu():
     url = "https://admissions.hkmu.edu.hk/sc/tpg/online-application/"
-    response = requests.get(url)
+    response = requests.get(url, verify=False)
     soup = BeautifulSoup(response.content, 'html.parser')
 
     # Extracting specific parts of the webpage

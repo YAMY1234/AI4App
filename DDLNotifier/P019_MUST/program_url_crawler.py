@@ -8,7 +8,7 @@ PROGRAM_DATA_EXCEL = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'p
 def crawl():
     # 发送GET请求并获取网页内容
     url = "https://www.must.edu.mo/cn/sgs/admission/master"
-    response = requests.get(url)
+    response = requests.get(url, verify=False)
 
     # 使用BeautifulSoup解析网页内容
     soup = BeautifulSoup(response.text, "html.parser")

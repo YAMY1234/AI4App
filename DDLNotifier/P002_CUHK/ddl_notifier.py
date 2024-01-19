@@ -17,7 +17,7 @@ recipient_email = CONFIG.RECIPEINT_EMAIL  # Replace with your actual email for t
 school_name = BASE_PATH.split('_')[-1]
 
 def download_html(url):
-    response = requests.get(url)
+    response = requests.get(url, verify=False)
     response.raise_for_status()
     return response.text
 

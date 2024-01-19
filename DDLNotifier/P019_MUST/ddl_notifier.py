@@ -26,7 +26,7 @@ SAVE_PATH_TMP_XLSX = os.path.join(BASE_PATH, SAVE_PATH_TMP_XLSX)  # Save path fo
 
 def constant_deadline():
     url = "https://www.must.edu.mo/cn/sgs/admission/oas/important-dates"
-    response = requests.get(url)
+    response = requests.get(url, verify=False)
     soup = BeautifulSoup(response.text, 'html.parser')
 
     # 查找包含“报名期”文本的<strong>标签

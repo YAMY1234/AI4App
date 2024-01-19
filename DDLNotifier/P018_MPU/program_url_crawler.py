@@ -13,7 +13,7 @@ def crawl():
     # relative_path = "admission_mainland/zh/postgraduate_mainland.php"
     # url = urljoin(base_url, relative_path)
     url = "https://www.mpu.edu.mo/admission_mainland/zh/postgraduate_mainland.php"
-    response = requests.get(url)
+    response = requests.get(url, verify=False)
 
 
     # 使用BeautifulSoup解析网页内容

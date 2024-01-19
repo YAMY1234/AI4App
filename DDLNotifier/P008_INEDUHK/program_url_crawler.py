@@ -5,7 +5,7 @@ import osPROGRAM_DATA_EXCEL = os.path.join(os.path.dirname(os.path.abspath(__fil
 def crawl():
     # 发送GET请求并获取网页内容
     url = "https://www.ln.edu.hk/sgs/taught-postgraduate-programmes/programme-on-offer"
-    response = requests.get(url)
+    response = requests.get(url, verify=False)
 
     # 使用BeautifulSoup解析网页内容
     soup = BeautifulSoup(response.text, "html.parser")
