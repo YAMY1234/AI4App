@@ -1,4 +1,6 @@
 from datetime import datetime
+import pycurl
+from io import BytesIO
 
 import pandas as pd
 import requests
@@ -23,10 +25,50 @@ SAVE_PATH_OLD_XLSX = os.path.join(BASE_PATH, SAVE_PATH_OLD_XLSX)  # Save path fo
 SAVE_PATH_NEW_XLSX = os.path.join(BASE_PATH, SAVE_PATH_NEW_XLSX)  # Save path for the CSV
 SAVE_PATH_TMP_XLSX = os.path.join(BASE_PATH, SAVE_PATH_TMP_XLSX)  # Save path for the CSV
 
+'''
+export OPENSSL_CONF=/etc/ssl/openssl.cnf
+python /root/AI4App/DDLNotifier/notifier_routine.py
+'''
+
+
+def get_with_pycurl(url):
+    buffer = BytesIO()  # 创建一个缓冲区以存储响应内容
+
+    c = pycurl.Curl()  # 创建一个 Curl 对象
+    c.setopt(c.URL, url)  # 设置请求的 URL
+    c.setopt(c.WRITEDATA, buffer)  # 将响应数据写入缓冲区
+    # 可选：忽略 SSL 证书验证（如果需要的话）
+    c.setopt(c.SSL_VERIFYPEER, 0)
+    c.setopt(c.SSL_VERIFYHOST, 0)
+
+    try:
+        c.perform()  # 执行请求
+    except pycurl.error as e:
+        print('Error:', e)
+    finally:
+        c.close()  # 关闭 Curl 对象
+
+    body = buffer.getvalue().decode('utf-8')  # 将响应内容转换为字符串
+    return body
+
 def constant_deadline():
     url = "https://www.mpu.edu.mo/admission_mainland/zh/pg_admissionroutes.php"
-    response = requests.get(url)
-    soup = BeautifulSoup(response.text, 'html.parser')
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3',
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+        'Accept-Language': 'en-US,en;q=0.5',
+        'Accept-Encoding': 'gzip, deflate, br',
+        'DNT': '1',  # Do Not Track Request Header
+        'Connection': 'keep-alive',
+        'Upgrade-Insecure-Requests': '1'
+    }
+
+    # response = session.get(url)
+    response_text = get_with_pycurl(url)
+    
+
+    # response = requests.get(url, verify=False)
+    soup = BeautifulSoup(response_text, 'html.parser')
 
     # 查找包含“硕士学位课程”文本的<strong>标签
     master_degree_heading = soup.find('strong', text='硕士学位课程')
