@@ -1,6 +1,4 @@
 from datetime import datetime
-import pycurl
-from io import BytesIO
 
 import pandas as pd
 import requests
@@ -31,26 +29,6 @@ python /root/AI4App/DDLNotifier/notifier_routine.py
 '''
 
 
-def get_with_pycurl(url):
-    buffer = BytesIO()  # 创建一个缓冲区以存储响应内容
-
-    c = pycurl.Curl()  # 创建一个 Curl 对象
-    c.setopt(c.URL, url)  # 设置请求的 URL
-    c.setopt(c.WRITEDATA, buffer)  # 将响应数据写入缓冲区
-    # 可选：忽略 SSL 证书验证（如果需要的话）
-    c.setopt(c.SSL_VERIFYPEER, 0)
-    c.setopt(c.SSL_VERIFYHOST, 0)
-
-    try:
-        c.perform()  # 执行请求
-    except pycurl.error as e:
-        print('Error:', e)
-    finally:
-        c.close()  # 关闭 Curl 对象
-
-    body = buffer.getvalue().decode('utf-8')  # 将响应内容转换为字符串
-    return body
-
 def constant_deadline():
     url = "https://www.mpu.edu.mo/admission_mainland/zh/pg_admissionroutes.php"
     headers = {
@@ -63,12 +41,9 @@ def constant_deadline():
         'Upgrade-Insecure-Requests': '1'
     }
 
-    # response = session.get(url)
-    response_text = get_with_pycurl(url)
+    response = requests.get(url)
     
-
-    # response = requests.get(url, verify=False)
-    soup = BeautifulSoup(response_text, 'html.parser')
+    soup = BeautifulSoup(response.text, 'html.parser')
 
     # 查找包含“硕士学位课程”文本的<strong>标签
     master_degree_heading = soup.find('strong', text='硕士学位课程')
