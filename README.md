@@ -34,3 +34,6 @@ ai_spider/
 5. **数据**: 所有的中间数据和最终结果都存放在`data`目录中。
 6. **运行**: `main.py`：主程序入口，可以选择对于不同的学校进行爬取。
 
+
+git fetch origin
+git reset --hard origin/main
