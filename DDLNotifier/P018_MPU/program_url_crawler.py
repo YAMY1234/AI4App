@@ -46,4 +46,5 @@ def crawl():
 
 
 # 调用爬虫函数
-crawl()
+if __name__ == '__main__':
+    crawl()
