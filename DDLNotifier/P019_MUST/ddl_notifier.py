@@ -46,7 +46,7 @@ def constant_deadline():
     return "日期未找到"
 
 
-global_deadline = constant_deadline()
+
 
 def get_deadline(url):
     return global_deadline
@@ -135,4 +135,5 @@ def main():
 
 # Run the main function
 if __name__ == "__main__":
+    global_deadline = constant_deadline()
     main()
