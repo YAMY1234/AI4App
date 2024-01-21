@@ -50,5 +50,5 @@ def crawl():
     df.to_excel(PROGRAM_DATA_EXCEL, index=False)
 
 
-# 运行爬虫
-crawl()
+# 运行爬虫if __name__ == "__main__":
+    crawl()
