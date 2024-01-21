@@ -1,7 +1,10 @@
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
-import osPROGRAM_DATA_EXCEL = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'programs.xlsx')
+import os
+
+PROGRAM_DATA_EXCEL = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'programs.xlsx')
+
 def crawl():
     # 发送GET请求并获取网页内容
     url = "https://www.ln.edu.hk/sgs/taught-postgraduate-programmes/programme-on-offer"
@@ -33,4 +36,5 @@ def crawl():
     df.to_excel(PROGRAM_DATA_EXCEL, index=False)
 
 # 运行爬虫
-crawl()
+if __name__ == "__main__":
+    crawl()
