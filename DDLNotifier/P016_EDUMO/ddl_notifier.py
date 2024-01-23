@@ -23,6 +23,7 @@ SAVE_PATH_OLD_XLSX = os.path.join(BASE_PATH, SAVE_PATH_OLD_XLSX)  # Save path fo
 SAVE_PATH_NEW_XLSX = os.path.join(BASE_PATH, SAVE_PATH_NEW_XLSX)  # Save path for the CSV
 SAVE_PATH_TMP_XLSX = os.path.join(BASE_PATH, SAVE_PATH_TMP_XLSX)  # Save path for the CSV
 
+constant_deadline = None
 
 
 def get_constant_deadline(url="https://grs.um.edu.mo/index.php/prospective-students/master-postgraduate-certificate-diploma-programmes/"):
@@ -97,6 +98,8 @@ def compare_and_notify(old_data, new_data):
 
 
 def main():
+    global constant_deadline
+    constant_deadline = get_constant_deadline()
     crawl()
     # Read current program data
     current_program_data = get_current_programs_and_urls()
@@ -138,5 +141,4 @@ def main():
 
 # Run the main function
 if __name__ == "__main__":
-    constant_deadline = get_constant_deadline()
     main()

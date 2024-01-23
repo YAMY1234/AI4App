@@ -29,7 +29,7 @@ python /root/AI4App/DDLNotifier/notifier_routine.py
 '''
 
 
-def constant_deadline():
+def get_constant_deadline():
     url = "https://www.mpu.edu.mo/admission_mainland/zh/pg_admissionroutes.php"
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3',
@@ -59,10 +59,10 @@ def constant_deadline():
 
     return "日期未找到"
 
-global_deadline = "日期未找到"
+constant_deadline = "日期未找到"
 
 def get_deadline(url):
-    return global_deadline
+    return constant_deadline
 
 def get_current_programs_and_urls():
     return pd.read_excel(PROGRAM_DATA_EXCEL)
@@ -107,8 +107,8 @@ def compare_and_notify(old_data, new_data):
 
 
 def main():
-    global global_deadline
-    global_deadline = constant_deadline()
+    global constant_deadline
+    constant_deadline = get_constant_deadline()
     crawl()
     # Read current program data
     current_program_data = get_current_programs_and_urls()

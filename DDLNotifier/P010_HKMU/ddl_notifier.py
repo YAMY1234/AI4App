@@ -46,12 +46,12 @@ def extract_dates_from_hkmu():
     return '\n'.join(extracted_text)
 
 
-GLOBAL_DEADLINE = extract_dates_from_hkmu()
+constant_deadline = None
 
 
 def get_deadline(url):
     # 发送GET请求
-    return GLOBAL_DEADLINE
+    return constant_deadline
 
 
 def get_current_programs_and_urls():
@@ -98,6 +98,8 @@ def compare_and_notify(old_data, new_data):
 
 
 def main():
+    global constant_deadline
+    constant_deadline = extract_dates_from_hkmu()
     crawl()
     # Read current program data
     current_program_data = get_current_programs_and_urls()

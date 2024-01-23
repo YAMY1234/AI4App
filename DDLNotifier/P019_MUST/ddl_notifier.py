@@ -23,8 +23,9 @@ SAVE_PATH_OLD_XLSX = os.path.join(BASE_PATH, SAVE_PATH_OLD_XLSX)  # Save path fo
 SAVE_PATH_NEW_XLSX = os.path.join(BASE_PATH, SAVE_PATH_NEW_XLSX)  # Save path for the CSV
 SAVE_PATH_TMP_XLSX = os.path.join(BASE_PATH, SAVE_PATH_TMP_XLSX)  # Save path for the CSV
 
+constant_deadline = None
 
-def constant_deadline():
+def get_constant_deadline():
     url = "https://www.must.edu.mo/cn/sgs/admission/oas/important-dates"
     response = requests.get(url, verify=False)
     soup = BeautifulSoup(response.text, 'html.parser')
@@ -49,7 +50,7 @@ def constant_deadline():
 
 
 def get_deadline(url):
-    return global_deadline
+    return constant_deadline
 
 def get_current_programs_and_urls():
     return pd.read_excel(PROGRAM_DATA_EXCEL)
@@ -94,6 +95,8 @@ def compare_and_notify(old_data, new_data):
 
 
 def main():
+    global constant_deadline
+    constant_deadline = get_constant_deadline()
     crawl()
     # Read current program data
     current_program_data = get_current_programs_and_urls()
@@ -135,5 +138,4 @@ def main():
 
 # Run the main function
 if __name__ == "__main__":
-    global_deadline = constant_deadline()
     main()
