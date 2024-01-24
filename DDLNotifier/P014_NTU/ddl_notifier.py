@@ -10,10 +10,9 @@ import os
 # Constants
 URL = 'https://wis.ntu.edu.sg/webexe/owa/coal_main.notice'
 BASE_PATH = os.path.dirname(os.path.abspath(__file__))
-SAVE_PATH_HTML = os.path.join(BASE_PATH, 'previous_page.html')  # Save path for the HTML
+
 SAVE_PATH_EXCEL = os.path.join(BASE_PATH, 'programme_data.xlsx')  # Save path for the CSV
-# recipient_email = CONFIG.RECIPEINT_EMAIL
-recipient_email = 'yamy12344@gmail.com'
+recipient_email = CONFIG.RECIPEINT_EMAIL
 
 school_name = BASE_PATH.split('_')[-1]
 

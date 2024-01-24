@@ -10,8 +10,8 @@ from DDLNotifier.config import CONFIG
 # Constants
 URL = 'https://www.gs.cuhk.edu.hk/admissions/admissions/application-deadline'
 BASE_PATH = os.path.dirname(os.path.abspath(__file__))
-SAVE_PATH_HTML = os.path.join(BASE_PATH, 'previous_page.html')  # Save path for the HTML
-SAVE_PATH_CSV = os.path.join(BASE_PATH, 'taught_programmes_data.csv')  # Save path for the CSV
+
+SAVE_PATH_XLSX = os.path.join(BASE_PATH, 'programme_data.xlsx')  # Save path for the CSV
 recipient_email = CONFIG.RECIPEINT_EMAIL  # Replace with your actual email for testing
 
 school_name = BASE_PATH.split('_')[-1]
@@ -118,8 +118,8 @@ def main():
     new_data = parse_html(new_html)
 
     # Read old data if it exists
-    if os.path.exists(SAVE_PATH_CSV):
-        old_data = pd.read_csv(SAVE_PATH_CSV)
+    if os.path.exists(SAVE_PATH_XLSX):
+        old_data = pd.read_excel(SAVE_PATH_XLSX)
     else:
         old_data = pd.DataFrame()
 
@@ -127,7 +127,7 @@ def main():
     compare_and_notify(old_data, new_data)
 
     # Save the new data for future comparisons
-    new_data.to_csv(SAVE_PATH_CSV, index=False)
+    new_data.to_excel(SAVE_PATH_XLSX, index=False)
 
 
 # Run the main function

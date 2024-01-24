@@ -9,8 +9,10 @@ from DDLNotifier.config import CONFIG
 
 # Constants
 URL = 'https://www.polyu.edu.hk/study/pg/taught-postgraduate'
-SAVE_PATH_EXCEL = 'taught_programmes_data_polyu.xlsx'
-recipient_email = CONFIG.RECIPEINT_EMAIL  # Replace with your actual email for notifications
+BASE_PATH = os.path.dirname(os.path.abspath(__file__))
+SAVE_PATH_EXCEL = os.path.join(BASE_PATH, 'programme_data.xlsx')  # Save path for the CSV
+recipient_email = CONFIG.RECIPEINT_EMAIL
+school_name = BASE_PATH.split('_')[-1]
 
 def download_html(url):
     headers = {
@@ -43,13 +45,12 @@ def parse_html(html):
             deadline = f"local: {local_deadline}, non-local: {non_local_deadline}"
         programmes_data.append([programme_code_and_entry, title + ' ' + subtitle, deadline])
 
-    return pd.DataFrame(programmes_data, columns=['Code', 'Programme Title', 'Deadline'])
+    return pd.DataFrame(programmes_data, columns=['Code', 'Programme', 'Deadline'])
 
-
-# Function to compare old and new programme data and notify if there are differences
-def compare_and_notify(old_data, new_data, recipient_email=recipient_email):
+def compare_and_notify(old_data, new_data):
     with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "notification_log.txt"), "a") as log_file:
         log_file.write(f"Function called at {datetime.now()}\n")
+
     if old_data.empty:
         print("No old data to compare with. Saving new data.")
         return
@@ -61,50 +62,45 @@ def compare_and_notify(old_data, new_data, recipient_email=recipient_email):
         changes_detected = []
         new_rows_detected = []
 
-        # Convert the DataFrame to a dictionary for easier comparison
-        old_data_dict = old_data.set_index('Programme Title').to_dict(orient='index')
-
         for index, new_row in new_data.iterrows():
-            programme_title = new_row['Programme Title']
-            deadline = new_row['Deadline']
-
             # Check if the row exists in the old data
-            old_row = old_data_dict.get(programme_title)
+            old_row = old_data.loc[old_data['Programme'] == new_row['Programme']]
 
             # If the row exists, check for deadline changes
-            if old_row and old_row['Deadline'] != deadline:
-                changes_detected.append({
-                    'Programme Title': programme_title,
-                    'Old Deadline': old_row['Deadline'],
-                    'New Deadline': deadline
-                })
-            elif not old_row:
+            if not old_row.empty:
+                if old_row['Deadline'].values[0] != new_row['Deadline']:
+                    changes_detected.append({
+                        'Programme': new_row['Programme'],
+                        'Old Deadline': old_row['Deadline'].values[0],
+                        'New Deadline': new_row['Deadline']
+                    })
+            else:
                 # If the row does not exist in old data, it's a new addition
                 new_rows_detected.append(new_row)
 
         # Preparing email content
         subject = "Changes Detected in Taught Programmes"
-        body = "school : {school_name}\n\n".format(school_name="PolyU")
+        body = ""
 
         if changes_detected:
             body += "Deadline changes detected:\n\n"
             for change in changes_detected:
-                body += (f"Programme: {change['Programme Title']}\n"
+                body += (f"School: {school_name}, Programme: {change['Programme']}\n"
                          f"Old Deadline: {change['Old Deadline']}\n"
                          f"New Deadline: {change['New Deadline']}\n\n")
 
         if new_rows_detected:
             body += "New programmes added:\n\n"
             for new_row in new_rows_detected:
-                body += (f"Programme: {new_row['Programme Title']}\n"
+                body += (f"School: {school_name}, Programme: {new_row['Programme']}\n"
                          f"Deadline: {new_row['Deadline']}\n\n")
 
         # Sending the email if there are any changes
         if changes_detected or new_rows_detected:
+            send_email(subject, body, recipient_email)
             with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "notification_log.txt"), "a") as log_file:
                 log_file.write(f"Email sent: {subject} | {body}\n")
-            send_email(subject, body, recipient_email)
-            print(f"Email notification sent for the detected changes: {body}")
+            print("Email notification sent for the detected changes.")
         else:
             print("No changes detected.")
 
