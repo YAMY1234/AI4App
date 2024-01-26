@@ -61,6 +61,8 @@ def compare_and_notify(old_data, new_data):
 
         changes_detected = []
         new_rows_detected = []
+        deleted_rows_detected = []
+
 
         for index, new_row in new_data.iterrows():
             # Check if the row exists in the old data

@@ -54,6 +54,7 @@ def compare_and_notify(old_data, new_data):
 
         changes_detected = []
         new_rows_detected = []
+        deleted_rows_detected = []
 
         for index, new_row in new_data.iterrows():
             # Check if the row exists in the old data
@@ -76,7 +77,7 @@ def compare_and_notify(old_data, new_data):
             new_row = new_data.loc[new_data['Programme'] == old_row['Programme']]
             if new_row.empty:
                 deleted_rows_detected.append(old_row)
-                
+
         # Preparing email content
         subject = "Changes Detected in Taught Programmes"
         body = ""
@@ -102,7 +103,8 @@ def compare_and_notify(old_data, new_data):
         # Sending the email if there are any changes
         if changes_detected or new_rows_detected or deleted_rows_detected:
             send_email(subject, body, recipient_email)
-            with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "notification_log.txt"), "a") as log_file:
+            with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "notification_log.txt"),
+                      "a") as log_file:
                 log_file.write(f"Email sent: {subject} | {body}\n")
             print("Email notification sent for the detected changes.")
         else:
@@ -110,7 +112,6 @@ def compare_and_notify(old_data, new_data):
 
     else:
         print("No changes detected in the data content.")
-
 
 def main():
     # Download HTML
