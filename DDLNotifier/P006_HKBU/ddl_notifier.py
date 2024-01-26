@@ -36,7 +36,7 @@ def get_deadline(url):
         # 检查是否包含“Full-time”
         if 'Full-time' in study_mode_tag.parent.get_text():
             # 存在“Full-time”时，继续查找截止日期标签
-            deadline_text = soup.find("span", class_="rte-field-row__title").parent.get_text(strip=True)
+            deadline_text = soup.find_all("span", class_="rte-field-row__title")[3].parent.get_text(strip=True)
             if deadline_text:
                 return deadline_text
             return 'Deadline not found'
