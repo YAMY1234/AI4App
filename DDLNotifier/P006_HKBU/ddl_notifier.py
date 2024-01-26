@@ -36,9 +36,9 @@ def get_deadline(url):
         # 检查是否包含“Full-time”
         if 'Full-time' in study_mode_tag.parent.get_text():
             # 存在“Full-time”时，继续查找截止日期标签
-            deadline_tag = soup.find('span', class_="icon-title-txt__title", text='Cut Off Date')
-            if deadline_tag and deadline_tag.next_sibling:
-                return deadline_tag.next_sibling.get_text(strip=True)
+            deadline_text = soup.find("span", class_="rte-field-row__title").parent.get_text(strip=True)
+            if deadline_text:
+                return deadline_text
             return 'Deadline not found'
     return 'No Full-time program found'
 
@@ -58,6 +58,7 @@ def compare_and_notify(old_data, new_data):
 
     changes_detected = False
     new_programs_detected = False
+    deleted_programs_detected = False
     print("Comparing old and new data...")
     for index, new_row in new_data.iterrows():
         program_name = new_row['ProgramName']
@@ -83,8 +84,21 @@ def compare_and_notify(old_data, new_data):
             send_email(subject, body, recipient_email)  # Implement this function in your email module
             with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "notification_log.txt"), "a") as log_file:
                 log_file.write(f"Email sent: {subject} | {body}\n")
+    
+    # New code for detecting deleted programs
+    for index, old_row in old_data.iterrows():
+        program_name = old_row['ProgramName']
+        new_row = new_data[new_data['ProgramName'] == program_name]
+        
+        if new_row.empty:
+            deleted_programs_detected = True
+            subject = f"School: {school_name}, Program Deleted: {program_name}"
+            body = (f"Deleted Program: {program_name}\n\n")
+            send_email(subject, body, recipient_email)  # Implement this function in your email module
+            with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "notification_log.txt"), "a") as log_file:
+                log_file.write(f"Email sent: {subject} | {body}\n")
 
-    return changes_detected or new_programs_detected
+    return changes_detected or new_programs_detected or deleted_programs_detected
 
 
 def main():

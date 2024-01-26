@@ -21,13 +21,15 @@ def crawl():
 
     # 遍历每个课程元素并提取信息
     for course_element in course_elements:
-        if "/programme/m" in course_element['href']:
-            program_name = course_element.text.strip()
-            url_link = "https://www.must.edu.mo" + course_element['href']
+        program_name = course_element.text.strip()
+        # 如果 program_name 不是以“硕士”结尾，则跳过
+        if not program_name.endswith("硕士"):
+            continue
+        url_link = "https://www.must.edu.mo" + course_element['href']
 
-            # 将信息添加到DataFrame中
-            data["ProgramName"].append(program_name)
-            data["URL Link"].append(url_link)
+        # 将信息添加到DataFrame中
+        data["ProgramName"].append(program_name)
+        data["URL Link"].append(url_link)
 
     # 创建DataFrame
     df = pd.DataFrame(data)

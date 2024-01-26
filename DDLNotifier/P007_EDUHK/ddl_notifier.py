@@ -28,23 +28,17 @@ def download_html(url):
 
 def parse_html(html):
     soup = BeautifulSoup(html, 'html.parser')
-
-    # 定位到 "Taught Postgraduate Programmes"
-    current_element = soup.find_all(text='Taught Postgraduate Programmes')[-1].parent
-
     programmes_data = []
 
-    # 逐个元素遍历，直到遇到 "Postgraduate Diploma Programmes"
-    while current_element:
-        if current_element.name == 'a' and 'Postgraduate Diploma Programmes' in current_element.text:
-            break
+    # 找到所有的 'faq_in_text' div元素
+    for div in soup.find_all('div', class_='faq_in_text'):
+        # 获取程序名称
+        title = div.find(class_='title').get_text(strip=True)
 
-        if 'faq_loop' in current_element.get('class', []):  # 检查是否是项目的HTML块
-            title = current_element.find(class_='title').get_text(strip=True)
-            deadline = current_element.find(class_='editor').get_text(strip=True)
-            programmes_data.append([title, deadline])
+        # 获取截止日期
+        deadline = div.find(class_='editor').get_text(strip=True)
 
-        current_element = current_element.find_next()
+        programmes_data.append([title, deadline])
 
     return pd.DataFrame(programmes_data, columns=['Programme', 'Deadline'])
 
@@ -80,6 +74,12 @@ def compare_and_notify(old_data, new_data):
                 # If the row does not exist in old data, it's a new addition
                 new_rows_detected.append(new_row)
 
+        # Check for deleted programmes
+        for index, old_row in old_data.iterrows():
+            new_row = new_data.loc[new_data['Programme'] == old_row['Programme']]
+            if new_row.empty:
+                deleted_rows_detected.append(old_row)
+                
         # Preparing email content
         subject = "Changes Detected in Taught Programmes"
         body = ""
@@ -97,8 +97,13 @@ def compare_and_notify(old_data, new_data):
                 body += (f"School: {school_name}, Programme: {new_row['Programme']}\n"
                          f"Deadline: {new_row['Deadline']}\n\n")
 
+        if deleted_rows_detected:
+            body += "Programmes deleted:\n\n"
+            for del_row in deleted_rows_detected:
+                body += f"School: {school_name}, Programme: {del_row['Programme']}\n\n"
+
         # Sending the email if there are any changes
-        if changes_detected or new_rows_detected:
+        if changes_detected or new_rows_detected or deleted_rows_detected:
             send_email(subject, body, recipient_email)
             with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "notification_log.txt"), "a") as log_file:
                 log_file.write(f"Email sent: {subject} | {body}\n")

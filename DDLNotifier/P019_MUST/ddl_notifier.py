@@ -14,8 +14,8 @@ BASE_PATH = os.path.dirname(os.path.abspath(__file__))
 school_name = BASE_PATH.split('_')[-1]
 PROGRAM_DATA_EXCEL = os.path.join(BASE_PATH, 'programs.xlsx')  # CSV file with current program data
 
-# recipient_email = CONFIG.RECIPEINT_EMAIL  # Replace with your actual email for notifications
-recipient_email = 'yamy12344@gmail.com'  # Replace with your actual email for notifications
+recipient_email = CONFIG.RECIPEINT_EMAIL  # Replace with your actual email for notifications
+
 SAVE_PATH_OLD_XLSX = 'program_deadlines.xlsx'  # Save path for the old Excel file
 SAVE_PATH_NEW_XLSX = 'program_deadlines.xlsx'  # Save path for the new Excel file
 SAVE_PATH_TMP_XLSX = 'program_deadlines_temp.xlsx'  # Save path for the new Excel file
@@ -65,6 +65,7 @@ def compare_and_notify(old_data, new_data):
 
     changes_detected = False
     new_programs_detected = False
+    deleted_programs_detected = False
     print("Comparing old and new data...")
     for index, new_row in new_data.iterrows():
         program_name = new_row['ProgramName']
@@ -90,8 +91,21 @@ def compare_and_notify(old_data, new_data):
             send_email(subject, body, recipient_email)  # Implement this function in your email module
             with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "notification_log.txt"), "a") as log_file:
                 log_file.write(f"Email sent: {subject} | {body}\n")
+    
+    # New code for detecting deleted programs
+    for index, old_row in old_data.iterrows():
+        program_name = old_row['ProgramName']
+        new_row = new_data[new_data['ProgramName'] == program_name]
+        
+        if new_row.empty:
+            deleted_programs_detected = True
+            subject = f"School: {school_name}, Program Deleted: {program_name}"
+            body = (f"Deleted Program: {program_name}\n\n")
+            send_email(subject, body, recipient_email)  # Implement this function in your email module
+            with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "notification_log.txt"), "a") as log_file:
+                log_file.write(f"Email sent: {subject} | {body}\n")
 
-    return changes_detected or new_programs_detected
+    return changes_detected or new_programs_detected or deleted_programs_detected
 
 
 def main():

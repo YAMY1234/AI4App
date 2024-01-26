@@ -86,6 +86,12 @@ def compare_and_notify(old_data, new_data):
                 # If the row does not exist in old data, it's a new addition
                 new_rows_detected.append(new_row)
 
+        # Check for deleted programmes
+        for index, old_row in old_data.iterrows():
+            new_row = new_data.loc[new_data['Programme'] == old_row['Programme']]
+            if new_row.empty:
+                deleted_rows_detected.append(old_row)
+                
         # Preparing email content
         subject = "Changes Detected in Taught Programmes"
         body = ""
@@ -103,8 +109,13 @@ def compare_and_notify(old_data, new_data):
                 body += (f"School: {school_name}, Programme: {new_row['Programme']}\n"
                          f"Deadline: {new_row['Deadline']}\n\n")
 
+        if deleted_rows_detected:
+            body += "Programmes deleted:\n\n"
+            for del_row in deleted_rows_detected:
+                body += f"School: {school_name}, Programme: {del_row['Programme']}\n\n"
+
         # Sending the email if there are any changes
-        if changes_detected or new_rows_detected:
+        if changes_detected or new_rows_detected or deleted_rows_detected:
             send_email(subject, body, recipient_email)
             with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "notification_log.txt"), "a") as log_file:
                 log_file.write(f"Email sent: {subject} | {body}\n")

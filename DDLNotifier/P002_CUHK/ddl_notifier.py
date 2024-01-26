@@ -32,8 +32,8 @@ def parse_html(html):
     # Extracting each programme's deadlines from all the right columns
     for right_col in right_cols:
         # The first 'div' with class 'application-deadline-tb-txt' contains the programme name
-        programme_name_div = right_col.find('div', class_='application-deadline-tb-txt')
-        if programme_name_div:
+        programme_name_divs = right_col.find_all('div', class_='application-deadline-tb-txt')
+        for programme_name_div in programme_name_divs:
             programme_name = programme_name_div.text.strip()
             if programme_name == 'Taught Programmes':
                 continue
