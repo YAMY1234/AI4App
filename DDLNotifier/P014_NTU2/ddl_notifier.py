@@ -50,7 +50,7 @@ def parse_html(html):
             programmes_data.append([program_name, deadline])
 
     # 创建 DataFrame
-    return pd.DataFrame(programmes_data, columns=['Program Name', 'Deadline'])
+    return pd.DataFrame(programmes_data, columns=['Programme', 'Deadline'])
 
 
 
