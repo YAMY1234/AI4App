@@ -5,7 +5,8 @@ import os
 PROGRAM_DATA_EXCEL = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'programs.xlsx')
 def crawl():
     # 发送GET请求并获取网页内容
-    url = "https://gs.hkbu.edu.hk/programmes?type%5B%5D=taught-postgraduate-programmes"
+    # url = "https://gs.hkbu.edu.hk/programmes?type%5B%5D=taught-postgraduate-programmes"
+    url = "https://ar.hkbu.edu.hk/tpg-admissions/programmes?type%5B%5D=taught-postgraduate-programmes&keywords="
     response = requests.get(url, verify=False)
 
     # 使用BeautifulSoup解析网页内容
@@ -22,7 +23,7 @@ def crawl():
         program_name = course_element.text.strip()
         if not ("/programmes/" in course_element["href"]):
             continue
-        url_link = "https://gs.hkbu.edu.hk" + course_element["href"]
+        url_link = "https://ar.hkbu.edu.hk" + course_element["href"]
 
         # 将信息添加到DataFrame中
         data["ProgramName"].append(program_name)
@@ -33,3 +34,7 @@ def crawl():
 
     # 将数据保存到Excel文件
     df.to_excel(PROGRAM_DATA_EXCEL, index=False)
+
+
+if __name__ == "__main__":
+    crawl()
