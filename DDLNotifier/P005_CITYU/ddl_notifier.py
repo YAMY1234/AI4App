@@ -57,19 +57,21 @@ def download_html(url):
 
 
 def parse_html(html):
-    classes = ['CB', 'CENG', 'CH', 'CSCI', 'VM', 'SM', 'DS', 'E2', 'FL']
+    # classes = ['CAI', 'CB', 'CENG', 'CH', 'CSCI', 'VM', 'SM', 'DS', 'E2', 'FL']
     soup = BeautifulSoup(html, 'html.parser')
-    rows = soup.find_all('tr', class_=classes)
+    # rows = soup.find_all('tr', class_=classes)
+    rows = soup.find_all('tr')
     programmes_data = []
     for row in rows:
-        columns = row.find_all('td')
-        if columns:
-            prog_code = columns[0].get_text(strip=True)
-            prog_title = columns[1].get_text(strip=True).split('\n')[0]
-            local_deadline = columns[3].get_text(strip=True)
-            non_local_deadline = columns[4].get_text(strip=True)
-            deadline = "local: " + local_deadline + "\n" + "non-local: " + non_local_deadline + "\n"
-            programmes_data.append([prog_code, prog_title, deadline])
+        if row.get('class'):
+            columns = row.find_all('td')
+            if columns:
+                prog_code = columns[0].get_text(strip=True)
+                prog_title = columns[1].get_text(strip=True).split('\n')[0]
+                local_deadline = columns[3].get_text(strip=True)
+                non_local_deadline = columns[4].get_text(strip=True)
+                deadline = "local: " + local_deadline + "\n" + "non-local: " + non_local_deadline + "\n"
+                programmes_data.append([prog_code, prog_title, deadline])
     return pd.DataFrame(programmes_data, columns=['Code', 'Programme', 'Deadline'])
 
 
