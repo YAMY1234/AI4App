@@ -36,7 +36,7 @@ def parse_html(html):
             deadlines = columns[2].get_text(strip=True)
             programmes_data.append([programme_name, deadlines])
 
-    return pd.DataFrame(programmes_data, columns=['Programme', 'Deadlines'])
+    return pd.DataFrame(programmes_data, columns=['Programme', 'Deadline'])
 
 
 
