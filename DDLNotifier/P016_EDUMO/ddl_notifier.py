@@ -21,6 +21,7 @@ SAVE_PATH_OLD_XLSX = 'program_deadlines.xlsx'  # Save path for the old Excel fil
 SAVE_PATH_NEW_XLSX = 'program_deadlines.xlsx'  # Save path for the new Excel file
 SAVE_PATH_OLD_XLSX = os.path.join(BASE_PATH, SAVE_PATH_OLD_XLSX)  # Save path for the HTML
 SAVE_PATH_NEW_XLSX = os.path.join(BASE_PATH, SAVE_PATH_NEW_XLSX)  # Save path for the CSV
+log_file = os.path.join(BASE_PATH, "notification_log.txt")
 
 constant_deadline = None
 
@@ -87,7 +88,7 @@ def main():
 
     # If old data is not empty, compare and notify
     if not old_data.empty:
-        compare_and_notify(old_data, new_data)
+        compare_and_notify(old_data, new_data, log_file, school_name)
 
     # Save the new data for future comparisons
     new_data.to_excel(SAVE_PATH_NEW_XLSX, index=False)

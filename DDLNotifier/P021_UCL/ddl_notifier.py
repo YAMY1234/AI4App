@@ -85,7 +85,7 @@ def main():
 
     # If old data is not empty, compare and notify
     if not old_data.empty:
-        compare_and_notify(old_data, new_data)
+        compare_and_notify(old_data, new_data, log_file, school_name)
 
     # Save the new data for future comparisons
     new_data.to_excel(SAVE_PATH_NEW_XLSX, index=False)
