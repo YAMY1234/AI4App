@@ -38,8 +38,8 @@ def parse_html(html):
             if programme_name == 'Taught Programmes':
                 continue
             programme_name = programme_name.split('\n')[0].strip()
-            # Find all 'p' tags within this right_col div to get the deadlines
-            deadline_ps = right_col.find_all('p')
+            # Find all 'p' tags within this programme_name_div div to get the deadlines
+            deadline_ps = programme_name_div.find_all('p')
             ddls = []
             for deadline_p in deadline_ps:
                 deadline_info = deadline_p.get_text(strip=True)
