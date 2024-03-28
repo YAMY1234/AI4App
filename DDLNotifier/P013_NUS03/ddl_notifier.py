@@ -2,12 +2,19 @@ from datetime import datetime
 
 import pandas as pd
 import requests
+import sys
 from bs4 import BeautifulSoup
 import os
 from DDLNotifier.email_sender import send_email
 from DDLNotifier.config import CONFIG  # Replace with your actual email module
-from DDLNotifier.P013_NUS02.program_url_crawler import crawl
+# from DDLNotifier.P013_NUS03.program_url_crawler import crawl
+
+parent_dir = os.path.dirname(os.path.dirname(__file__))
+sys.path.append(parent_dir)
+
+from program_url_crawler import crawl
 from DDLNotifier.utils.compare_and_notify import compare_and_notify
+from DDLNotifier.utils.get_request_header import WebScraper
 
 # Constants
 BASE_PATH = os.path.dirname(os.path.abspath(__file__))
@@ -16,7 +23,6 @@ school_name = BASE_PATH.split('_')[-1]
 PROGRAM_DATA_EXCEL = os.path.join(BASE_PATH, 'programs.xlsx')  # CSV file with current program data
 
 recipient_email = CONFIG.RECIPEINT_EMAIL  # Replace with your actual email for notifications
-# recipient_email = 'yamy12344@gmail.com'  # Replace with your actual email for notifications
 SAVE_PATH_OLD_XLSX = 'program_deadlines.xlsx'  # Save path for the old Excel file
 SAVE_PATH_NEW_XLSX = 'program_deadlines.xlsx'  # Save path for the new Excel file
 SAVE_PATH_OLD_XLSX = os.path.join(BASE_PATH, SAVE_PATH_OLD_XLSX)  # Save path for the HTML
@@ -24,42 +30,33 @@ SAVE_PATH_NEW_XLSX = os.path.join(BASE_PATH, SAVE_PATH_NEW_XLSX)  # Save path fo
 log_file = os.path.join(BASE_PATH, "notification_log.txt")
 
 constant_deadline = None
-
-
-def get_constant_deadline(url="https://grs.um.edu.mo/index.php/prospective-students/master-postgraduate-certificate-diploma-programmes/"):
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.190 Safari/537.36",
-        # 其他headers...
-    }
-
-    response = requests.get(url, headers=headers)
-
-    if response.status_code == 200:
-        soup = BeautifulSoup(response.text, "html.parser")
-
-        # 找到所有的<tbody>标签
-        tbodies = soup.find_all('tbody')
-        if tbodies and len(tbodies) >= 2:
-            # 获取第二个<tbody>标签的所有文本内容
-            second_tbody = tbodies[0]
-            return '\n'.join(second_tbody.stripped_strings)
-        else:
-            print("未找到足够数量的<tbody>标签")
-    else:
-        print("无法获取网页内容，HTTP状态码:", response.status_code)
-
-    return None
+webScraper = WebScraper()
 
 def get_deadline(url):
     # 发送GET请求
-    return constant_deadline
+    url = url[-1] == '/' and url[:-1] or url
+    response_text = webScraper.get_html(url + "/application")
+    soup = BeautifulSoup(response_text, "html.parser")
+
+    # 查找包含"Programme Briefing"文本的<h4>标签
+    programme_briefing_h4 = soup.find("h4", string="Programme Briefing\n")
+    if not programme_briefing_h4:
+        programme_briefing_h4 = soup.find("h4", string="Programme Briefing")
+
+    if programme_briefing_h4:
+        # 找到紧接着的<div>标签
+        next_div = programme_briefing_h4.find_next("div")
+        if next_div:
+            # 提取<div>标签里的所有文本，并且用换行符链接
+            texts = next_div.get_text(separator="\n", strip=True)
+            return texts
+    return "Deadline information not found."
 
 def get_current_programs_and_urls():
     return pd.read_excel(PROGRAM_DATA_EXCEL)
 
 def main():
-    global constant_deadline
-    constant_deadline = get_constant_deadline()
+    # get_deadline("https://www.comp.nus.edu.sg/programmes/pg/phdis/")
     crawl()
     # Read current program data
     current_program_data = get_current_programs_and_urls()

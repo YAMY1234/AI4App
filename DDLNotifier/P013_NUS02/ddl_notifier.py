@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 import os
 from DDLNotifier.email_sender import send_email
 from DDLNotifier.config import CONFIG  # Replace with your actual email module
-from DDLNotifier.P016_EDUMO.program_url_crawler import crawl
+from DDLNotifier.P013_NUS02.program_url_crawler import crawl
 from DDLNotifier.utils.compare_and_notify import compare_and_notify
 
 # Constants

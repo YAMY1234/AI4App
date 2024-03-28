@@ -2,51 +2,55 @@ import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 import os
+from DDLNotifier.utils.get_request_header import get_cookie_string, get_html
 
 PROGRAM_DATA_EXCEL = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'programs.xlsx')
 
-def crawl(url="https://grs.um.edu.mo/index.php/prospective-students/master-postgraduate-certificate-diploma-programmes/"):
+
+def crawl(url="https://bschool.nus.edu.sg/"):
     headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.190 Safari/537.36",
-        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
-        "Accept-Language": "en-US,en;q=0.5",
-        "Referer": "https://www.google.com/",
-        "DNT": "1",
-        "Connection": "keep-alive",
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36",
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+        "Accept-Encoding": "gzip, deflate, br, zstd",
+        "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8",
+        "Cache-Control": "max-age=0",
+        "Sec-Ch-Ua": "\"Google Chrome\";v=\"123\", \"Not:A-Brand\";v=\"8\", \"Chromium\";v=\"123\"",
+        "Sec-Ch-Ua-Mobile": "?0",
+        "Sec-Ch-Ua-Platform": "\"macOS\"",
+        "Sec-Fetch-Dest": "document",
+        "Sec-Fetch-Mode": "navigate",
+        "Sec-Fetch-Site": "none",
+        "Sec-Fetch-User": "?1",
         "Upgrade-Insecure-Requests": "1",
     }
 
     response = requests.get(url, headers=headers)
+    response_text = response.text
 
-    if response.status_code == 200:
-        soup = BeautifulSoup(response.text, "html.parser")
+    if response.status_code != 200:
+        print("网页获取失败，URL不正确！！")
+    elif "ROBOT" in response_text or "robot" in response_text:
+        response_text = get_html(url)
 
-        # 修改lambda表达式，确保text不是None
-        master_programmes_th = soup.find_all('th', string=lambda
-            text: text and "Master’s Degree & Postgraduate Certificate/Diploma Programmes" in text)
-        if master_programmes_th:
-            last_master_programmes_th = master_programmes_th[-1]
+    soup = BeautifulSoup(response_text, "html.parser")
 
-            # 找到<th>标签后的所有<li>标签
-            li_tags = last_master_programmes_th.find_all_next('li')
+    # 找到页面上的所有<div class="col-lg-6">
+    col_lg_6_divs = soup.find_all('div', class_='tab-content home-column-main-tab-content-child-content')
 
-            data = {"ProgramName": [], "URL Link": []}
+    # 选择第二个和第三个<div class="col-lg-6">
+    target_divs = col_lg_6_divs[1:3]  # Python切片是左闭右开区间
 
-            # 遍历所有的<li>标签
-            for li in li_tags:
-                # 提取专业名称和链接
-                a_tag = li.find('a', href=True)
-                program_name = a_tag.get_text().strip() if a_tag else None
-                url_link = a_tag['href'] if a_tag else None
+    data = {"ProgramName": [], "URL Link": []}
 
-                if program_name and url_link:
-                    data["ProgramName"].append(program_name)
-                    data["URL Link"].append(url_link)
-        else:
-            print("未找到匹配的<th>标签")
-    else:
-        print("无法获取网页内容，HTTP状态码:", response.status_code)
-
+    for div in target_divs:
+        # 在每个目标<div>中查找<img>和<a>标签
+        img_tags = div.find_all('img', alt=True)
+        a_tags = div.find_all('a', href=True)
+        for img_tag, a_tag in zip(img_tags, a_tags):
+            program_name = img_tag['alt'].strip()
+            url_link = a_tag['href'].strip()
+            data["ProgramName"].append(program_name)
+            data["URL Link"].append(url_link)
     df = pd.DataFrame(data)
     df.to_excel("programs.xlsx", index=False)
 

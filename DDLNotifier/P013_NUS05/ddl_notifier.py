@@ -8,9 +8,10 @@ from DDLNotifier.config import CONFIG
 import pandas as pd
 import os
 from DDLNotifier.utils.compare_and_notify import compare_and_notify
+from DDLNotifier.utils.get_request_header import WebScraper
 
 # Constants
-URL = 'https://fass.nus.edu.sg/prospective-students/graduate/coursework-programmes/application-process-gradcoursework/'
+URL = 'https://cde.nus.edu.sg/graduate/graduate-programmes-by-coursework/application-period/'
 BASE_PATH = os.path.dirname(os.path.abspath(__file__))
 
 SAVE_PATH_EXCEL = os.path.join(BASE_PATH, 'programme_data.xlsx')  # Save path for the CSV
@@ -19,57 +20,48 @@ recipient_email = CONFIG.RECIPEINT_EMAIL
 school_name = BASE_PATH.split('_')[-1]
 log_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "notification_log.txt")
 
+webScrapper = WebScraper()
 
 def download_html(url):
-    session = requests.Session()
+    response_text = webScrapper.get_html(url)
+    return response_text
 
-    headers = {
-        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
-        "Accept-Encoding": "gzip, deflate, br, zstd",
-        "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8",
-        "Cache-Control": "max-age=0",
-        "Cookie": "visid_incap_2431398=SZ6bQTaURkCblUv1sBBvxqRl+mUAAAAAQUIPAAAAAABOors9ILWCvnWCTyRY2VN+; nlbi_2431398=MN5MTX2xMkjzPS33YtCAhAAAAACelH6MY7nuAk12AYS3gLLR; incap_ses_1350_2431398=5HeSMUXXuWVuAdAL4Cq8EqZl+mUAAAAASrtNkkzY4oUv3DO7AL1omg==; _ga=GA1.1.34324038.1710908840; visid_incap_1750112=b/7BY2A/RjqChmUzd3geTqdl+mUAAAAAQUIPAAAAAAAEaaEDlgeatEYknoYo0lnF; incap_ses_1350_1750112=XDsvW5JNpxOQBNAL4Cq8Eqdl+mUAAAAA3IBuxth1kEHaMzKHLGELnA==; _ga_DWXTFQZLLP=GS1.1.1710908839.1.1.1710909842.0.0.0",
-        "Sec-Ch-Ua-Mobile": "?0",
-        "Sec-Ch-Ua-Platform": "macOS",
-        "Sec-Fetch-Dest": "document",
-        "Sec-Fetch-Mode": "navigate",
-        "Sec-Fetch-Site": "none",
-        "Sec-Fetch-User": "?1",
-        "Upgrade-Insecure-Requests": "1",
-        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
-    }
-
-    # 随机延迟
-    time.sleep(random.uniform(1, 5))
-
-    response = session.get(url, headers=headers)
-    response.raise_for_status()
-    return response.text
 
 from bs4 import BeautifulSoup
 import pandas as pd
 
 def parse_html(html):
+    # Parse the HTML content
     soup = BeautifulSoup(html, 'html.parser')
-    programmes_data = []
 
-    # Skip the first row as it contains header information
-    rows = soup.find_all('tr')[1:]
+    # Initialize a list to hold the parsed data
+    parsed_data = []
+
+    # Find all 'tr' elements
+    rows = soup.find_all('tr')
 
     for row in rows:
-        columns = row.find_all('td')
-        if len(columns) == 3:  # Rows that start a new intake period
-            intake = columns[0].get_text(" ", strip=True)
-            application_period = columns[1].get_text(" ", strip=True)
-            programmes = columns[2].get_text("\n", strip=True).split('\n')
-        elif len(columns) == 2:  # Continuing rows for the same intake
-            application_period = columns[0].get_text(" ", strip=True)
-            programmes = columns[1].get_text("\n", strip=True).split('\n')
+        # For each 'tr', find all 'td' tags
+        tds = row.find_all('td')
 
-        for programme in programmes:
-            programmes_data.append([programme, f"{intake}: {application_period}"])
+        # Check if there are exactly three 'td' tags
+        if len(tds) == 3:
+            # Extract the program name from the first 'td' tag
+            program_name = tds[0].find('a').text.strip() if tds[0].find(
+                'a') else ''
+            if program_name == '':
+                continue
 
-    return pd.DataFrame(programmes_data, columns=['Programme', 'Deadline'])
+            # Extract the texts for the deadline from the second and third 'td' tags
+            deadline = tds[1].text.strip() + "\n" + tds[2].text.strip()
+
+            # Append the extracted data to the list
+            parsed_data.append([program_name, deadline])
+
+    # Convert the list to a DataFrame
+    df = pd.DataFrame(parsed_data, columns=['Programme', 'Deadline'])
+
+    return df
 
 
 def main():

@@ -7,12 +7,8 @@ from bs4 import BeautifulSoup
 import os
 from DDLNotifier.email_sender import send_email
 from DDLNotifier.config import CONFIG  # Replace with your actual email module
-# from DDLNotifier.P013_NUS03.program_url_crawler import crawl
+from DDLNotifier.P013_NUS04.program_url_crawler import crawl
 
-parent_dir = os.path.dirname(os.path.dirname(__file__))
-sys.path.append(parent_dir)
-
-from program_url_crawler import crawl
 from DDLNotifier.utils.compare_and_notify import compare_and_notify
 from DDLNotifier.utils.get_request_header import WebScraper
 
@@ -33,31 +29,29 @@ constant_deadline = None
 webScraper = WebScraper()
 
 def get_deadline(url):
-    # 发送GET请求
-    url = url[-1] == '/' and url[:-1] or url
-    response_text = webScraper.get_html(url + "/application")
+    response_text = webScraper.get_html(url)
+
     soup = BeautifulSoup(response_text, "html.parser")
 
-    # 查找包含"Programme Briefing"文本的<h4>标签
-    programme_briefing_h4 = soup.find("h4", string="Programme Briefing\n")
-    if not programme_briefing_h4:
-        programme_briefing_h4 = soup.find("h4", string="Programme Briefing")
+    # 尝试定位包含"Application Period:"文本的<strong>标签
+    application_period_strong = soup.find(lambda tag: tag.name == "strong" and "Application Period:" in tag.text)
 
-    if programme_briefing_h4:
-        # 找到紧接着的<div>标签
-        next_div = programme_briefing_h4.find_next("div")
-        if next_div:
-            # 提取<div>标签里的所有文本，并且用换行符链接
-            texts = next_div.get_text(separator="\n", strip=True)
-            return texts
-    return "Deadline information not found."
+    if application_period_strong:
+        # 获取这个<strong>标签的父级元素（假设是<td>，但这可以根据实际HTML结构调整）
+        parent_td = application_period_strong.find_parent()
+        if parent_td:
+            # 提取并返回父级元素内的所有文本信息，使用\n分隔，这假设日期信息紧跟在"Application Period:"后面
+            application_dates = parent_td.get_text(separator="\n", strip=True)
+            return application_dates
+
+    return "Application period information not found."
 
 def get_current_programs_and_urls():
     return pd.read_excel(PROGRAM_DATA_EXCEL)
 
 def main():
     # get_deadline("https://www.comp.nus.edu.sg/programmes/pg/phdis/")
-    crawl()
+    # crawl()
     # Read current program data
     current_program_data = get_current_programs_and_urls()
 
