@@ -1,0 +1,56 @@
+Function called at 2024-01-11 20:10:12.447500
+Function called at 2024-01-25 20:03:57.956298
+Function called at 2024-01-25 20:05:10.131781
+Function called at 2024-01-25 20:06:49.565850
+Function called at 2024-01-25 20:07:40.397615
+Function called at 2024-01-25 20:09:45.880395
+Function called at 2024-01-25 20:18:53.681614
+Function called at 2024-01-25 20:23:02.712363
+Function called at 2024-01-25 20:24:03.702316
+Function called at 2024-01-25 20:27:33.193562
+Function called at 2024-02-26 15:55:48.551728
+Function called at 2024-02-26 15:56:12.957168
+Function called at 2024-02-26 15:57:31.341963
+Email sent: Changes Detected in School: SMU's Programmes | Programmes deleted:
+
+School: SMU, Programme: MSc in CFO Leadership (MCFO)
+
+School: SMU, Programme: Master of Professional Accounting (MPA)
+
+School: SMU, Programme: MSc in Accounting (Data and Analytics)
+
+School: SMU, Programme: Executive MBA (EMBA)
+
+School: SMU, Programme: Master of Business Administration (MBA)
+
+School: SMU, Programme: MSc in Management (MiM)
+
+School: SMU, Programme: MSc in Applied Finance (MAF)
+
+School: SMU, Programme: MSc in Quantitative Finance (MQF)
+
+School: SMU, Programme: MSc in Wealth Management (MWM)
+
+School: SMU, Programme: Global Master of Finance Dual-Degree (GMF)
+
+School: SMU, Programme: MSc in Entrepreneurship and Innovation (MEI)
+
+School: SMU, Programme: MSc in Economics (MSE)
+
+School: SMU, Programme: MSc in Financial Economics (MSFE)
+
+School: SMU, Programme: Master of IT in Business (MITB)
+
+School: SMU, Programme: Juris Doctor (JD)
+
+School: SMU, Programme: Master of Laws (LLM)
+
+School: SMU, Programme: Master of Sustainability (MST)
+
+
+Function called at 2024-03-20 00:36:57.330988
+Function called at 2024-03-20 00:37:37.344148
+Function called at 2024-03-20 00:38:13.086363
+Function called at 2024-03-20 00:40:08.523973
+Function called at 2024-03-20 00:40:15.888438
+Function called at 2024-03-20 00:47:34.086032

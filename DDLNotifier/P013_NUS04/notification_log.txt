@@ -1,0 +1,275 @@
+Function called at 2024-01-11 20:10:12.447500
+Function called at 2024-01-25 20:03:57.956298
+Function called at 2024-01-25 20:05:10.131781
+Function called at 2024-01-25 20:06:49.565850
+Function called at 2024-01-25 20:07:40.397615
+Function called at 2024-01-25 20:09:45.880395
+Function called at 2024-01-25 20:18:53.681614
+Function called at 2024-01-25 20:23:02.712363
+Function called at 2024-01-25 20:24:03.702316
+Function called at 2024-01-25 20:27:33.193562
+Function called at 2024-02-26 15:55:48.551728
+Function called at 2024-02-26 15:56:12.957168
+Function called at 2024-02-26 15:57:31.341963
+Email sent: Changes Detected in School: SMU's Programmes | Programmes deleted:
+
+School: SMU, Programme: MSc in CFO Leadership (MCFO)
+
+School: SMU, Programme: Master of Professional Accounting (MPA)
+
+School: SMU, Programme: MSc in Accounting (Data and Analytics)
+
+School: SMU, Programme: Executive MBA (EMBA)
+
+School: SMU, Programme: Master of Business Administration (MBA)
+
+School: SMU, Programme: MSc in Management (MiM)
+
+School: SMU, Programme: MSc in Applied Finance (MAF)
+
+School: SMU, Programme: MSc in Quantitative Finance (MQF)
+
+School: SMU, Programme: MSc in Wealth Management (MWM)
+
+School: SMU, Programme: Global Master of Finance Dual-Degree (GMF)
+
+School: SMU, Programme: MSc in Entrepreneurship and Innovation (MEI)
+
+School: SMU, Programme: MSc in Economics (MSE)
+
+School: SMU, Programme: MSc in Financial Economics (MSFE)
+
+School: SMU, Programme: Master of IT in Business (MITB)
+
+School: SMU, Programme: Juris Doctor (JD)
+
+School: SMU, Programme: Master of Laws (LLM)
+
+School: SMU, Programme: Master of Sustainability (MST)
+
+
+Function called at 2024-03-20 00:36:57.330988
+Function called at 2024-03-20 00:37:37.344148
+Function called at 2024-03-20 00:38:13.086363
+Function called at 2024-03-20 00:40:08.523973
+Function called at 2024-03-20 00:40:15.888438
+Function called at 2024-03-20 00:47:34.086032
+Function called at 2024-03-27 19:12:21.656976
+Email sent: Changes Detected in School: NUS03's Programmes | New programmes added:
+
+School: NUS03, Programme: Information Systems
+Deadline: Deadline information not found.
+
+School: NUS03, Programme: Computer Engineering
+Deadline: Deadline information not found.
+
+School: NUS03, Programme: Business Analytics
+Deadline: Deadline information not found.
+
+School: NUS03, Programme: Information Security
+Deadline: Deadline information not found.
+
+School: NUS03, Programme: Information Systems
+Deadline: Deadline information not found.
+
+School: NUS03, Programme: MSc+PhD (by Research)
+Deadline: Deadline information not found.
+
+School: NUS03, Programme: Information Systems
+Deadline: Deadline information not found.
+
+School: NUS03, Programme: Infocomm Security
+Deadline: Deadline information not found.
+
+School: NUS03, Programme: Artificial Intelligence
+Deadline: Deadline information not found.
+
+School: NUS03, Programme: Master of Computing - General Track
+Deadline: Deadline information not found.
+
+School: NUS03, Programme: Master of Science in Digital FinTech
+Deadline: Deadline information not found.
+
+School: NUS03, Programme: Graduate Certificates
+Deadline: Deadline information not found.
+
+School: NUS03, Programme: Graduate Certificate in Computing Foundations
+Deadline: Deadline information not found.
+
+School: NUS03, Programme: Graduate Certificate in Analytics Technologies
+Deadline: Deadline information not found.
+
+School: NUS03, Programme: Bachelor of Technology
+Deadline: Deadline information not found.
+
+
+Function called at 2024-03-27 19:19:19.877666
+Email sent: Changes Detected in School: NUS03's Programmes | Deadline changes detected:
+
+School: NUS03, Programme: Computer Science
+Old Deadline: Deadline information not found.
+New Deadline: There will be an information session on:
+PhD in Information Systems and Analytics
+Date: 16 November 2023 (Thursday)
+Time: 3 pm (Singapore Time)
+Venue: Zoom Webinar Session
+To register, please
+click here
+. Registration will close on 14 November 2023, 2359 hours.
+If you have any queries regarding the programme, please
+contact us
+.
+
+School: NUS03, Programme: Information Systems
+Old Deadline: Deadline information not found.
+New Deadline: There will be an information session on:
+PhD in Information Systems and Analytics
+Date: 16 November 2023 (Thursday)
+Time: 3 pm (Singapore Time)
+Venue: Zoom Webinar Session
+To register, please
+click here
+. Registration will close on 14 November 2023, 2359 hours.
+If you have any queries regarding the programme, please
+contact us
+.
+
+School: NUS03, Programme: MSc+PhD (by Research)
+Old Deadline: Deadline information not found.
+New Deadline: There will be an information session on:
+NUS Computing Postgraduate Information Session July 2023
+Date: 1 July (Saturday)
+Time: 1 pm (Singapore Time)
+Venue: Shaw Foundation Alumni House Auditorium (Level 2)
+11 Kent Ridge Drive, Singapore 119244
+For information please click
+here
+.
+If you have any queries regarding the programme, please
+contact us
+.
+
+School: NUS03, Programme: Computer Science
+Old Deadline: Deadline information not found.
+New Deadline: MComp (Specialisations) will be having an information session on:
+Date: 31 October 2023 (Tuesday)
+Time: 7pm (Singapore Time)
+Venue: Zoom Webinar Session
+For more information, please
+click here
+.
+If you have any queries regarding the programme, please
+contact us
+.
+
+School: NUS03, Programme: Artificial Intelligence
+Old Deadline: Deadline information not found.
+New Deadline: MComp (Specialisations) will be having an information session on:
+Date: 31 October 2023 (Tuesday)
+Time: 7pm (Singapore Time)
+Venue: Zoom Webinar Session
+For more information, please
+click here
+.
+If you have any queries regarding the programme, please
+contact us
+.
+
+School: NUS03, Programme: Master of Computing - General Track
+Old Deadline: Deadline information not found.
+New Deadline: MComp (General Track) will be having an information session on:
+Date: 31 October 2023 (Tuesday)
+Time: 7pm (Singapore Time)
+Venue: Zoom Webinar Session
+For more information, please
+click here
+.
+If you have any queries regarding the programme, please
+contact us
+.
+
+School: NUS03, Programme: Master of Science in Digital FinTech
+Old Deadline: Deadline information not found.
+New Deadline: MSc DFinTech will be having an information session on:
+Date: 7 November 2023 (Tuesday)
+Time: 7pm (Singapore Time)
+Venue: Zoom Webinar Session
+For more information, please
+click here
+.
+If you have any queries regarding the programme, please
+contact us
+.
+
+
+Function called at 2024-03-27 19:21:20.350319
+Email sent: Changes Detected in School: NUS03's Programmes | Deadline changes detected:
+
+School: NUS03, Programme: Computer Science
+Old Deadline: Deadline information not found.
+New Deadline: There will be an information session on:
+PhD in Information Systems and Analytics
+Date: 16 November 2023 (Thursday)
+Time: 3 pm (Singapore Time)
+Venue: Zoom Webinar Session
+To register, please
+click here
+. Registration will close on 14 November 2023, 2359 hours.
+If you have any queries regarding the programme, please
+contact us
+.
+
+School: NUS03, Programme: Information Systems
+Old Deadline: Deadline information not found.
+New Deadline: There will be an information session on:
+PhD in Information Systems and Analytics
+Date: 16 November 2023 (Thursday)
+Time: 3 pm (Singapore Time)
+Venue: Zoom Webinar Session
+To register, please
+click here
+. Registration will close on 14 November 2023, 2359 hours.
+If you have any queries regarding the programme, please
+contact us
+.
+
+School: NUS03, Programme: Computer Science
+Old Deadline: Deadline information not found.
+New Deadline: MComp (Specialisations) will be having an information session on:
+Date: 31 October 2023 (Tuesday)
+Time: 7pm (Singapore Time)
+Venue: Zoom Webinar Session
+For more information, please
+click here
+.
+If you have any queries regarding the programme, please
+contact us
+.
+
+School: NUS03, Programme: Information Systems
+Old Deadline: Deadline information not found.
+New Deadline: MComp (Specialisations) will be having an information session on:
+Date: 31 October 2023 (Tuesday)
+Time: 7pm (Singapore Time)
+Venue: Zoom Webinar Session
+For more information, please
+click here
+.
+If you have any queries regarding the programme, please
+contact us
+.
+
+School: NUS03, Programme: Infocomm Security
+Old Deadline: Deadline information not found.
+New Deadline: MComp (Specialisations) will be having an information session on:
+Date: 31 October 2023 (Tuesday)
+Time: 7pm (Singapore Time)
+Venue: Zoom Webinar Session
+For more information, please
+click here
+.
+If you have any queries regarding the programme, please
+contact us
+.
+
+

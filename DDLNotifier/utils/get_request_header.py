@@ -1,49 +1,46 @@
 from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
-# 指定WebDriver的路径
-driver_path = '/path/to/your/chromedriver'
+class WebScraper:
+    def __init__(self):
+        options = Options()
+        options.add_argument('--headless')
+        options.add_argument('--no-sandbox')
+        options.add_argument('--disable-dev-shm-usage')
+        self.service = Service()
+        self.options = options
+        self.driver = webdriver.Chrome(service=self.service, options=self.options)
 
-# 初始化WebDriver
-# driver = webdriver.Chrome(driver_path)
+    def get_html(self, url):
+        driver = self.driver
+        driver.get(url)
+        WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.TAG_NAME, "body")))
+        html_source = driver.page_source
+        return html_source
 
-def get_cookie(url):
-    # 初始化WebDriver
-    if driver_path:
-        driver = webdriver.Chrome(driver_path)
-    else:
-        driver = webdriver.Chrome()
+    def get_cookies(self, url):
+        self.driver.get(url)
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.TAG_NAME, "body")))
+        cookies = self.driver.get_cookies()
+        return cookies
 
-    # 访问网页
-    driver.get(url)
+    @staticmethod
+    def format_cookies_for_request_header(cookies):
+        cookie_parts = [f"{cookie['name']}={cookie['value']}" for cookie in cookies]
+        cookie_header = "; ".join(cookie_parts)
+        return cookie_header
 
-    # 获取cookies
-    cookies = driver.get_cookies()
-
-    # 打印cookies
-    # print(cookies)
-    return cookies
-
-
-def format_cookies_for_request_header(cookies):
-    """
-    将cookie列表转换为适用于requests库的请求头格式。
-
-    参数:
-    - cookies (list): 一个包含多个cookie字典的列表。
-
-    返回:
-    - str: 格式化的Cookie头字符串。
-    """
-    cookie_parts = []
-    for cookie in cookies:
-        # 对于每个cookie字典，取出name和value，并将它们格式化为"name=value"的形式
-        part = f"{cookie['name']}={cookie['value']}"
-        cookie_parts.append(part)
-    # 将所有的"name=value"部分用"; "连接成一个字符串
-    cookie_header = "; ".join(cookie_parts)
-    return cookie_header
+    def get_cookie_string(self, url):
+        cookies = self.get_cookies(url)
+        cookie_str = self.format_cookies_for_request_header(cookies)
+        return cookie_str
 
 if __name__ == "__main__":
+    scraper = WebScraper()
     url = "https://bschool.nus.edu.sg/"
-    cookie = get_cookie(url)
-    print(format_cookies_for_request_header(cookie))
+    cookie_str = scraper.get_cookie_string(url)
+    print(cookie_str)
