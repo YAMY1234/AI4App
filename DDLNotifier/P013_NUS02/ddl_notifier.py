@@ -33,22 +33,39 @@ def get_constant_deadline(url="https://grs.um.edu.mo/index.php/prospective-stude
     }
 
     response = requests.get(url, headers=headers)
-
+    data = []
     if response.status_code == 200:
         soup = BeautifulSoup(response.text, "html.parser")
+        rows = soup.find_all('tr')
 
-        # 找到所有的<tbody>标签
-        tbodies = soup.find_all('tbody')
-        if tbodies and len(tbodies) >= 2:
-            # 获取第二个<tbody>标签的所有文本内容
-            second_tbody = tbodies[0]
-            return '\n'.join(second_tbody.stripped_strings)
-        else:
-            print("未找到足够数量的<tbody>标签")
+        current_deadline = None
+        for row in rows:
+            cells = row.find_all('th')
+            program_name = None
+            deadline = None
+
+            # Check for program name in the first cell
+            if cells:
+                program_name = cells[0].find('span').get_text(strip=True) if cells[0].find('span') else None
+
+            header_styles = [cell.get('style', '') for cell in cells]
+            if 'background-color: #4dbd87;' in ''.join(header_styles):
+                continue  # This is likely a title or header row, so skip it
+            # Check if there is a deadline in the row (assuming it's in the second cell)
+            if len(cells) > 1:
+                deadline = cells[1].find('span').get_text(strip=True) if cells[1].find('span') else None
+
+            # Update current deadline if a new one is found
+            if deadline:
+                current_deadline = deadline
+
+            # Append program and its deadline to data list
+            if program_name:
+                data.append({'Programme': program_name, 'Deadline': current_deadline})
     else:
-        print("无法获取网页内容，HTTP状态码:", response.status_code)
+        print("Failed to fetch webpage content, HTTP status code:", response.status_code)
 
-    return None
+    return data
 
 def get_deadline(url):
     # 发送GET请求

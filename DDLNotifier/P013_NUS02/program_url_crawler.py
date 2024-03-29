@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 import os
-from DDLNotifier.utils.get_request_header import get_cookie_string, get_html
+from DDLNotifier.utils.get_request_header import WebScraper
 
 PROGRAM_DATA_EXCEL = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'programs.xlsx')
 
@@ -27,10 +27,12 @@ def crawl(url="https://bschool.nus.edu.sg/"):
     response = requests.get(url, headers=headers)
     response_text = response.text
 
+    webScraper = WebScraper()
+
     if response.status_code != 200:
         print("网页获取失败，URL不正确！！")
     elif "ROBOT" in response_text or "robot" in response_text:
-        response_text = get_html(url)
+        response_text = webScraper.get_html(url)
 
     soup = BeautifulSoup(response_text, "html.parser")
 
@@ -44,7 +46,7 @@ def crawl(url="https://bschool.nus.edu.sg/"):
 
     for div in target_divs:
         # 在每个目标<div>中查找<img>和<a>标签
-        img_tags = div.find_all('img', alt=True)
+        img_tags = div.find_all('img', alt=True,  class_="lazyload img-fluid")
         a_tags = div.find_all('a', href=True)
         for img_tag, a_tag in zip(img_tags, a_tags):
             program_name = img_tag['alt'].strip()
