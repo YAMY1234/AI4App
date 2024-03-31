@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 import os
 from DDLNotifier.email_sender import send_email
 from DDLNotifier.config import CONFIG  # Replace with your actual email module
-from DDLNotifier.P013_NUS10.program_url_crawler import crawl
+from DDLNotifier.P013_NUS08.program_url_crawler import crawl
 from DDLNotifier.utils.compare_and_notify import compare_and_notify
 from DDLNotifier.utils.get_request_header import WebScraper
 
@@ -26,37 +26,41 @@ log_file = os.path.join(BASE_PATH, "notification_log.txt")
 
 constant_deadline = None
 
+url = "https://www.ystmusic.nus.edu.sg/admissions-how-to-apply-bmus-mmus-mmusl/"
 
-def get_constant_deadline(url="https://lkyspp.nus.edu.sg/graduate-admissions/admission-guide/how-to-apply"):
+
+def get_constant_deadline(url):
     webScraper = WebScraper()  # 假设WebScraper是已经定义好的用于获取HTML的类
     response_text = webScraper.get_html(url)
 
     soup = BeautifulSoup(response_text, "html.parser")
 
-    # Initialize a list to hold the parsed data
-
-    # Find all 'li' elements
-    items = soup.find_all('li')
+    # Initialize a string to hold the parsed deadlines
     deadline_str = ""
-    for item in items:
-        # Split the text of the 'li' element on the colon to separate the program name and the deadline
-        parts = item.text.split(':')
-        if len(parts) == 2 and 'year' in parts[1]:
-            program_name = parts[0].strip()
-            deadline = parts[1].strip()
-            deadline_str += f"{program_name}: {deadline}\n"
+
+    # Find the <p> elements containing the deadline information
+    p_elements = soup.select('p')
+    for p in p_elements:
+        if 'open on' in p.text or 'close on' in p.text:
+            # Extract and format the deadline information
+            deadline_info = p.text.strip().replace('\n', ' ')
+            deadline_str += f"{deadline_info}\n"
+
     return deadline_str
+
 
 def get_deadline(url):
     # 发送GET请求
     return constant_deadline
 
+
 def get_current_programs_and_urls():
     return pd.read_excel(PROGRAM_DATA_EXCEL)
 
+
 def main():
     global constant_deadline
-    constant_deadline = get_constant_deadline()
+    constant_deadline = get_constant_deadline(url)
     crawl()
     # Read current program data
     current_program_data = get_current_programs_and_urls()
