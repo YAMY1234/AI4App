@@ -7,7 +7,7 @@ from bs4 import BeautifulSoup
 import os
 from DDLNotifier.email_sender import send_email
 from DDLNotifier.config import CONFIG  # Replace with your actual email module
-# from DDLNotifier.P013_NUS03.program_url_crawler import crawl
+from DDLNotifier.P013_NUS03.program_url_crawler import crawl
 
 parent_dir = os.path.dirname(os.path.dirname(__file__))
 sys.path.append(parent_dir)
