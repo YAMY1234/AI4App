@@ -11,6 +11,8 @@ class WebScraper:
         options.add_argument('--headless')
         options.add_argument('--no-sandbox')
         options.add_argument('--disable-dev-shm-usage')
+        # self.service = Service(
+        #     executable_path='/root/AI4App/chromedriver-linux64/chromedriver')
         self.service = Service()
         self.options = options
         self.driver = webdriver.Chrome(service=self.service, options=self.options)
