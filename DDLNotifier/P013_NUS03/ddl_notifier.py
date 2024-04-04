@@ -12,7 +12,6 @@ from DDLNotifier.P013_NUS03.program_url_crawler import crawl
 parent_dir = os.path.dirname(os.path.dirname(__file__))
 sys.path.append(parent_dir)
 
-from program_url_crawler import crawl
 from DDLNotifier.utils.compare_and_notify import compare_and_notify
 from DDLNotifier.utils.get_request_header import WebScraper
 
