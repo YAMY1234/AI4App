@@ -51,7 +51,7 @@ def get_current_programs_and_urls():
 
 def main():
     # get_deadline("https://www.comp.nus.edu.sg/programmes/pg/phdis/")
-    # crawl()
+    crawl()
     # Read current program data
     current_program_data = get_current_programs_and_urls()
 
