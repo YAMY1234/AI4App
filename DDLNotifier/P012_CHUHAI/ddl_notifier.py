@@ -34,8 +34,8 @@ def get_deadline(url):
     soup = BeautifulSoup(response.text, 'html.parser')
 
     # 使用正则表达式进行灵活匹配
-    start_tag = soup.find('h3', text=re.compile('Application Periods|報名日期'))
-    end_tag = soup.find('h3', text=re.compile('How to Apply|報名方法'))
+    start_tag = soup.find('h3', text=re.compile('Application Periods|Application Deadlines|報名日期'))
+    end_tag = soup.find('h3', text=re.compile('How to Apply|報名方法|2024/25學年度學費'))
 
     if start_tag and end_tag:
         content = []
@@ -47,6 +47,9 @@ def get_deadline(url):
 
         return '\n'.join(content)
     else:
+        if "%20" in url:
+            ret_val = get_deadline(url.replace("%20", "-").lower())
+            return ret_val
         return 'Application Periods or How to Apply section not found'
 
 
