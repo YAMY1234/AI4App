@@ -86,6 +86,8 @@ def parse_html(html):
         title = block.find('div', class_='title').get_text(strip=True)
         subtitle = block.find('div', class_='subtitle').get_text(strip=True)
         deadlines = block.find_all('div', class_='early-deadline')
+        if 'doctor' in title.lower() or 'doctor' in subtitle.lower():
+            continue
         print(f"programme_code_and_entry: {programme_code_and_entry}, title: {title}, subtitle: {subtitle}")
         if len(deadlines) == 0:
             deadline = "empty"
