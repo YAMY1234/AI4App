@@ -1,0 +1,2800 @@
+Function called at 2024-05-08 18:23:10.941886
+Email sent: Changes Detected in School: Manchester's Programmes | Deadline changes detected:
+
+School: Manchester, Programme: AccountingMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Accounting and FinanceMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: ACS: Artificial IntelligenceMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: ACS: Computer SecurityMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: ACS: Data and Knowledge ManagementMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: ACS: Digital BiologyMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Adult NursingMSc (2 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Advanced Chemical EngineeringMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Advanced Clinical Optometric PracticeMSc
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Advanced Clinical Practice (Paediatrics)MSc (3 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Advanced Computer ScienceMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Advanced Control and Systems EngineeringMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Advanced Control and Systems Engineering with Extended ResearchMSc (2 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Advanced Electrical Power Systems EngineeringMSc (2 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Advanced Engineering MaterialsMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Advanced Leadership for Professional Practice (Allied Health Profession)MSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Advanced Leadership for Professional Practice (Nursing)MSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Advanced Leadership for Professional Practice (Social Work)MSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Advanced Manufacturing Technology & Systems ManagementMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Advanced Process Integration and DesignMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Aerospace EngineeringMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Analytical Chemistry and Measurement Science (online)MSc/PGDip/PGCert
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Anthropological ResearchMA (1 or 2 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Approaches to Mental Health Theory CPD
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Approved Mental Health Professional PracticePGCert
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: ArchitectureMArch (2 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Architecture and Adaptive ReuseMA (1 or 2 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Architecture and UrbanismMA (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Art Gallery and Museum StudiesMA (1 or 2 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Arts Management, Policy and PracticeMA (1 or 2 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: AudiologyMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Audiology Short Courses
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: BiochemistryMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Bioinformatics and Systems BiologyMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Biological SciencesMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: BiomaterialsMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Biotechnology and EnterpriseMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Business Analysis and Strategic ManagementMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Business Analytics: Operational Research and Risk AnalysisMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Business PsychologyMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Cancer Research and Molecular BiomedicineMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Cardiovascular Health and Disease (Research)MSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Cell BiologyMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: ChemistryMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Classics and Ancient HistoryMA (1 or 2 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Climate Change: Science, Society and SolutionsMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Clinical and Health PsychologyMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Clinical BiochemistryMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Clinical Biochemistry CPDPG Credit
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Clinical Data Science
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Clinical Data SciencePGCert (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Clinical Dentistry (Paediatric Dentistry)MSc (3 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Clinical ImmunologyMSc
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Clinical PharmacyMSc
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Clinical ResearchMClin Res (1 or 2 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Cognitive Neuroscience and NeuropsychologyMRes (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Commercial Project ManagementMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Communications and Signal ProcessingMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Communications and Signal Processing with Extended ResearchMSc (2 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Composition (Electroacoustic Music and Interactive Media)MusM (1 or 2 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Computational and Corpus LinguisticsMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Construction Project ManagementMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Corporate GovernanceLLM (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Corrosion Control EngineeringMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Creative and Cultural IndustriesMA (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Creative WritingMA (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: CriminologyMA
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: CriminologyMRes
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: CriminologyPGDip
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Criminology (Social Statistics)MRes
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Data Analytics and Social Statistics (online)MSc/PGDip
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Data Science (Business and Management)MSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Data Science (Computer Science Data Informatics)MSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Data Science (Earth and Environmental Analytics)MSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Data Science (Mathematics)MSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Data Science (Social Analytics)MSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Data Science (Urban Analytics)MSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Deaf EducationMSc/PGDip (2 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Deaf Education (International Pathway)PGCert
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Development Economics and PolicyMSc
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Development FinanceMSc
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Developmental BiologyMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Digital DevelopmentMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Digital MarketingMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Digital Media, Culture and SocietyMA (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Digital Technologies, Communication and EducationMA (Up to 3 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: EconomicsMA (1 or 2 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: EconomicsMSc (1 or 2 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Economics and Data ScienceMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Education for a Sustainable EnvironmentMA (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Educational LeadershipMA (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Educational Leadership in PracticeMA
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: EgyptologyMA
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Electrical Power Systems EngineeringMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: EndodonticsMSc (Clin) (3 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Endodontics (Dental Specialties)MSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Engineering Project ManagementMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Engineers Teach Physics
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: English Literature and American StudiesMA (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Environmental GovernanceMSc
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Environmental Impact Assessment & ManagementMSc
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Environmental Monitoring, Modelling and ReconstructionMSc
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Evidence Based Healthcare CPD
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Experimental Psychology with Data ScienceMRes (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Film StudiesMA (1 or 2 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: FinanceMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Financial Crime and Compliance in Digital Societies (top-up) (blended learning)MSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Financial EconomicsMSc (1 or 2 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Financial ManagementMSc (2 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Fixed and Removable ProsthodonticsMSc (Clin) (3 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Fixed and Removable Prosthodontics (Dental Specialties)MSc (1 or 2 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Forensic Psychology and Mental HealthMSc
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Gender, Sexuality and CultureMA/PGDip (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Genomic MedicineMSc (1 or 2 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Genomic Medicine CPDPG Credit
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Geographical Information ScienceMSc
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Geoscience for Sustainable EnergyMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Global DevelopmentMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Global Development (Development Management)MSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Global Development (Environment and Climate Change)MSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Global Development (Globalisation, Trade & Industry)MSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Global Development (Migration, Mobility & Displacement)MSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Global Development (Politics, Governance and Development Policy)MSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Global Development (Poverty and Inequality)MSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Global Executive MBA
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Global HealthMSc (3 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Global Health (Disaster Management)MSc (3 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Global Health (Emergency Medical Response)MSc (3 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Global Health (Humanitarian Response)MSc (3 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Global Urban Development and PlanningMSc
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Green InfrastructureMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Health and Social CareMRes/PGDip/PGCert (1 or 2 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Health Data ScienceMSc
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Health Informatics (UCL/UoM Joint Award)MSc/PGDip/PGCert
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Health PsychologyMSc (1 or 2 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Healthcare Ethics (online)PGCert
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Healthcare Ethics and LawLLM
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Healthcare Ethics and LawMA
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Healthcare Ethics and Law (Intercalated)MSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Healthcare Ethics and Law (online)LLM
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Healthcare Ethics and Law (online)MA
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Healthcare Ethics and Law (online)PGDip
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Healthcare Ethics and Law Postgraduate DiplomaPGDip (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Healthcare Ethics Postgraduate CertificatePGCert
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Healthcare Law (online)PGCert
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Healthcare Law Postgraduate CertificatePGCert
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Heritage StudiesMA/PGDip (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: HistoryMA (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: History of Science, Technology and MedicineMA (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Human Resource Development (International Development)MSc
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Human Resource Management (International Development)MSc
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Human Resource Management and Industrial RelationsMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Human Rights - Law/Political Science Pathway (Research Route)MA (1 or 2 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Human Rights - Law/Political Science Pathway (Standard Route)MA (1 or 2 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Human Rights - Political Science (Research Route)MA (1 or 2 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Human Rights - Political Science (Standard Route)MA (1 or 2 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Humanitarian PracticeMSc/PGDip/PGCert
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Humanitarianism and Conflict ResponseMA
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Implementation Strategy in Dental Services (CPD)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Independent Prescribing (Short Course)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Infection BiologyMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Injectables in Aesthetic Medicine (BCDG)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Innovation Management and EntrepreneurshipMSc (1 or 2 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Intellectual Property LawLLM (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Intercultural CommunicationMA (1 or 2 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: International Business and Commercial LawLLM (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: International Business and ManagementMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: International Commercial and Technology Law (online)LLM (2 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: International Development: Public Policy and ManagementMSc
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: International Disaster ManagementMSc (1 or 2 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: International Disaster Management and Humanitarian Response - January IntakeMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: International Disaster Management and Humanitarian Response - September IntakeMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: International Economic LawLLM (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: International EducationMA (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: International Education (Curriculum and Pedagogy)MA (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: International Education (Equity, Diversity and Inclusion)MA (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: International Education (Globalisation and International Development)MA (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: International Education (Higher Education)MA (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: International Education (TESOL)MA (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: International Fashion MarketingMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: International Fashion RetailingMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: International Fashion Retailing (Entrepreneurship and Innovation)MSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: International Financial LawLLM (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: International Human Resource Management and Comparative Industrial RelationsMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: International Political Economy (Research)MA (1 or 2 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: International Political Economy (Standard)MA (1 or 2 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: International Relations (Research)MA (1 or 2 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: International Relations (Standard)MA (1 or 2 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Investigative Ophthalmology and Vision ScienceMSc (Up to 4 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: LawLLM (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Master of Leadership for Development
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Library and Archive StudiesMA (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: LinguisticsMA (1 or 2 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: ManagementMRes (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: ManagementMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Management and Implementation of Development ProjectsMSc
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Management and Information Systems: Change and DevelopmentMSc (1 or 2 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Management and Information Systems: Change and Development (Distance Learning)MSc
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Management of ProjectsMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Manchester Full-Time MBA
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Manchester Global MBA
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: MarketingMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Master of Landscape ArchitectureMLA
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Master of Public Health (Dental Public Health)MPH (Up to 5 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Master of Public Health (on campus)MPH (Up to 5 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Mathematical FinanceMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Mechanical Engineering DesignMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Medical and Health EducationPGCert
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Medical and Molecular VirologyMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Medical Imaging ScienceMSc
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Medical MicrobiologyMSc
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Medical Physics in Cancer Radiation TherapyMSc
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Medieval and Early Modern StudiesMA (1 or 2 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Model-based Drug Development
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Model-based Drug Development - Pharmacokinetic and Pharmacodynamic ModellingMSc (2 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Modern and Contemporary LiteratureMA (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Modern Languages and CulturesMA (1 or 2 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Molecular Pathology CPDPG Credit
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Molecular Pathology of CancerMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Music (Ethnomusicology)MusM (1 or 2 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Music (Musicology)MusM (1 or 2 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Music (Performance Studies)MusM (1 or 2 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: NanomaterialsMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Nanomedicine by ResearchMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Neuroimaging for Clinical & Cognitive NeuroscienceMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: NeuroscienceMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Nuclear Science and TechnologyMSc (Up to 3 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Occupational HealthMPH (Up to 5 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Occupational HygieneMSc
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Occupational Hygiene - Personal Professional Development
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Occupational MedicineMSc
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Oncology ResearchMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Operations, Project and Supply Chain ManagementMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Optometry and Ophthalmology CPD units
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Oral and Maxillofacial SurgeryMSc (Clin) (3 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Oral and Maxillofacial Surgery (Dental Specialties)MSc/PGDip
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Oral Health & Disease in Populations (CPD)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Organisational Change and DevelopmentMSc
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Organisational PsychologyMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: OrthodonticsMSc (Clin) (3 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Peace and Conflict StudiesMA (1 or 2 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: PeriodontologyMSc (Clin) (3 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Personal Professional Development (Public Health and Primary Care)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Petroleum GeoscienceMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: PGCE Primary
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: PGCE Primary School Direct 5-11
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: PGCE Secondary Biology
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: PGCE Secondary Business Education
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: PGCE Secondary Chemistry
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: PGCE Secondary Economics and Business Education
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: PGCE Secondary English
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: PGCE Secondary French
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: PGCE Secondary Geography
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: PGCE Secondary German
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: PGCE Secondary History
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: PGCE Secondary Mathematics
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: PGCE Secondary Mathematics with Economics
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: PGCE Secondary Physics
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: PGCE Secondary Physics with Maths
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: PGCE Secondary School Direct (English)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: PGCE Secondary School Direct (French)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: PGCE Secondary School Direct (Geography)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: PGCE Secondary School Direct (German)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: PGCE Secondary School Direct (History)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: PGCE Secondary School Direct (Mathematics)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: PGCE Secondary School Direct (Spanish)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: PGCE Secondary School Direct Science: Biology (11-16 or 11-18)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: PGCE Secondary School Direct Science: Chemistry (11-16 or 11-18)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: PGCE Secondary School Direct Science: Physics (11-16 or 11-18)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: PGCE Secondary School Direct: Business Education (14-19)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: PGCE Secondary Spanish
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Pharmaceutical Technology and Quality AssuranceMSc (3 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Pharmacist CPD
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: PhilosophyMA (1 or 2 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Physician Associate StudiesMSc (2 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: PlanningMSc
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: PlaywritingMA (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Political Economy (Research Route)MA (1 or 2 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Political Economy (Standard Route)MA (1 or 2 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Political Science - Democracy and Elections (Research Route)MA (1 or 2 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Political Science - Democracy and Elections (Standard Route)MA (1 or 2 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Political Science - European Politics & Policy Pathway (Standard Route)MA (1 or 2 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Political Science - European Politics & Policy Pathway  (Research Route)MA (1 or 2 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Political Science - Governance and Public Policy Pathway (Research Route)MA (1 or 2 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Political Science - Governance and Public Policy Pathway (Standard Route)MA (1 or 2 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Political Science - Philosophy and Political TheoryMA (1 or 2 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Political Science - Political Theory Pathway (Research Route)MA (1 or 2 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Political Science - Political Theory Pathway (Standard Route)MA (1 or 2 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: PoliticsMA (1 or 2 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Pollution & Environmental ControlMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Pollution and Environmental Control (online)MSc
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Polymer Materials Science and EngineeringMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Precision MedicineMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Primary Mental Health CarePGCert (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Primary Mental Health Care pathway - APIMHMSc/PGDip (3 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Psychology of EducationMEd (1 or 2 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Public Health (Web-based Learning)MPH (Up to 5 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Public Health (Web-based Learning)MRes (Up to 5 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Public International LawLLM
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Pure MathematicsMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Pure Mathematics and Mathematical LogicMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Quantitative FinanceMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Real Estate (online)MSc
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Real Estate Asset ManagementMSc
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Real Estate DevelopmentMSc (1 or 2 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Real Estate Finance and InvestmentMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Reliability Engineering and Asset ManagementMSc (Up to 3 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Reliability Engineering and Asset ManagementPGDip
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Religions and TheologyMA (1 or 2 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Renewable Energy and Clean Technology with Extended ResearchMSc (2 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Reproduction and Pregnancy (Research)MSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Research Methods with EducationMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Research Methods with Human GeographyMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Research Methods with International DevelopmentMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Research Methods with Planning and Environmental ManagementMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: RoboticsMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Robotics with Extended ResearchMSc (2 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Science and Health CommunicationMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: ScreenwritingMA (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Secondary School Direct Economics and Business Education 14-19
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Security and International LawLLM
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Security and International LawMA
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Skin Ageing and Aesthetic MedicineMSc
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Skin Ageing and Aesthetic MedicinePGCert
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Social AnthropologyMA (1 or 2 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Social Change, Environment and SustainabilityMA (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Social Network AnalysisMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Social Research Methods and StatisticsMSc (1 or 2 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Social WorkMA (2 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Sociological ResearchMSc (1 or 2 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: SociologyMA (1 or 2 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Specialist Practice (Cancer)MSc
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Speech & Language CPD
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: StatisticsMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Structural EngineeringMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Subsurface Energy EngineeringMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Sustainable BusinessMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Sustainable Electrical Power Systems Engineering (online)MSc/PGDip/PGCert
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: TESOLMA (Up to 3 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Textile Technology (Technical Textiles)MSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Thermal Power & Fluid EngineeringMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Tissue Engineering for Regenerative MedicineMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Transformative OncologyMSc
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Translation and Interpreting StudiesMA (1 or 2 years)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Transnational Dispute ResolutionLLM
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Urban Design and International PlanningMSc
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Urban Regeneration and DevelopmentMSc
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Urban StudiesMSc (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+School: Manchester, Programme: Visual AnthropologyMA (1 year)
+Old Deadline: Application details not found
+New Deadline: Failed to retrieve details
+
+
+Function called at 2024-05-08 19:06:39.210240
+Email sent: Changes Detected in School: Manchester's Programmes | Deadline changes detected:
+
+School: Manchester, Programme: AccountingMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Accounting and FinanceMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: ACS: Artificial IntelligenceMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline:  Applications to this course are considered through a staged admissions process with selection deadlines throughout the year.  Due to the competition for places and high quality of applications that we receive, we give preference to students from high-ranking institutions and with grades above our minimum entry requirements.Please ensure you submit all supporting documentation with your application before the application deadline to avoid a delay in processing.   Applications for 2024 entry:   Stage 1 : Application received by 10 November 2023; Decision by 12 January 2024.  Stage 2 : Application received by 5 January 2024; Decision by 8 March 2024.  Stage 3 : Application received by 1 March 2024; Decision by 19 April 2024.  Stage 4 : Application received by 24 May 2024; Decision by 21 June 2024.  Whilst we aim to give you a decision on your application by the deadline date, in some instances due to the competition for places and the volume of applications received, it may be necessary to roll your application forward to the next deadline date. If this is the case we will let you know after the deadline date.  Please note:  All places are subject to availability and if you apply at one of the later stages, some courses may already be reaching capacity or be closed to further applications. We, therefore, recommend that you apply early in the cycle to avoid disappointment.  Applicants who are made a conditional offer of a place must demonstrate that they have met all the conditions of their offer by 31 July 2024. 
+
+School: Manchester, Programme: ACS: Computer SecurityMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline:   Apply online   Applications to this course are considered through a staged admissions process with selection deadlines throughout the year. Due to the competition for places and high quality of applications that we receive, we give preference to students from high-ranking institutions and with grades above our minimum entry requirements.  Please ensure you submit all supporting documentation with your application before the application deadline to avoid a delay in processing.   Applications for 2024 entry :   Stage 1 : Application received by 10 November 2023; Decision by 12 January 2024.   Stage 2 : Application received by 5 January 2024; Decision by 8 March 2024.   Stage 3 : Application received by 1 March 2024; Decision by 19 April 2024.   Stage 4 : Application received by 24 May 2024; Decision by 21 June 2024.  Whilst we aim to give you a decision on your application by the deadline date, in some instances due to the competition for places and the volume of applications received, it may be necessary to roll your application forward to the next deadline date. If this is the case we will let you know after the deadline date.   Please note: All places are subject to availability and if you apply at one of the later stages, some courses may already be reaching capacity or be closed to further applications. We, therefore, recommend that you apply early in the cycle to avoid disappointment.  Applicants who are made a conditional offer of a place must demonstrate that they have met all the conditions of their offer by 31 July 2024. 
+
+School: Manchester, Programme: ACS: Data and Knowledge ManagementMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline:   Apply online   Applications to this course are considered through a staged admissions process with selection deadlines throughout the year. Due to the competition for places and high quality of applications that we receive, we give preference to students from high-ranking institutions and with grades above our minimum entry requirements.  Please ensure you submit all supporting documentation with your application before the application deadline to avoid a delay in processing.   Applications for 2024 entry :   Stage 1 : Application received by 10 November 2023; Decision by 12 January 2024.   Stage 2 : Application received by 5 January 2024; Decision by 8 March 2024.   Stage 3 : Application received by 1 March 2024; Decision by 19 April 2024.   Stage 4 : Application received by 24 May 2024; Decision by 21 June 2024.  Whilst we aim to give you a decision on your application by the deadline date, in some instances due to the competition for places and the volume of applications received, it may be necessary to roll your application forward to the next deadline date. If this is the case we will let you know after the deadline date.   Please note: All places are subject to availability and if you apply at one of the later stages, some courses may already be reaching capacity or be closed to further applications. We, therefore, recommend that you apply early in the cycle to avoid disappointment.  Applicants who are made a conditional offer of a place must demonstrate that they have met all the conditions of their offer by 31 July 2024. 
+
+School: Manchester, Programme: ACS: Digital BiologyMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline:   Apply online   Applications to this course are considered through a staged admissions process with selection deadlines throughout the year. Due to the competition for places and high quality of applications that we receive, we give preference to students from high-ranking institutions and with grades above our minimum entry requirements.  Please ensure you submit all supporting documentation with your application before the application deadline to avoid a delay in processing.   Applications for 2024 entry :   Stage 1 : Application received by 10 November 2023; Decision by 12 January 2024.   Stage 2 : Application received by 5 January 2024; Decision by 8 March 2024.   Stage 3 : Application received by 1 March 2024; Decision by 19 April 2024.   Stage 4 : Application received by 24 May 2024; Decision by 21 June 2024.  Whilst we aim to give you a decision on your application by the deadline date, in some instances due to the competition for places and the volume of applications received, it may be necessary to roll your application forward to the next deadline date. If this is the case we will let you know after the deadline date.   Please note: All places are subject to availability and if you apply at one of the later stages, some courses may already be reaching capacity or be closed to further applications. We, therefore, recommend that you apply early in the cycle to avoid disappointment.  Applicants who are made a conditional offer of a place must demonstrate that they have met all the conditions of their offer by 31 July 2024. 
+
+School: Manchester, Programme: Adult NursingMSc (2 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Advanced Chemical EngineeringMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Advanced Clinical Optometric PracticeMSc
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Advanced Clinical Practice (Paediatrics)MSc (3 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Advanced Computer ScienceMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline:  Applications to this course are considered through a staged admissions process with selection deadlines throughout the year. Due to the competition for places and high quality of applications that we receive, we give preference to students from high-ranking institutions and with grades above our minimum entry requirements.  Please ensure you submit all supporting documentation with your application before the application deadline to avoid a delay in processing.   Applications for 2024 entry :   Stage 1 : Application received by 10 November 2023; Decision by 12 January 2024.   Stage 2 : Application received by 5 January 2024; Decision by 8 March 2024.   Stage 3 : Application received by 1 March 2024; Decision by 19 April 2024.   Stage 4 : Application received by 24 May 2024; Decision by 21 June 2024.  Whilst we aim to give you a decision on your application by the deadline date, in some instances due to the competition for places and the volume of applications received, it may be necessary to roll your application forward to the next deadline date. If this is the case we will let you know after the deadline date.   Please note: All places are subject to availability and if you apply at one of the later stages, some courses may already be reaching capacity or be closed to further applications. We, therefore, recommend that you apply early in the cycle to avoid disappointment.  Applicants who are made a conditional offer of a place must demonstrate that they have met all the conditions of their offer by 31 July 2024. 
+
+School: Manchester, Programme: Advanced Control and Systems EngineeringMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline:   Applications for 2024 entry :   Stage 1 : Application received by 27 October 2023; Decision by 8 December 2023.   Stage 2 : Application received by 15 December 2023; Decision by 9 February 2024.   Stage 3 : Application received by 1 March 2024; Decision by 26 April 2024.   Stage 4 : Application received by 3 May 2024; Decision by 21 June 2024.  Whilst we aim to give you a decision on your application by the deadline date, in some instances due to the competition for places and the volume of applications received, it may be necessary to roll your application forward to the next deadline date. If this is the case we will let you know after the deadline date.  Applications received after our final selection deadline will be considered at our discretion.  Please note: All places are subject to availability and if you apply at one of the later stages, some courses may already be closed. We therefore recommend that you apply early in the cycle to secure your place with us.  Applicants who are made a conditional offer of a place must demonstrate that they have met all the conditions of their offer by 31 July 2024.  
+
+School: Manchester, Programme: Advanced Control and Systems Engineering with Extended ResearchMSc (2 years)
+Old Deadline: Failed to retrieve details
+New Deadline:   Applications for 2024 entry :   Stage 1 : Application received by 27 October 2023; Decision by 8 December 2023.   Stage 2 : Application received by 15 December 2023; Decision by 9 February 2024.   Stage 3 : Application received by 1 March 2024; Decision by 26 April 2024.   Stage 4 : Application received by 3 May 2024; Decision by 21 June 2024.  Whilst we aim to give you a decision on your application by the deadline date, in some instances due to the competition for places and the volume of applications received, it may be necessary to roll your application forward to the next deadline date. If this is the case we will let you know after the deadline date.  Applications received after our final selection deadline will be considered at our discretion.  Please note: All places are subject to availability and if you apply at one of the later stages, some courses may already be closed. We therefore recommend that you apply early in the cycle to secure your place with us.  Applicants who are made a conditional offer of a place must demonstrate that they have met all the conditions of their offer by 31 July 2024.  
+
+School: Manchester, Programme: Advanced Electrical Power Systems EngineeringMSc (2 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Advanced Engineering MaterialsMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline:  Due to the competition for places, we give preference to students with grades above our minimum entry requirements. If we make you an offer, you will have 6 weeks in which to accept. Any offers not accepted within 6 weeks will be withdrawn so that an offer can be made to another candidate.   Stage 1: Application received by 27 October 2023. Decision by 15 December 2023.    Stage 2: Application received by 15 December 2023. Decision by 16 February 2024.    Stage 3: Application received by 23 February 2024. Decision by 26 April 2024    Stage 4: Application received by 03 May 2024. Decision by 28 June 2024.   You need to submit your supporting documents with your application as it may delay us processing your application by the decision deadline.  Whilst we aim to give you a decision on your application by the deadline date, in some instances due to the competition for places and the volume of applications received, it may be necessary to roll your application forward to the next stage. If this is the case we will let you know.  Applications received after our final application deadline will be considered at our discretion if places are still available.  Please note: All places are subject to availability and if you apply at one of the later stages, some courses may already be closed. We therefore recommend that you apply early in the cycle to secure your place with us.  Applicants who are made a conditional offer of a place must demonstrate that they have met all the conditions of their offer by 31st July 2024.  
+
+School: Manchester, Programme: Advanced Leadership for Professional Practice (Allied Health Profession)MSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Advanced Leadership for Professional Practice (Nursing)MSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Advanced Leadership for Professional Practice (Social Work)MSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Advanced Manufacturing Technology & Systems ManagementMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline:  Applications to this course are considered through a staged admissions process with selection deadlines throughout the year. Due to the competition for places, we give preference to applicants with grades above our minimum entry requirements. If we make you an offer, you will have 6 weeks in which to accept. Offers that are not accepted within the 6 week period will be withdrawn so that an offer can be made to another candidate in the next application stage.  Stage 1: Application deadline 15 December 2023. Decision by 16 February 2024.  Stage 2: Application deadline 1 March 2024. Decision by 26 April 2024.  Stage 3: Application deadline 3 May 2024. Decision by 21 June 2024. We aim to give you a decision on your application in the decision period for your application stage. However, in some instances it may be necessary to roll your application forward to the next stage due to the competition for places and the volume of applications received. All places are subject to availability and some courses may close before the later stages. We therefore recommend that you apply early. Applications received after the final deadline may be considered at our discretion if places are still available.  Applicants who are made a conditional offer of a place must meet all the conditions of their offer by 31 July 2024. 
+
+School: Manchester, Programme: Advanced Process Integration and DesignMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Aerospace EngineeringMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Analytical Chemistry and Measurement Science (online)MSc/PGDip/PGCert
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Anthropological ResearchMA (1 or 2 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Approaches to Mental Health Theory CPD
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Approved Mental Health Professional PracticePGCert
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: ArchitectureMArch (2 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Architecture and Adaptive ReuseMA (1 or 2 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Architecture and UrbanismMA (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Art Gallery and Museum StudiesMA (1 or 2 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Arts Management, Policy and PracticeMA (1 or 2 years)
+Old Deadline: Failed to retrieve details
+New Deadline: As there is a high demand for our courses we operate a staged admissions process with selection deadlines throughout the year. Due to the competition for places and high quality of applications that we receive, we give preference to students from high ranking institutions and with grades above our minimum entry requirements. Please ensure you submit all supporting documentation with your application before the application deadline to avoid a delay in processing.   Applications for 2024 entry:    Stage 1: Application received by 8th December 2023 ; Application update by 22nd February 2024    Stage 2: Application received by 3rd March 2024 ; Application update by 25th April 2024    Stage 3: Application received by 5th May 2024 ; Application update by 8th June 2024    Stage 4: Application received by 1st July 2024 ; Application update by 25th July 2024   Whilst we aim to give you a decision on your application by the deadline date, in some instances due to the competition for places and the volume of applications received, it may be necessary to roll your application forward to the next deadline date.  Applications received after our final selection deadline will be considered at our discretion if places are still available.   Please note: All places are subject to availability and if you apply at one of the later stages, some courses may already be reaching capacity or be closed to further applications. We, therefore, recommend that you apply early in the cycle to avoid disappointment. 
+
+School: Manchester, Programme: AudiologyMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Audiology Short Courses
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: BiochemistryMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Bioinformatics and Systems BiologyMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Biological SciencesMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: BiomaterialsMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline:  Due to the competition for places, we give preference to students with grades above our minimum entry requirements. If we make you an offer, you will have 6 weeks in which to accept. Any offers not accepted within 6 weeks will be withdrawn so that an offer can be made to another candidate.   Stage 1: Application received by 27 October 2023. Decision by 15 December 2023.    Stage 2: Application received by 15 December 2023. Decision by 16 February 2024.    Stage 3: Application received by 23 February 2024. Decision by 26 April 2024    Stage 4: Application received by 03 May 2024. Decision by 28 June 2024.   You need to submit your supporting documents with your application as it may delay us processing your application by the decision deadline.  Whilst we aim to give you a decision on your application by the deadline date, in some instances due to the competition for places and the volume of applications received, it may be necessary to roll your application forward to the next stage. If this is the case we will let you know.  Applications received after our final application deadline will be considered at our discretion if places are still available.  Please note: All places are subject to availability and if you apply at one of the later stages, some courses may already be closed. We therefore recommend that you apply early in the cycle to secure your place with us.  Applicants who are made a conditional offer of a place must demonstrate that they have met all the conditions of their offer by 31st July 2024.  
+
+School: Manchester, Programme: Biotechnology and EnterpriseMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Business Analysis and Strategic ManagementMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Business Analytics: Operational Research and Risk AnalysisMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Business PsychologyMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Cancer Research and Molecular BiomedicineMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Cardiovascular Health and Disease (Research)MSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Cell BiologyMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: ChemistryMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Classics and Ancient HistoryMA (1 or 2 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Climate Change: Science, Society and SolutionsMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Clinical and Health PsychologyMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Clinical BiochemistryMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Clinical Biochemistry CPDPG Credit
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Clinical Data Science
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Clinical Data SciencePGCert (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Clinical Dentistry (Paediatric Dentistry)MSc (3 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Clinical ImmunologyMSc
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Clinical PharmacyMSc
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Clinical ResearchMClin Res (1 or 2 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Cognitive Neuroscience and NeuropsychologyMRes (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Commercial Project ManagementMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline:  Please note, due to the competition for places, we give preference to applicants with grades above our minimum entry requirements. Applicants are expected to demonstrate a strong academic background.  If we make you an offer, you will have 6 weeks in which to accept. Offers that are not accepted within the 6 week period will be withdrawn so that an offer can be made to another candidate in the next application stage. Please only apply for one of our Management of Project MSc courses.  Stage 1: Application deadline 20 October 2023. Decision by 15 December 2023.  Stage 2: Application deadline 15 December 2023. Decision by 16 February 2024.  Stage 3: Application deadline 23 February 2024. Decision by 12 April 2024.  Stage 4: Application deadline 19 April 2024. Decision by 7 June 2024.  Applications received by 31st May will receive a decision by 29th June 2024.  Applications received after 31st May will be considered depending on course availability.  We aim to give you a decision on your application in the decision period for your application stage. However, in some instances it may be necessary to roll your application forward to the next stage due to the competition for places and the volume of applications received.  All places are subject to availability and some courses may close before the later stages. We therefore recommend that you apply early.  Applicants who are made a conditional offer of a place must meet all the conditions of their offer by 31 July 2024. 
+
+School: Manchester, Programme: Communications and Signal ProcessingMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline:   Applications for 2024 entry :   Stage 1 : Application received by 27 October 2023; Decision by 8 December 2023.   Stage 2 : Application received by 15 December 2023; Decision by 9 February 2024.   Stage 3 : Application received by 1 March 2024; Decision by 26 April 2024.   Stage 4 : Application received by 3 May 2024; Decision by 21 June 2024.  Whilst we aim to give you a decision on your application by the deadline date, in some instances due to the competition for places and the volume of applications received, it may be necessary to roll your application forward to the next deadline date. If this is the case we will let you know after the deadline date.  Applications received after our final selection deadline will be considered at our discretion.  Please note: All places are subject to availability and if you apply at one of the later stages, some courses may already be closed. We therefore recommend that you apply early in the cycle to secure your place with us.  Applicants who are made a conditional offer of a place must demonstrate that they have met all the conditions of their offer by 31 July 2024.  
+
+School: Manchester, Programme: Communications and Signal Processing with Extended ResearchMSc (2 years)
+Old Deadline: Failed to retrieve details
+New Deadline:   Applications for 2024 entry :   Stage 1 : Application received by 27 October 2023; Decision by 8 December 2023.   Stage 2 : Application received by 15 December 2023; Decision by 9 February 2024.   Stage 3 : Application received by 1 March 2024; Decision by 26 April 2024.   Stage 4 : Application received by 3 May 2024; Decision by 21 June 2024.  Whilst we aim to give you a decision on your application by the deadline date, in some instances due to the competition for places and the volume of applications received, it may be necessary to roll your application forward to the next deadline date. If this is the case we will let you know after the deadline date.  Applications received after our final selection deadline will be considered at our discretion.  Please note: All places are subject to availability and if you apply at one of the later stages, some courses may already be closed. We therefore recommend that you apply early in the cycle to secure your place with us.  Applicants who are made a conditional offer of a place must demonstrate that they have met all the conditions of their offer by 31 July 2024.  
+
+School: Manchester, Programme: Composition (Electroacoustic Music and Interactive Media)MusM (1 or 2 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Computational and Corpus LinguisticsMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Construction Project ManagementMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline:  Please note, due to the competition for places, we give preference to applicants with grades above our minimum entry requirements. Applicants are expected to demonstrate a strong academic background.  If we make you an offer, you will have 6 weeks in which to accept. Offers that are not accepted within the 6 week period will be withdrawn so that an offer can be made to another candidate in the next application stage. Please only apply for one of our Management of Project MSc courses.  Stage 1: Application deadline 20 October 2023. Decision by 15 December 2023.  Stage 2: Application deadline 15 December 2023. Decision by 16 February 2024.  Stage 3: Application deadline 23 Feb 2024. Decision by 12 April 2024.  Stage 4: Application deadline 19 April 2024. Decision by 7 June 2024.  Applications received by 31st May will receive a decision by 29th June 2024.  Applications received after 31st May will be considered depending on course availability.  We aim to give you a decision on your application in the decision period for your application stage. However, in some instances it may be necessary to roll your application forward to the next stage due to the competition for places and the volume of applications received.  All places are subject to availability and some courses may close before the later stages. We therefore recommend that you apply early.  Applicants who are made a conditional offer of a place must meet all the conditions of their offer by 31 July 2024. 
+
+School: Manchester, Programme: Corporate GovernanceLLM (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Corrosion Control EngineeringMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline:  Due to the competition for places, we give preference to students with grades above our minimum entry requirements. If we make you an offer, you will have 6 weeks in which to accept. Any offers not accepted within 6 weeks will be withdrawn so that an offer can be made to another candidate.   Stage 1: Application received by 27 October 2023. Decision by 15 December 2023.    Stage 2: Application received by 15 December 2023. Decision by 16 February 2024.    Stage 3: Application received by 23 February 2024. Decision by 26 April 2024    Stage 4: Application received by 03 May 2024. Decision by 28 June 2024.   You need to submit your supporting documents with your application as it may delay us processing your application by the decision deadline.  Whilst we aim to give you a decision on your application by the deadline date, in some instances due to the competition for places and the volume of applications received, it may be necessary to roll your application forward to the next stage. If this is the case we will let you know.  Applications received after our final application deadline will be considered at our discretion if places are still available.  Please note: All places are subject to availability and if you apply at one of the later stages, some courses may already be closed. We therefore recommend that you apply early in the cycle to secure your place with us.  Applicants who are made a conditional offer of a place must demonstrate that they have met all the conditions of their offer by 31st July 2024.  
+
+School: Manchester, Programme: Creative and Cultural IndustriesMA (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: As there is a high demand for our courses we operate a staged admissions process with selection deadlines throughout the year. Due to the competition for places and high quality of applications that we receive, we give preference to students from high ranking institutions and with grades above our minimum entry requirements. Please ensure you submit all supporting documentation with your application before the application deadline to avoid a delay in processing.   Applications for 2024 entry:    Stage 1: Application received by 8th December 2023 ; Application update by 22nd February 2024    Stage 2: Application received by 3rd March 2024 ; Application update by 25th April 2024    Stage 3: Application received by 5th May 2024 ; Application update by 8th June 2024    Stage 4: Application received by 1st July 2024 ; Application update by 25th July 2024   Whilst we aim to give you a decision on your application by the deadline date, in some instances due to the competition for places and the volume of applications received, it may be necessary to roll your application forward to the next deadline date.  Applications received after our final selection deadline will be considered at our discretion if places are still available.   Please note: All places are subject to availability and if you apply at one of the later stages, some courses may already be reaching capacity or be closed to further applications. We, therefore, recommend that you apply early in the cycle to avoid disappointment. 
+
+School: Manchester, Programme: Creative WritingMA (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: CriminologyMA
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: CriminologyMRes
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: CriminologyPGDip
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Criminology (Social Statistics)MRes
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Data Analytics and Social Statistics (online)MSc/PGDip
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Data Science (Business and Management)MSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Data Science (Computer Science Data Informatics)MSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Data Science (Earth and Environmental Analytics)MSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Data Science (Mathematics)MSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Data Science (Social Analytics)MSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Data Science (Urban Analytics)MSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Deaf EducationMSc/PGDip (2 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Deaf Education (International Pathway)PGCert
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Development Economics and PolicyMSc
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Development FinanceMSc
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Developmental BiologyMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Digital DevelopmentMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Digital MarketingMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Digital Media, Culture and SocietyMA (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: As there is a high demand for our courses we operate a staged admissions process with selection deadlines throughout the year. Due to the competition for places and high quality of applications that we receive, we give preference to students from high ranking institutions and with grades above our minimum entry requirements. Please ensure you submit all supporting documentation with your application before the application deadline to avoid a delay in processing.   Applications for 2024 entry:    Stage 1: Application received by 8th December 2023 ; Application update by 22nd February 2024    Stage 2: Application received by 3rd March 2024 ; Application update by 25th April 2024    Stage 3: Application received by 5th May 2024 ; Application update by 8th June 2024    Stage 4: Application received by 1st July 2024 ; Application update by 25th July 2024   Whilst we aim to give you a decision on your application by the deadline date, in some instances due to the competition for places and the volume of applications received, it may be necessary to roll your application forward to the next deadline date.  Applications received after our final selection deadline will be considered at our discretion if places are still available.   Please note: All places are subject to availability and if you apply at one of the later stages, some courses may already be reaching capacity or be closed to further applications. We, therefore, recommend that you apply early in the cycle to avoid disappointment. 
+
+School: Manchester, Programme: Digital Technologies, Communication and EducationMA (Up to 3 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: EconomicsMA (1 or 2 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: EconomicsMSc (1 or 2 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Economics and Data ScienceMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Education for a Sustainable EnvironmentMA (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Educational LeadershipMA (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Educational Leadership in PracticeMA
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: EgyptologyMA
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Electrical Power Systems EngineeringMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: EndodonticsMSc (Clin) (3 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Endodontics (Dental Specialties)MSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Engineering Project ManagementMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline:  Please note, due to the competition for places, we give preference to applicants with grades above our minimum entry requirements. Applicants are expected to demonstrate a strong academic background.  If we make you an offer, you will have 6 weeks in which to accept. Offers that are not accepted within the 6 week period will be withdrawn so that an offer can be made to another candidate in the next application stage. Please only apply for one of our Management of Project MSc courses.  Stage 1: Application deadline 20 October 2023. Decision by 15 December 2023.  Stage 2: Application deadline 15 December 2023. Decision by 16 February 2024.  Stage 3: Application deadline 23 February 2024. Decision by 12 April 2024.  Stage 4: Application deadline 19 April 2024. Decision by 7 June 2024.  Applications received by 31st May will receive a decision by 29th June 2024.  Applications received after 31st May will be considered depending on course availability.  We aim to give you a decision on your application in the decision period for your application stage. However, in some instances it may be necessary to roll your application forward to the next stage due to the competition for places and the volume of applications received.  All places are subject to availability and some courses may close before the later stages. We therefore recommend that you apply early.  Applicants who are made a conditional offer of a place must meet all the conditions of their offer by 31 July 2024. 
+
+School: Manchester, Programme: Engineers Teach Physics
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: English Literature and American StudiesMA (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Environmental GovernanceMSc
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Environmental Impact Assessment & ManagementMSc
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Environmental Monitoring, Modelling and ReconstructionMSc
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Evidence Based Healthcare CPD
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Experimental Psychology with Data ScienceMRes (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Film StudiesMA (1 or 2 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: FinanceMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Financial Crime and Compliance in Digital Societies (top-up) (blended learning)MSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Financial EconomicsMSc (1 or 2 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Financial ManagementMSc (2 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Fixed and Removable ProsthodonticsMSc (Clin) (3 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Fixed and Removable Prosthodontics (Dental Specialties)MSc (1 or 2 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Forensic Psychology and Mental HealthMSc
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Gender, Sexuality and CultureMA/PGDip (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Genomic MedicineMSc (1 or 2 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Genomic Medicine CPDPG Credit
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Geographical Information ScienceMSc
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Geoscience for Sustainable EnergyMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Global DevelopmentMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Global Development (Development Management)MSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Global Development (Environment and Climate Change)MSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Global Development (Globalisation, Trade & Industry)MSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Global Development (Migration, Mobility & Displacement)MSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Global Development (Politics, Governance and Development Policy)MSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Global Development (Poverty and Inequality)MSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Global Executive MBA
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Global HealthMSc (3 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Global Health (Disaster Management)MSc (3 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Global Health (Emergency Medical Response)MSc (3 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Global Health (Humanitarian Response)MSc (3 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Global Urban Development and PlanningMSc
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Green InfrastructureMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Health and Social CareMRes/PGDip/PGCert (1 or 2 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Health Data ScienceMSc
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Health Informatics (UCL/UoM Joint Award)MSc/PGDip/PGCert
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Health PsychologyMSc (1 or 2 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Healthcare Ethics (online)PGCert
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Healthcare Ethics and LawLLM
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Healthcare Ethics and LawMA
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Healthcare Ethics and Law (Intercalated)MSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Healthcare Ethics and Law (online)LLM
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Healthcare Ethics and Law (online)MA
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Healthcare Ethics and Law (online)PGDip
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Healthcare Ethics and Law Postgraduate DiplomaPGDip (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Healthcare Ethics Postgraduate CertificatePGCert
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Healthcare Law (online)PGCert
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Healthcare Law Postgraduate CertificatePGCert
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Heritage StudiesMA/PGDip (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: HistoryMA (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: History of Science, Technology and MedicineMA (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Human Resource Development (International Development)MSc
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Human Resource Management (International Development)MSc
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Human Resource Management and Industrial RelationsMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Human Rights - Law/Political Science Pathway (Research Route)MA (1 or 2 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Human Rights - Law/Political Science Pathway (Standard Route)MA (1 or 2 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Human Rights - Political Science (Research Route)MA (1 or 2 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Human Rights - Political Science (Standard Route)MA (1 or 2 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Humanitarian PracticeMSc/PGDip/PGCert
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Humanitarianism and Conflict ResponseMA
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Implementation Strategy in Dental Services (CPD)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Independent Prescribing (Short Course)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Infection BiologyMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Injectables in Aesthetic Medicine (BCDG)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Innovation Management and EntrepreneurshipMSc (1 or 2 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Intellectual Property LawLLM (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Intercultural CommunicationMA (1 or 2 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: International Business and Commercial LawLLM (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: International Business and ManagementMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: International Commercial and Technology Law (online)LLM (2 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: International Development: Public Policy and ManagementMSc
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: International Disaster ManagementMSc (1 or 2 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: International Disaster Management and Humanitarian Response - January IntakeMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: International Disaster Management and Humanitarian Response - September IntakeMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: International Economic LawLLM (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: International EducationMA (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: International Education (Curriculum and Pedagogy)MA (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: International Education (Equity, Diversity and Inclusion)MA (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: International Education (Globalisation and International Development)MA (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: International Education (Higher Education)MA (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: International Education (TESOL)MA (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: International Fashion MarketingMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline:  Due to the competition for places, we give preference to students with grades above our minimum entry requirements. If we make you an offer, you will have 6 weeks in which to accept. Any offers not accepted within 6 weeks will be withdrawn so that an offer can be made to another candidate.   Stage 1: Application received by 27 October 2023. Decision by 15 December 2023.    Stage 2: Application received by 15 December 2023. Decision by 16 February 2024.    Stage 3: Application received by 23 February 2024. Decision by 26 April 2024    Stage 4: Application received by 03 May 2024. Decision by 28 June 2024.   You need to submit your supporting documents with your application as it may delay us processing your application by the decision deadline.  Whilst we aim to give you a decision on your application by the deadline date, in some instances due to the competition for places and the volume of applications received, it may be necessary to roll your application forward to the next stage. If this is the case we will let you know.  Applications received after our final application deadline will be considered at our discretion if places are still available.  Please note: All places are subject to availability and if you apply at one of the later stages, some courses may already be closed. We therefore recommend that you apply early in the cycle to secure your place with us.  Applicants who are made a conditional offer of a place must demonstrate that they have met all the conditions of their offer by 31st July 2024.  
+
+School: Manchester, Programme: International Fashion RetailingMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline:  Due to the competition for places, we give preference to students with grades above our minimum entry requirements. If we make you an offer, you will have 6 weeks in which to accept. Any offers not accepted within 6 weeks will be withdrawn so that an offer can be made to another candidate.   Stage 1: Application received by 27 October 2023. Decision by 15 December 2023.    Stage 2: Application received by 15 December 2023. Decision by 16 February 2024.    Stage 3: Application received by 23 February 2024. Decision by 26 April 2024    Stage 4: Application received by 03 May 2024. Decision by 28 June 2024.   You need to submit your supporting documents with your application as it may delay us processing your application by the decision deadline.  Whilst we aim to give you a decision on your application by the deadline date, in some instances due to the competition for places and the volume of applications received, it may be necessary to roll your application forward to the next stage. If this is the case we will let you know.  Applications received after our final application deadline will be considered at our discretion if places are still available.  Please note: All places are subject to availability and if you apply at one of the later stages, some courses may already be closed. We therefore recommend that you apply early in the cycle to secure your place with us.  Applicants who are made a conditional offer of a place must demonstrate that they have met all the conditions of their offer by 31st July 2024.  
+
+School: Manchester, Programme: International Fashion Retailing (Entrepreneurship and Innovation)MSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline:  Due to the competition for places, we give preference to students with grades above our minimum entry requirements. If we make you an offer, you will have 6 weeks in which to accept. Any offers not accepted within 6 weeks will be withdrawn so that an offer can be made to another candidate.   Stage 1: Application received by 27 October 2023. Decision by 15 December 2023.    Stage 2: Application received by 15 December 2023. Decision by 16 February 2024.    Stage 3: Application received by 23 February 2024. Decision by 26 April 2024    Stage 4: Application received by 03 May 2024. Decision by 28 June 2024.   You need to submit your supporting documents with your application as it may delay us processing your application by the decision deadline.  Whilst we aim to give you a decision on your application by the deadline date, in some instances due to the competition for places and the volume of applications received, it may be necessary to roll your application forward to the next stage. If this is the case we will let you know.  Applications received after our final application deadline will be considered at our discretion if places are still available.  Please note: All places are subject to availability and if you apply at one of the later stages, some courses may already be closed. We therefore recommend that you apply early in the cycle to secure your place with us.  Applicants who are made a conditional offer of a place must demonstrate that they have met all the conditions of their offer by 31st July 2024.  
+
+School: Manchester, Programme: International Financial LawLLM (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: International Human Resource Management and Comparative Industrial RelationsMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: International Political Economy (Research)MA (1 or 2 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: International Political Economy (Standard)MA (1 or 2 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: International Relations (Research)MA (1 or 2 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: International Relations (Standard)MA (1 or 2 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Investigative Ophthalmology and Vision ScienceMSc (Up to 4 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: LawLLM (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Master of Leadership for Development
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Library and Archive StudiesMA (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: LinguisticsMA (1 or 2 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: ManagementMRes (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: ManagementMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Management and Implementation of Development ProjectsMSc
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Management and Information Systems: Change and DevelopmentMSc (1 or 2 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Management and Information Systems: Change and Development (Distance Learning)MSc
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Management of ProjectsMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline:  Please note, due to the competition for places, we give preference to applicants with grades above our minimum entry requirements. Applicants are expected to demonstrate a strong academic background.  If we make you an offer, you will have 6 weeks in which to accept. Offers that are not accepted within the 6 week period will be withdrawn so that an offer can be made to another candidate in the next application stage. Please only apply for one of our Management of Project MSc courses.  Stage 1: Application deadline 20 October 2023. Decision by 15 December 2023.  Stage 2: Application deadline 15 December 2023. Decision by 16 February 2024.  Stage 3: Application deadline 23 February 2024. Decision by 12 April 2024.  Stage 4: Application deadline 19 April 2024. Decision by 7 June 2024.  Applications received by 31st May will receive a decision by 29th June 2024.  Applications received after 31st May will be considered depending on course availability.  We aim to give you a decision on your application in the decision period for your application stage.  However, in some instances it may be necessary to roll your application forward to the next stage due to the competition for places and the volume of applications received.  All places are subject to availability and some courses may close before the later stages.  We therefore recommend that you apply early. Applicants who are made a conditional offer of a place must meet all the conditions of their offer by 31 July 2024.
+
+School: Manchester, Programme: Manchester Full-Time MBA
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Manchester Global MBA
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: MarketingMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Master of Landscape ArchitectureMLA
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Master of Public Health (Dental Public Health)MPH (Up to 5 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Master of Public Health (on campus)MPH (Up to 5 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Mathematical FinanceMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline:  As there is high demand for this course we operate a staged admissions process with selection deadlines throughout the year. Due to the competition for places, we give preference to students with grades above our minimum entry requirements.  If we make you an offer, you will have 3 weeks in which to accept. Any offers not accepted within 3 weeks will be withdrawn so that an offer can be made to another candidate.   Stage 1:  Application received by 10 November 2023; Decision by 12 January 2024.    Stage 2:  Application received by 05 January 2024; Decision by 08 March 2024.    Stage 3:  Application received by 01 March 2024; Decision by 19 April 2024.    Stage 4:  Application received by 24 May 2024; Decision by 21 June 2024.   You need to ensure that you submit your supporting documents with your application as it may delay us processing your application before the decision deadline.  Whilst we aim to give you a decision on your application by the deadline date, in some instances due to the competition for places and the volume of applications received, it may be necessary to roll your application forward to the next deadline date. If this is the case we will let you know after the deadline date.  Applications received after our final selection deadline will be considered at our discretion if places are still available.  Please note: All places are subject to availability and if you apply at one of the later stages, some courses may already be closed. We therefore recommend that you apply early in the cycle to secure your place with us.   Applicants who are made a conditional offer of a place must demonstrate that they have met all the conditions of their offer by 31 July 2024.  
+
+School: Manchester, Programme: Mechanical Engineering DesignMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline:  Applications to this course are considered through a staged admissions process with selection deadlines throughout the year. Due to the competition for places, we give preference to applicants with grades above our minimum entry requirements. If we make you an offer, you will have 6 weeks in which to accept. Offers that are not accepted within the 6 week period will be withdrawn so that an offer can be made to another candidate in the next application stage.  Stage 1: Application deadline 15 December 2023. Decision by 16 February 2024.  Stage 2: Application deadline 1 March 2024. Decision by 26 April 2024.  Stage 3: Application deadline 3 May 2024. Decision by 21 June 2024.  We aim to give you a decision on your application in the decision period for your application stage. However, in some instances it may be necessary to roll your application forward to the next stage due to the competition for places and the volume of applications received.  All places are subject to availability and some courses may close before the later stages. We therefore recommend that you apply early. Applications received after the final deadline may be considered at our discretion if places are still available.  Applicants who are made a conditional offer of a place must meet all the conditions of their offer by 31 July 2024. 
+
+School: Manchester, Programme: Medical and Health EducationPGCert
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Medical and Molecular VirologyMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Medical Imaging ScienceMSc
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Medical MicrobiologyMSc
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Medical Physics in Cancer Radiation TherapyMSc
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Medieval and Early Modern StudiesMA (1 or 2 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Model-based Drug Development
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Model-based Drug Development - Pharmacokinetic and Pharmacodynamic ModellingMSc (2 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Modern and Contemporary LiteratureMA (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Modern Languages and CulturesMA (1 or 2 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Molecular Pathology CPDPG Credit
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Molecular Pathology of CancerMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Music (Ethnomusicology)MusM (1 or 2 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Music (Musicology)MusM (1 or 2 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Music (Performance Studies)MusM (1 or 2 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: NanomaterialsMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline:  Due to the competition for places, we give preference to students with grades above our minimum entry requirements. If we make you an offer, you will have 6 weeks in which to accept. Any offers not accepted within 6 weeks will be withdrawn so that an offer can be made to another candidate.   Stage 1: Application received by 27 October 2023. Decision by 15 December 2023.    Stage 2: Application received by 15 December 2023. Decision by 16 February 2024.    Stage 3: Application received by 23 February 2024. Decision by 26 April 2024    Stage 4: Application received by 03 May 2024. Decision by 28 June 2024.   You need to submit your supporting documents with your application as it may delay us processing your application by the decision deadline.  Whilst we aim to give you a decision on your application by the deadline date, in some instances due to the competition for places and the volume of applications received, it may be necessary to roll your application forward to the next stage. If this is the case we will let you know.  Applications received after our final application deadline will be considered at our discretion if places are still available.  Please note: All places are subject to availability and if you apply at one of the later stages, some courses may already be closed. We therefore recommend that you apply early in the cycle to secure your place with us.  Applicants who are made a conditional offer of a place must demonstrate that they have met all the conditions of their offer by 31st July 2024.  
+
+School: Manchester, Programme: Nanomedicine by ResearchMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Neuroimaging for Clinical & Cognitive NeuroscienceMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: NeuroscienceMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Nuclear Science and TechnologyMSc (Up to 3 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Occupational HealthMPH (Up to 5 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Occupational HygieneMSc
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Occupational Hygiene - Personal Professional Development
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Occupational MedicineMSc
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Oncology ResearchMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Operations, Project and Supply Chain ManagementMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Optometry and Ophthalmology CPD units
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Oral and Maxillofacial SurgeryMSc (Clin) (3 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Oral and Maxillofacial Surgery (Dental Specialties)MSc/PGDip
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Oral Health & Disease in Populations (CPD)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Organisational Change and DevelopmentMSc
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Organisational PsychologyMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: OrthodonticsMSc (Clin) (3 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Peace and Conflict StudiesMA (1 or 2 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: PeriodontologyMSc (Clin) (3 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Personal Professional Development (Public Health and Primary Care)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Petroleum GeoscienceMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: PGCE Primary
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: PGCE Primary School Direct 5-11
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: PGCE Secondary Biology
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: PGCE Secondary Business Education
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: PGCE Secondary Chemistry
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: PGCE Secondary Economics and Business Education
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: PGCE Secondary English
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: PGCE Secondary French
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: PGCE Secondary Geography
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: PGCE Secondary German
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: PGCE Secondary History
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: PGCE Secondary Mathematics
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: PGCE Secondary Mathematics with Economics
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: PGCE Secondary Physics
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: PGCE Secondary Physics with Maths
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: PGCE Secondary School Direct (English)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: PGCE Secondary School Direct (French)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: PGCE Secondary School Direct (Geography)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: PGCE Secondary School Direct (German)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: PGCE Secondary School Direct (History)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: PGCE Secondary School Direct (Mathematics)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: PGCE Secondary School Direct (Spanish)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: PGCE Secondary School Direct Science: Biology (11-16 or 11-18)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: PGCE Secondary School Direct Science: Chemistry (11-16 or 11-18)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: PGCE Secondary School Direct Science: Physics (11-16 or 11-18)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: PGCE Secondary School Direct: Business Education (14-19)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: PGCE Secondary Spanish
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Pharmaceutical Technology and Quality AssuranceMSc (3 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Pharmacist CPD
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: PhilosophyMA (1 or 2 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Physician Associate StudiesMSc (2 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: PlanningMSc
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: PlaywritingMA (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Political Economy (Research Route)MA (1 or 2 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Political Economy (Standard Route)MA (1 or 2 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Political Science - Democracy and Elections (Research Route)MA (1 or 2 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Political Science - Democracy and Elections (Standard Route)MA (1 or 2 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Political Science - European Politics & Policy Pathway (Standard Route)MA (1 or 2 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Political Science - European Politics & Policy Pathway  (Research Route)MA (1 or 2 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Political Science - Governance and Public Policy Pathway (Research Route)MA (1 or 2 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Political Science - Governance and Public Policy Pathway (Standard Route)MA (1 or 2 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Political Science - Philosophy and Political TheoryMA (1 or 2 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Political Science - Political Theory Pathway (Research Route)MA (1 or 2 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Political Science - Political Theory Pathway (Standard Route)MA (1 or 2 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: PoliticsMA (1 or 2 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Pollution & Environmental ControlMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Pollution and Environmental Control (online)MSc
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Polymer Materials Science and EngineeringMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline:  Due to the competition for places, we give preference to students with grades above our minimum entry requirements. If we make you an offer, you will have 6 weeks in which to accept. Any offers not accepted within 6 weeks will be withdrawn so that an offer can be made to another candidate.   Stage 1: Application received by 27 October 2023. Decision by 15 December 2023.    Stage 2: Application received by 15 December 2023. Decision by 16 February 2024.    Stage 3: Application received by 23 February 2024. Decision by 26 April 2024    Stage 4: Application received by 03 May 2024. Decision by 28 June 2024.   You need to submit your supporting documents with your application as it may delay us processing your application by the decision deadline.  Whilst we aim to give you a decision on your application by the deadline date, in some instances due to the competition for places and the volume of applications received, it may be necessary to roll your application forward to the next stage. If this is the case we will let you know.  Applications received after our final application deadline will be considered at our discretion if places are still available.  Please note: All places are subject to availability and if you apply at one of the later stages, some courses may already be closed. We therefore recommend that you apply early in the cycle to secure your place with us.  Applicants who are made a conditional offer of a place must demonstrate that they have met all the conditions of their offer by 31st July 2024.  
+
+School: Manchester, Programme: Precision MedicineMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Primary Mental Health CarePGCert (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Primary Mental Health Care pathway - APIMHMSc/PGDip (3 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Psychology of EducationMEd (1 or 2 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Public Health (Web-based Learning)MPH (Up to 5 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Public Health (Web-based Learning)MRes (Up to 5 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Public International LawLLM
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Pure MathematicsMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline:  As there is high demand for this course we operate a staged admissions process with selection deadlines throughout the year. Due to the competition for places, we give preference to students with grades above our minimum entry requirements.  If we make you an offer, you will have 3 weeks in which to accept. Any offers not accepted within 3 weeks will be withdrawn so that an offer can be made to another candidate.   Stage 1:  Application received by 10 November 2023; Decision by 12 January 2024.    Stage 2:  Application received by 05 January 2024; Decision by 08 March 2024.    Stage 3:  Application received by 01 March 2024; Decision by 19 April 2024.    Stage 4:  Application received by 24 May 2024; Decision by 21 June 2024.   You need to ensure that you submit your supporting documents with your application as it may delay us processing your application before the decision deadline.  Whilst we aim to give you a decision on your application by the deadline date, in some instances due to the competition for places and the volume of applications received, it may be necessary to roll your application forward to the next deadline date. If this is the case we will let you know after the deadline date.  Applications received after our final selection deadline will be considered at our discretion if places are still available.  Please note: All places are subject to availability and if you apply at one of the later stages, some courses may already be closed. We therefore recommend that you apply early in the cycle to secure your place with us.   Applicants who are made a conditional offer of a place must demonstrate that they have met all the conditions of their offer by 31 July 2024.  
+
+School: Manchester, Programme: Pure Mathematics and Mathematical LogicMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline:  As there is high demand for this course we operate a staged admissions process with selection deadlines throughout the year. Due to the competition for places, we give preference to students with grades above our minimum entry requirements.  If we make you an offer, you will have 3 weeks in which to accept. Any offers not accepted within 3 weeks will be withdrawn so that an offer can be made to another candidate.   Stage 1:  Application received by 10 November 2023; Decision by 12 January 2024.    Stage 2:  Application received by 05 January 2024; Decision by 08 March 2024.    Stage 3:  Application received by 01 March 2024; Decision by 19 April 2024.    Stage 4:  Application received by 24 May 2024; Decision by 21 June 2024.   You need to ensure that you submit your supporting documents with your application as it may delay us processing your application before the decision deadline.  Whilst we aim to give you a decision on your application by the deadline date, in some instances due to the competition for places and the volume of applications received, it may be necessary to roll your application forward to the next deadline date. If this is the case we will let you know after the deadline date.  Applications received after our final selection deadline will be considered at our discretion if places are still available.  Please note: All places are subject to availability and if you apply at one of the later stages, some courses may already be closed. We therefore recommend that you apply early in the cycle to secure your place with us.   Applicants who are made a conditional offer of a place must demonstrate that they have met all the conditions of their offer by 31 July 2024.  
+
+School: Manchester, Programme: Quantitative FinanceMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Real Estate (online)MSc
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Real Estate Asset ManagementMSc
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Real Estate DevelopmentMSc (1 or 2 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Real Estate Finance and InvestmentMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Reliability Engineering and Asset ManagementMSc (Up to 3 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Reliability Engineering and Asset ManagementPGDip
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Religions and TheologyMA (1 or 2 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Renewable Energy and Clean Technology with Extended ResearchMSc (2 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Reproduction and Pregnancy (Research)MSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Research Methods with EducationMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Research Methods with Human GeographyMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Research Methods with International DevelopmentMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Research Methods with Planning and Environmental ManagementMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: RoboticsMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Robotics with Extended ResearchMSc (2 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Science and Health CommunicationMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: ScreenwritingMA (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Secondary School Direct Economics and Business Education 14-19
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Security and International LawLLM
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Security and International LawMA
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Skin Ageing and Aesthetic MedicineMSc
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Skin Ageing and Aesthetic MedicinePGCert
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Social AnthropologyMA (1 or 2 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Social Change, Environment and SustainabilityMA (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Social Network AnalysisMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Social Research Methods and StatisticsMSc (1 or 2 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Social WorkMA (2 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Sociological ResearchMSc (1 or 2 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: SociologyMA (1 or 2 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Specialist Practice (Cancer)MSc
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Speech & Language CPD
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: StatisticsMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline:  As there is high demand for this course we operate a staged admissions process with selection deadlines throughout the year. Due to the competition for places, we give preference to students with grades above our minimum entry requirements.  If we make you an offer, you will have 3 weeks in which to accept. Any offers not accepted within 3 weeks will be withdrawn so that an offer can be made to another candidate.   Stage 1:  Application received by 10 November 2023; Decision by 12 January 2024.    Stage 2:  Application received by 05 January 2024; Decision by 08 March 2024.    Stage 3:  Application received by 01 March 2024; Decision by 19 April 2024.    Stage 4:  Application received by 24 May 2024; Decision by 21 June 2024.   You need to ensure that you submit your supporting documents with your application as it may delay us processing your application before the decision deadline.  Whilst we aim to give you a decision on your application by the deadline date, in some instances due to the competition for places and the volume of applications received, it may be necessary to roll your application forward to the next deadline date. If this is the case we will let you know after the deadline date.  Applications received after our final selection deadline will be considered at our discretion if places are still available.  Please note: All places are subject to availability and if you apply at one of the later stages, some courses may already be closed. We therefore recommend that you apply early in the cycle to secure your place with us.   Applicants who are made a conditional offer of a place must demonstrate that they have met all the conditions of their offer by 31 July 2024.  
+
+School: Manchester, Programme: Structural EngineeringMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline:  Applications to this course are considered through a staged admissions process with selection deadlines throughout the year. Due to the competition for places, we give preference to applicants with grades above our minimum entry requirements. If we make you an offer, you will have 6 weeks in which to accept. Offers that are not accepted within the 6 week period will be withdrawn so that an offer can be made to another candidate in the next application stage.  Stage 1: Application deadline 15 December 2023. Decision by 16 February 2024.  Stage 2: Application deadline 1 March 2024. Decision by 26 April 2024.  Stage 3: Application deadline 3 May 2024. Decision by 21 June 2024.  We aim to give you a decision on your application in the decision period for your application stage. However, in some instances it may be necessary to roll your application forward to the next stage due to the competition for places and the volume of applications received.  All places are subject to availability and some courses may close before the later stages. We therefore recommend that you apply early. Applications received after the final deadline may be considered at our discretion if places are still available.  Applicants who are made a conditional offer of a place must meet all the conditions of their offer by 31 July 2024. 
+
+School: Manchester, Programme: Subsurface Energy EngineeringMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Sustainable BusinessMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Sustainable Electrical Power Systems Engineering (online)MSc/PGDip/PGCert
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: TESOLMA (Up to 3 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Textile Technology (Technical Textiles)MSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline:  Due to the competition for places, we give preference to students with grades above our minimum entry requirements. If we make you an offer, you will have 6 weeks in which to accept. Any offers not accepted within 6 weeks will be withdrawn so that an offer can be made to another candidate.   Stage 1: Application received by 27 October 2023. Decision by 15 December 2023.    Stage 2: Application received by 15 December 2023. Decision by 16 February 2024.    Stage 3: Application received by 23 February 2024. Decision by 26 April 2024    Stage 4: Application received by 03 May 2024. Decision by 28 June 2024.   You need to submit your supporting documents with your application as it may delay us processing your application by the decision deadline.  Whilst we aim to give you a decision on your application by the deadline date, in some instances due to the competition for places and the volume of applications received, it may be necessary to roll your application forward to the next stage. If this is the case we will let you know.  Applications received after our final application deadline will be considered at our discretion if places are still available.  Please note: All places are subject to availability and if you apply at one of the later stages, some courses may already be closed. We therefore recommend that you apply early in the cycle to secure your place with us.  Applicants who are made a conditional offer of a place must demonstrate that they have met all the conditions of their offer by 31st July 2024.  
+
+School: Manchester, Programme: Thermal Power & Fluid EngineeringMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Tissue Engineering for Regenerative MedicineMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Transformative OncologyMSc
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Translation and Interpreting StudiesMA (1 or 2 years)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Transnational Dispute ResolutionLLM
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Urban Design and International PlanningMSc
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Urban Regeneration and DevelopmentMSc
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Urban StudiesMSc (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+School: Manchester, Programme: Visual AnthropologyMA (1 year)
+Old Deadline: Failed to retrieve details
+New Deadline: Staged admissions section not found.
+
+
