@@ -10,12 +10,7 @@ from DDLNotifier.email_sender import send_email
 from DDLNotifier.config import CONFIG  # Replace with your actual email module
 from DDLNotifier.P024_KCL.program_url_crawler import crawl
 from DDLNotifier.utils.compare_and_notify import compare_and_notify
-import requests
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.chrome.options import Options
+from DDLNotifier.utils.get_request_header import WebScraper
 # Constants
 BASE_PATH = os.path.dirname(os.path.abspath(__file__))
 
@@ -37,20 +32,12 @@ export OPENSSL_CONF=/etc/ssl/openssl.cnf
 python /root/AI4App/DDLNotifier/notifier_routine.py
 '''
 
-options = Options()
-options.add_argument("--headless")  # Runs Chrome in headless mode.
-
 def get_deadline(url):
     """Fetches the application closing date guidance text from the specified URL."""
-    driver = webdriver.Chrome(options=options)
-    driver.get(url)
-    WebDriverWait(driver, 10).until(
-        EC.visibility_of_element_located((By.CSS_SELECTOR,
-                                          "div.Richtextstyled__RichtextStyled-sc-1kvg2vc-0 p.Paragraphstyled__ParagraphStyled-sc-176xsi4-0"))
-    )
+    webScraper = WebScraper()
+    response_text = webScraper.get_html_KCL(url)
     try:
-        soup = BeautifulSoup(driver.page_source, "html.parser")
-        driver.quit()
+        soup = BeautifulSoup(response_text, "html.parser")
         header = soup.find("h4", string=lambda text: text and "Application closing date guidance" in text)
         print(f"Debug: Header found - {header.text if header else 'No header found'}")  # Debug output
 
