@@ -2,18 +2,12 @@ from bs4 import BeautifulSoup
 import pandas as pd
 import os
 from urllib.parse import urljoin
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
+from DDLNotifier.utils.get_request_header import WebScraper
 
 def crawl(url="https://www.southampton.ac.uk/courses/postgraduate?keyword_filter="):
-    options = Options()
-    options.add_argument('--headless')  # Run in background
-    driver = webdriver.Chrome(options=options)
-    driver.get(url)
-
-    # Fetch the page HTML and parse it
-    html = driver.page_source
-    soup = BeautifulSoup(html, 'html.parser')
+    webScraper = WebScraper()
+    response_text = webScraper.get_html(url)
+    soup = BeautifulSoup(response_text, 'html.parser')
 
     # Then check if any are being filtered out by the style attribute
     test_links_filtered = soup.select('li.course-list-item:not([style*="display: none"]) a')
@@ -38,7 +32,7 @@ def crawl(url="https://www.southampton.ac.uk/courses/postgraduate?keyword_filter
         print(f"Data successfully saved to Excel. Total programs found: {len(data['ProgramName'])}")
     else:
         print("No data extracted. Check selectors and page structure.")
-    driver.quit()
 
 if __name__ == '__main__':
     crawl()
+
