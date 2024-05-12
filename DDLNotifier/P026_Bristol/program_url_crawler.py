@@ -1,27 +1,13 @@
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
+
+import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 import os
 
-def setup_driver():
-    """Set up Selenium WebDriver."""
-    options = Options()
-    options.add_argument('--headless')  # Run in headless mode for servers
-    options.add_argument('--no-sandbox')
-    options.add_argument('--disable-dev-shm-usage')
-    driver = webdriver.Chrome(options=options)
-    return driver
 
 def crawl(url="https://www.bristol.ac.uk/study/postgraduate/search/?q=&length=15&sort=score&dir=desc&sort=PostgraduateCourse-programtype&dir=asc&sort=PostgraduateCourse-programname&dir=asc&filterStudyType=Taught"):
-    driver = setup_driver()
-    driver.get(url)
-
-    # Wait for JavaScript to load
-    driver.implicitly_wait(10)  # Adjust time based on your connection speed and website response time
-
-    soup = BeautifulSoup(driver.page_source, 'html.parser')
-    driver.quit()
+    response = requests.get(url)
+    soup = BeautifulSoup(response.text, 'html.parser')
 
     # Use the correct class to find course elements
     course_elements = soup.find_all("article", class_="search-result--course")
