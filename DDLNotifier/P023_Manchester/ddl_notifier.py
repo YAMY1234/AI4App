@@ -10,8 +10,7 @@ from DDLNotifier.email_sender import send_email
 from DDLNotifier.config import CONFIG  # Replace with your actual email module
 from DDLNotifier.P023_Manchester.program_url_crawler import crawl
 from DDLNotifier.utils.compare_and_notify import compare_and_notify
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
+import requests
 # Constants
 BASE_PATH = os.path.dirname(os.path.abspath(__file__))
 
@@ -34,24 +33,13 @@ python /root/AI4App/DDLNotifier/notifier_routine.py
 '''
 
 
-def setup_driver():
-    """Set up Selenium WebDriver."""
-    options = Options()
-    options.add_argument('--headless')  # Run in headless mode for automation
-    options.add_argument('--disable-gpu')  # Disable GPU hardware acceleration
-    options.add_argument('--no-sandbox')  # Bypass OS security model
-    options.add_argument('--disable-dev-shm-usage')  # Overcome limited resource problems
-    return webdriver.Chrome(options=options)
 
 def get_deadline(url):
     url = f"{url}/application-and-selection/#course-profile"
-    driver = setup_driver()
-    driver.get(url)
-    driver.implicitly_wait(10)  # Allow some time for JavaScript to execute
 
     try:
-        html = driver.page_source
-        soup = BeautifulSoup(html, "html.parser")
+        response = requests.get(url, verify=False)
+        soup = BeautifulSoup(response.text, "html.parser")
 
         # Directly find the 'Staged admissions' header
         staged_admissions_header = soup.find("h2", string="Staged admissions")
@@ -69,8 +57,6 @@ def get_deadline(url):
     except Exception as e:
         print(f"Error retrieving deadlines: {str(e)}")
         return "Failed to retrieve details"
-    finally:
-        driver.quit()
 
 
 def get_current_programs_and_urls():
@@ -126,3 +112,4 @@ def main():
 # Run the main function
 if __name__ == "__main__":
     main()
+
