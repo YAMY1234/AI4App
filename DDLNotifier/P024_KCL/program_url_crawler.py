@@ -1,5 +1,4 @@
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
+import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 import os
@@ -8,25 +7,22 @@ PROGRAM_DATA_EXCEL = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'p
 
 
 def crawl(base_url="https://www.kcl.ac.uk/search/courses"):
-    options = Options()
-    options.add_argument('--headless')  # Run in background
-    driver = webdriver.Chrome(options=options)
-
     data = {"ProgramName": [], "URL Link": []}
-    page = 0
 
-    while True:
+    for page in range(10):  # Adjust the range as needed for the number of pages
         url = f"{base_url}?coursesPage={page}&level=postgraduate-taught"
         print(f"Fetching data from: {url}")
-        driver.get(url)
 
-        # Let's print the current page HTML to inspect it
-        html = driver.page_source
-        soup = BeautifulSoup(html, 'html.parser')
+        response = requests.get(url)
+        if response.status_code != 200:
+            print(f"Failed to fetch data from {url}")
+            continue
+
+        soup = BeautifulSoup(response.text, 'html.parser')
 
         courses = soup.find_all('div', class_='Cardstyled__CardStyled-sc-147a7mv-0 kymBik')
         if not courses:
-            print("No more courses found or page did not load as expected at: {url}")
+            print(f"No more courses found or page did not load as expected at: {url}")
             break  # Break if no courses are found or if the page fails to load expected content
 
         print(f"Found {len(courses)} courses on page {page + 1}.")
@@ -43,11 +39,7 @@ def crawl(base_url="https://www.kcl.ac.uk/search/courses"):
                 data["ProgramName"].append(program_name)
                 data["URL Link"].append(program_link)
 
-                print(f"Added program: {program_name} with URL: {program_link}")
-
-        page += 1  # Increment the page number for the next iteration
-
-    driver.quit()
+                print(f"Added program: {program_name} with URL: https://www.kcl.ac.uk{program_link}")
 
     if not data["ProgramName"]:
         print("No programs were added to the list.")
@@ -60,3 +52,4 @@ def crawl(base_url="https://www.kcl.ac.uk/search/courses"):
 
 if __name__ == '__main__':
     crawl()
+

@@ -10,7 +10,11 @@ from DDLNotifier.email_sender import send_email
 from DDLNotifier.config import CONFIG  # Replace with your actual email module
 from DDLNotifier.P024_KCL.program_url_crawler import crawl
 from DDLNotifier.utils.compare_and_notify import compare_and_notify
+import requests
 from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
 # Constants
 BASE_PATH = os.path.dirname(os.path.abspath(__file__))
@@ -33,26 +37,20 @@ export OPENSSL_CONF=/etc/ssl/openssl.cnf
 python /root/AI4App/DDLNotifier/notifier_routine.py
 '''
 
-
-def setup_driver():
-    """Set up Selenium WebDriver."""
-    options = Options()
-    options.add_argument('--headless')  # Run in headless mode for automation
-    options.add_argument('--disable-gpu')  # Disable GPU hardware acceleration
-    options.add_argument('--no-sandbox')  # Bypass OS security model
-    options.add_argument('--disable-dev-shm-usage')  # Overcome limited resource problems
-    return webdriver.Chrome(options=options)
-
+options = Options()
+options.add_argument("--headless")  # Runs Chrome in headless mode.
 
 def get_deadline(url):
     """Fetches the application closing date guidance text from the specified URL."""
-    driver = setup_driver()
+    driver = webdriver.Chrome(options=options)
     driver.get(url)
-    driver.implicitly_wait(20)  # Allow some time for JavaScript to execute
-
+    WebDriverWait(driver, 10).until(
+        EC.visibility_of_element_located((By.CSS_SELECTOR,
+                                          "div.Richtextstyled__RichtextStyled-sc-1kvg2vc-0 p.Paragraphstyled__ParagraphStyled-sc-176xsi4-0"))
+    )
     try:
-        html = driver.page_source
-        soup = BeautifulSoup(html, "html.parser")
+        soup = BeautifulSoup(driver.page_source, "html.parser")
+        driver.quit()
         header = soup.find("h4", string=lambda text: text and "Application closing date guidance" in text)
         print(f"Debug: Header found - {header.text if header else 'No header found'}")  # Debug output
 
@@ -60,8 +58,6 @@ def get_deadline(url):
             content = []
             # Start collecting all sibling elements until another header is found or no more siblings
             for sibling in header.find_next_siblings():
-                if sibling.name == "h4":  # Assuming no relevant content beyond another header
-                    break
                 content.append(" ".join(sibling.stripped_strings))
             text = " ".join(content)
             return text if text else "Application deadline information not found"
@@ -69,14 +65,12 @@ def get_deadline(url):
             return "Closing date section not found"
     except Exception as e:
         return f"Error retrieving information: {str(e)}"
-    finally:
-        driver.quit()
 
 def get_current_programs_and_urls():
     return pd.read_excel(PROGRAM_DATA_EXCEL)
 
 def main():
-    #crawl()
+    crawl()
     # Read current program data
     current_program_data = get_current_programs_and_urls()
 
@@ -125,3 +119,4 @@ def main():
 # Run the main function
 if __name__ == "__main__":
     main()
+
