@@ -70,7 +70,7 @@ def get_current_programs_and_urls():
     return pd.read_excel(PROGRAM_DATA_EXCEL)
 
 def main():
-    # crawl()
+    crawl()
     # Read current program data
     current_program_data = get_current_programs_and_urls()
 
