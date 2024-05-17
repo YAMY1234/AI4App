@@ -3,24 +3,13 @@ from bs4 import BeautifulSoup
 import pandas as pd
 import os
 from urllib.parse import urljoin
+from DDLNotifier.utils.get_request_header import WebScraper
 
 PROGRAM_DATA_EXCEL = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'programs.xlsx')
-
+webScraper = WebScraper()
 
 def crawl(url="https://www.manchester.ac.uk/study/masters/courses/list/"):
-    # Set up the Selenium WebDriver
-    options = webdriver.ChromeOptions()
-    options.add_argument('--headless')  # Run in background
-    driver = webdriver.Chrome(options=options)
-
-    # Fetch the webpage
-    driver.get(url)
-    # Allow some time for JavaScript to execute
-    driver.implicitly_wait(10)
-
-    # Get the page source and close the browser
-    html = driver.page_source
-    driver.quit()
+    html = webScraper.get_html(url)
 
     # Use BeautifulSoup to parse the HTML content
     soup = BeautifulSoup(html, 'html.parser')
