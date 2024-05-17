@@ -36,9 +36,6 @@ def crawl(url="https://www.nottingham.ac.uk/pgstudy/courses/courses.aspx?level=t
     # 创建DataFrame
     df = pd.DataFrame(data)
 
-    # 定义输出文件名
-    PROGRAM_DATA_EXCEL = "programs.xlsx"
-
     # 将数据保存到Excel文件
     df.to_excel(PROGRAM_DATA_EXCEL, index=False)
 

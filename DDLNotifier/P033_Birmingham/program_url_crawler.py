@@ -40,7 +40,7 @@ def crawl():
                 data["URL Link"].append(program_link)
 
     df = pd.DataFrame(data)
-    df.to_excel('programs.xlsx', index=False)
+    df.to_excel(PROGRAM_DATA_EXCEL, index=False)
 
 # 调用爬虫函数
 if __name__ == '__main__':
