@@ -8,9 +8,9 @@ from bs4 import BeautifulSoup
 import os
 from DDLNotifier.email_sender import send_email
 from DDLNotifier.config import CONFIG  # Replace with your actual email module
-from DDLNotifier.P024_KCL.program_url_crawler import crawl
+from DDLNotifier.P031_Glasgow.program_url_crawler import crawl
 from DDLNotifier.utils.compare_and_notify import compare_and_notify
-from DDLNotifier.utils.get_request_header import WebScraper
+
 # Constants
 BASE_PATH = os.path.dirname(os.path.abspath(__file__))
 
@@ -27,32 +27,31 @@ SAVE_PATH_NEW_XLSX_WITH_TIMESTAMP = os.path.join(BASE_PATH, f"program_deadlines-
 
 log_file = os.path.join(BASE_PATH, "notification_log.txt")
 
-'''
-export OPENSSL_CONF=/etc/ssl/openssl.cnf
-python /root/AI4App/DDLNotifier/notifier_routine.py
-'''
-
-webScraper = WebScraper()
 
 def get_deadline(url):
-    """Fetches the application closing date guidance text from the specified URL."""
-    response_text = webScraper.get_html_KCL(url)
-    try:
-        soup = BeautifulSoup(response_text, "html.parser")
-        header = soup.find("h4", string=lambda text: text and "Application closing date guidance" in text)
-        print(f"Debug: Header found - {header.text if header else 'No header found'}")  # Debug output
+    # 发送GET请求并获取网页内容
+    response = requests.get(url, verify=False)
 
-        if header:
-            content = []
-            # Start collecting all sibling elements until another header is found or no more siblings
-            for sibling in header.find_next_siblings():
-                content.append(" ".join(sibling.stripped_strings))
-            text = " ".join(content)
-            return text if text else "Application deadline information not found"
-        else:
-            return "Closing date section not found"
-    except Exception as e:
-        return f"Error retrieving information: {str(e)}"
+    # 使用BeautifulSoup解析网页内容
+    soup = BeautifulSoup(response.text, "html.parser")
+
+    # 查找id含有"content_"和"_deadlines"的div标签
+    deadlines_div = soup.find("div", id=lambda x: x and x.startswith("content_") and x.endswith(
+        "_deadlines"))
+
+    if deadlines_div:
+        content = []
+        # 遍历div中的所有元素，收集文本内容
+        for element in deadlines_div.find_all():
+            text = element.get_text(strip=True)
+            if text:
+                content.append(text)
+        if content:
+            return "\n".join(content)
+
+    # 如果没有找到符合条件的div，返回特定字符串
+    return "No deadline information found"
+
 
 def get_current_programs_and_urls():
     return pd.read_excel(PROGRAM_DATA_EXCEL)
@@ -107,4 +106,3 @@ def main():
 # Run the main function
 if __name__ == "__main__":
     main()
-

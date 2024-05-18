@@ -8,9 +8,9 @@ from bs4 import BeautifulSoup
 import os
 from DDLNotifier.email_sender import send_email
 from DDLNotifier.config import CONFIG  # Replace with your actual email module
-from DDLNotifier.P024_KCL.program_url_crawler import crawl
+from DDLNotifier.P032_Leeds.program_url_crawler import crawl
 from DDLNotifier.utils.compare_and_notify import compare_and_notify
-from DDLNotifier.utils.get_request_header import WebScraper
+
 # Constants
 BASE_PATH = os.path.dirname(os.path.abspath(__file__))
 
@@ -32,33 +32,45 @@ export OPENSSL_CONF=/etc/ssl/openssl.cnf
 python /root/AI4App/DDLNotifier/notifier_routine.py
 '''
 
-webScraper = WebScraper()
 
 def get_deadline(url):
-    """Fetches the application closing date guidance text from the specified URL."""
-    response_text = webScraper.get_html_KCL(url)
-    try:
-        soup = BeautifulSoup(response_text, "html.parser")
-        header = soup.find("h4", string=lambda text: text and "Application closing date guidance" in text)
-        print(f"Debug: Header found - {header.text if header else 'No header found'}")  # Debug output
+    # 发送GET请求并获取网页内容
+    response = requests.get(url, verify=False)
 
-        if header:
+    # 使用BeautifulSoup解析网页内容
+    soup = BeautifulSoup(response.text, "html.parser")
+
+    # 首先查找“Application deadlines”后的第一个p标签并提取所有文本
+    deadlines_tag = soup.find("h3", string="Application deadlines")
+    if not deadlines_tag:
+        deadlines_tag = soup.find("h2", string="Application deadlines")
+    if deadlines_tag:
+        next_p = deadlines_tag.find_next("p")
+        if next_p:
+            return next_p.text.strip()
+
+    # 如果没有找到“Application deadlines”，则查找包含"How To Apply"文本的h2标签
+    apply_tags = soup.find_all("h2", class_="accordion__title")
+    for tag in apply_tags:
+        if "How To Apply" in tag.get_text(strip=True):
             content = []
-            # Start collecting all sibling elements until another header is found or no more siblings
-            for sibling in header.find_next_siblings():
-                content.append(" ".join(sibling.stripped_strings))
-            text = " ".join(content)
-            return text if text else "Application deadline information not found"
-        else:
-            return "Closing date section not found"
-    except Exception as e:
-        return f"Error retrieving information: {str(e)}"
+            current_tag = tag.find_next()
+            while current_tag and current_tag.name not in ["h2", "a"]:
+                if current_tag.name == "p":
+                    content.append(current_tag.get_text(strip=True))
+                current_tag = current_tag.find_next()
+            if content:
+                return "\n".join(content)
+
+    # 如果两种方法都找不到有效信息，返回特定字符串
+    return "No deadline information found"
+
 
 def get_current_programs_and_urls():
     return pd.read_excel(PROGRAM_DATA_EXCEL)
 
 def main():
-    crawl()
+    # crawl()
     # Read current program data
     current_program_data = get_current_programs_and_urls()
 
@@ -107,4 +119,3 @@ def main():
 # Run the main function
 if __name__ == "__main__":
     main()
-

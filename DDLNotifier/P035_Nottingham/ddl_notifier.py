@@ -77,6 +77,7 @@ def get_current_programs_and_urls():
 
 def main():
     crawl()
+    global constant_deadline
     constant_deadline = get_constant_deadline()
     # Read current program data
     current_program_data = get_current_programs_and_urls()
