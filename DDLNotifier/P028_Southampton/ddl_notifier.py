@@ -35,28 +35,62 @@ python /root/AI4App/DDLNotifier/notifier_routine.py
 
 def get_deadline(url):
     try:
-        response = requests.get(url + "#apply")  # Append the fragment directly to reach the relevant section.
-        soup = BeautifulSoup(response.text, 'html.parser')
+        response = requests.get(url + "#apply")
+        if response.status_code != 200:
+            return f"Error fetching the page: {response.status_code}"
 
-        # First attempt: Look for the section 'Application deadlines' directly
+        soup = BeautifulSoup(response.text, 'html.parser')
+        print("Fetched the page successfully")
+
+        deadlines_text = []
+
+        # First attempt: Look for paragraphs directly under 'Application deadlines' with spans
         deadlines_heading = soup.find("h3", string=lambda text: "application deadlines" in text.lower() if text else False)
+        if deadlines_heading:
+            print("Found 'Application deadlines' heading")
+            next_p = deadlines_heading.find_next("p")
+            while next_p and next_p.name == "p":
+                span_texts = [span.text.strip() for span in next_p.find_all("span")]
+                if span_texts:
+                    deadlines_text.extend(span_texts)
+                else:
+                    deadlines_text.append(next_p.text.strip())
+                next_p = next_p.find_next_sibling("p")
+
+        # Second attempt: Look for the section 'Application deadlines' directly
         if deadlines_heading:
             next_ul = deadlines_heading.find_next("ul")
             if next_ul:
                 deadline_items = next_ul.find_all("li")
-                return " | ".join(item.text.strip() for item in deadline_items)
+                if deadline_items:
+                    deadlines_text.extend(item.text.strip() for item in deadline_items)
+            print("Empty 'ul' found, proceeding to next attempt")
 
-        # Second attempt: Look for any paragraphs or lists under 'How to apply'
-        apply_section = soup.find("div", id="apply")  # Adjust based on actual div ID or structure
+        if deadlines_text:
+            return " | ".join(deadlines_text)
+
+        # Third attempt: Look for any paragraphs or lists under 'How to apply'
+        apply_section = soup.find("div", id="apply")
         if apply_section:
+            print("Found 'apply' section")
             paragraphs = apply_section.find_all("p")
             for p in paragraphs:
                 if "application deadline" in p.text.lower():
-                    return p.text.strip()
+                    deadlines_text.append(p.text.strip())
+            # Additionally check for lists under apply_section
+            lists = apply_section.find_all("ul")
+            for ul in lists:
+                for li in ul.find_all("li"):
+                    if "application deadline" in li.text.lower():
+                        deadlines_text.append(li.text.strip())
+
+        if deadlines_text:
+            return " | ".join(deadlines_text)
 
         return "Deadline section not found"
     except Exception as e:
         return f"Error processing the page: {str(e)}"
+
 
 
 def get_current_programs_and_urls():
@@ -112,3 +146,4 @@ def main():
 # Run the main function
 if __name__ == "__main__":
     main()
+
