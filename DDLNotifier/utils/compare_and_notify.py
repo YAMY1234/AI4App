@@ -2,13 +2,26 @@ import os
 from datetime import datetime
 import pandas as pd
 from DDLNotifier.email_sender import send_email
-from openpyxl import Workbook
+from openpyxl import Workbook, load_workbook
 from openpyxl.styles import Font, PatternFill
 from DDLNotifier.config import CONFIG
+from filelock import FileLock
 
 recipient_email = CONFIG.RECIPEINT_EMAIL
 
+
 def compare_and_notify(old_data, new_data, log_path, school_name):
+    """
+    Compare old and new data, and log differences.
+
+    Parameters:
+    - old_data: DataFrame containing the previous data (identical to the outer scope variable).
+    - new_data: DataFrame containing the current data to compare against old_data.
+    - log_path: Path to the log file where results are recorded.
+    - school_name: Name of the school for which the data is compared.
+
+    This function assumes that 'old_data' from the outer scope is passed to it directly.
+    """
     with open(log_path, "a") as log_file:
         log_file.write(f"Function called at {datetime.now()}\n")
 
@@ -46,59 +59,62 @@ def compare_and_notify(old_data, new_data, log_path, school_name):
             if new_row.empty:
                 deleted_rows_detected.append(old_row)
 
-        # Preparing email content
-        subject = f"Changes Detected in School: {school_name}'s Programmes"
-        body = ""
-
-        if changes_detected:
-            body += "Deadline changes detected:\n\n"
-            for change in changes_detected:
-                body += (
-                    f"School: {school_name}, Programme: {change['Programme']}\n"
-                    f"Old Deadline: {change['Old Deadline']}\n"
-                    f"New Deadline: {change['New Deadline']}\n\n")
-
-        if new_rows_detected:
-            body += "New programmes added:\n\n"
-            for new_row in new_rows_detected:
-                body += (
-                    f"School: {school_name}, Programme: {new_row['Programme']}\n"
-                    f"Deadline: {new_row['Deadline']}\n\n")
-
-        if deleted_rows_detected:
-            body += "Programmes deleted:\n\n"
-            for del_row in deleted_rows_detected:
-                body += f"School: {school_name}, Programme: {del_row['Programme']}\n\n"
-
-        # Sending the email if there are any changes
-        if changes_detected or new_rows_detected or deleted_rows_detected:
-            send_email(subject, body, recipient_email)
-            with open(log_path, "a") as log_file:
-                log_file.write(f"Email sent: {subject} | {body}\n")
-            print("Email notification sent for the detected changes.")
-        else:
-            print("No changes detected.")
+        # Save changes to an email if there are any changes
+        save_changes_to_email(changes_detected, new_rows_detected, deleted_rows_detected,
+                              school_name, log_path)
 
         # Save changes to an Excel file if there are any changes
-        if changes_detected or new_rows_detected or deleted_rows_detected:
-            save_changes_to_excel(changes_detected, new_rows_detected, deleted_rows_detected, school_name)
-            print("Excel file saved for the detected changes.")
-        else:
-            print("No changes detected.")
+        save_changes_to_excel(changes_detected, new_rows_detected, deleted_rows_detected,
+                              school_name)
     else:
         print("No changes detected in the data content.")
 
+
+def save_changes_to_email(changes_detected, new_rows_detected, deleted_rows_detected, m_school_name, log_path):
+    # Preparing email content
+    subject = f"Changes Detected in School: {m_school_name}'s Programmes"
+    body = ""
+
+    if changes_detected:
+        body += "Deadline changes detected:\n\n"
+        for change in changes_detected:
+            body += (
+                f"School: {m_school_name}, Programme: {change['Programme']}\n"
+                f"Old Deadline: {change['Old Deadline']}\n"
+                f"New Deadline: {change['New Deadline']}\n\n")
+
+    if new_rows_detected:
+        body += "New programmes added:\n\n"
+        for new_row in new_rows_detected:
+            body += (
+                f"School: {m_school_name}, Programme: {new_row['Programme']}\n"
+                f"Deadline: {new_row['Deadline']}\n\n")
+
+    if deleted_rows_detected:
+        body += "Programmes deleted:\n\n"
+        for del_row in deleted_rows_detected:
+            body += f"School: {m_school_name}, Programme: {del_row['Programme']}\n\n"
+
+    # Sending the email if there are any changes
+    if changes_detected or new_rows_detected or deleted_rows_detected:
+        send_email(subject, body, recipient_email)
+        with open(log_path, "a") as log_file:
+            log_file.write(f"Email sent: {subject} | {body}\n")
+        print("Email notification sent for the detected changes.")
+    else:
+        print("No changes detected.")
+
+
 def save_changes_to_excel(changes_detected, new_rows_detected, deleted_rows_detected, school_name):
-    # Create a new workbook and select the active worksheet
-    wb = Workbook()
-    ws = wb.active
-    ws.title = "Changes"
+    # Current timestamp (year, month, day, hour)
+    now = datetime.now()
+    timestamp = now.strftime("%Y-%m-%d %H")
+    file_name = f"{timestamp}-changes.xlsx"
+    file_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), file_name)
 
-    # Define headers
-    headers = ["Alert Label", "School Name", "Program Name", "Old Deadline", "New Deadline"]
-    ws.append(headers)
-
-    # Define styles
+    # Define headers and styles
+    headers = ["Alert Label", "School Name", "Program Name", "Old Deadline", "New Deadline",
+               "Record Time"]
     header_font = Font(bold=True)
     styles = {
         "Added Program": PatternFill(start_color="C6EFCE", end_color="C6EFCE", fill_type="solid"),
@@ -106,31 +122,46 @@ def save_changes_to_excel(changes_detected, new_rows_detected, deleted_rows_dete
         "Deadline Change": PatternFill(start_color="FFEB9C", end_color="FFEB9C", fill_type="solid")
     }
 
-    # Apply styles to header
-    for cell in ws["1:1"]:
-        cell.font = header_font
+    # Using file lock to ensure atomicity in file operations
+    lock = FileLock(f"{file_path}.lock")
+    with lock:
+        if os.path.exists(file_path):
+            wb = load_workbook(file_path)
+        else:
+            wb = Workbook()
 
-    # Add data to worksheet
-    for change in changes_detected:
-        ws.append(["Deadline Change", school_name, change['Programme'], change['Old Deadline'], change['New Deadline']])
+        # Check if the sheet for this school already exists, if not, create a new one
+        if school_name in wb.sheetnames:
+            ws = wb[school_name]
+        else:
+            ws = wb.create_sheet(school_name)
+            ws.append(headers)
+            for cell in ws["1:1"]:
+                cell.font = header_font
 
-    for new_row in new_rows_detected:
-        ws.append(["Added Program", school_name, new_row['Programme'], "", new_row['Deadline']])
+        # Add data to worksheet
+        for change in changes_detected:
+            ws.append(["Deadline Change", school_name, change['Programme'], change['Old Deadline'],
+                       change['New Deadline'], timestamp])
 
-    for del_row in deleted_rows_detected:
-        ws.append(["Deleted Program", school_name, del_row['Programme'], del_row['Deadline'], ""])
+        for new_row in new_rows_detected:
+            ws.append(["Added Program", school_name, new_row['Programme'], "", new_row['Deadline'],
+                       timestamp])
 
-    # Apply styles to rows based on Alert Label
-    for row in ws.iter_rows(min_row=2, max_col=5):
-        if row[0].value in styles:
-            for cell in row:
-                cell.fill = styles[row[0].value]
+        for del_row in deleted_rows_detected:
+            ws.append(
+                ["Deleted Program", school_name, del_row['Programme'], del_row['Deadline'], "",
+                 timestamp])
 
-    # Save the workbook to an absolute file path
-    file_name = f"{school_name}_changes.xlsx"
-    file_path = os.path.abspath(file_name)
-    wb.save(file_path)
-    print(f"Excel file saved to {file_path}")
+        # Apply styles to rows based on Alert Label
+        for row in ws.iter_rows(min_row=2, max_col=6):
+            if row[0].value in styles:
+                for cell in row:
+                    cell.fill = styles[row[0].value]
+
+        # Save the workbook
+        wb.save(file_path)
+        print(f"Excel file saved to {file_path}")
 
 # Example usage
 if __name__ == "__main__":
@@ -156,4 +187,3 @@ if __name__ == "__main__":
     compare_and_notify(old_data, new_data, log_path, school_name)
 
     print("Test completed. Check the local directory for the Excel file.")
-
