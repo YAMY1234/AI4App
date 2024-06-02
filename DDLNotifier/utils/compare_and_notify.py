@@ -1,6 +1,7 @@
 import os
 from datetime import datetime
 import pandas as pd
+from DDLNotifier.email_sender import send_email
 from openpyxl import Workbook
 from openpyxl.styles import Font, PatternFill
 from DDLNotifier.config import CONFIG
@@ -45,11 +46,42 @@ def compare_and_notify(old_data, new_data, log_path, school_name):
             if new_row.empty:
                 deleted_rows_detected.append(old_row)
 
+        # Preparing email content
+        subject = f"Changes Detected in School: {school_name}'s Programmes"
+        body = ""
+
+        if changes_detected:
+            body += "Deadline changes detected:\n\n"
+            for change in changes_detected:
+                body += (
+                    f"School: {school_name}, Programme: {change['Programme']}\n"
+                    f"Old Deadline: {change['Old Deadline']}\n"
+                    f"New Deadline: {change['New Deadline']}\n\n")
+
+        if new_rows_detected:
+            body += "New programmes added:\n\n"
+            for new_row in new_rows_detected:
+                body += (
+                    f"School: {school_name}, Programme: {new_row['Programme']}\n"
+                    f"Deadline: {new_row['Deadline']}\n\n")
+
+        if deleted_rows_detected:
+            body += "Programmes deleted:\n\n"
+            for del_row in deleted_rows_detected:
+                body += f"School: {school_name}, Programme: {del_row['Programme']}\n\n"
+
+        # Sending the email if there are any changes
+        if changes_detected or new_rows_detected or deleted_rows_detected:
+            send_email(subject, body, recipient_email)
+            with open(log_path, "a") as log_file:
+                log_file.write(f"Email sent: {subject} | {body}\n")
+            print("Email notification sent for the detected changes.")
+        else:
+            print("No changes detected.")
+
         # Save changes to an Excel file if there are any changes
         if changes_detected or new_rows_detected or deleted_rows_detected:
             save_changes_to_excel(changes_detected, new_rows_detected, deleted_rows_detected, school_name)
-            with open(log_path, "a") as log_file:
-                log_file.write(f"Excel file saved for {school_name}\n")
             print("Excel file saved for the detected changes.")
         else:
             print("No changes detected.")
