@@ -23,14 +23,7 @@ SAVE_PATH_OLD_XLSX = 'program_deadlines.xlsx'  # Save path for the old Excel fil
 SAVE_PATH_NEW_XLSX = 'program_deadlines.xlsx'  # Save path for the new Excel file
 SAVE_PATH_OLD_XLSX = os.path.join(BASE_PATH, SAVE_PATH_OLD_XLSX)  # Save path for the HTML
 SAVE_PATH_NEW_XLSX = os.path.join(BASE_PATH, SAVE_PATH_NEW_XLSX)  # Save path for the CSV
-SAVE_PATH_NEW_XLSX_WITH_TIMESTAMP = os.path.join(BASE_PATH, f"program_deadlines-{pd.Timestamp.now().strftime('%Y%m%d%H%M%S')}.xlsx")
-
 log_file = os.path.join(BASE_PATH, "notification_log.txt")
-
-'''
-export OPENSSL_CONF=/etc/ssl/openssl.cnf
-python /root/AI4App/DDLNotifier/notifier_routine.py
-'''
 
 
 def get_deadline(url):
@@ -102,17 +95,6 @@ def main():
 
     # Save the new data for future comparisons
     new_data.to_excel(SAVE_PATH_NEW_XLSX, index=False)
-
-    # 保存    programs-当前时间戳.xlsx
-    new_data.to_excel(f"program_deadlines-{pd.Timestamp.now().strftime('%Y%m%d%H%M%S')}.xlsx", index=False)
-
-    # 检查当前文件夹下时间戳后缀为3天之前的文件，如果存在则删除
-    for file in os.listdir(os.path.dirname(os.path.abspath(__file__))):
-        print(file)
-        if file.startswith("program_deadlines-") and file.endswith(".xlsx"):
-            file_time = pd.Timestamp(file.split("-")[1].split(".")[0])
-            if pd.Timestamp.now() - file_time >= pd.Timedelta(days=3):
-                os.remove(file)
     print(f"Deadlines updated and saved to {SAVE_PATH_NEW_XLSX}")
 
 
