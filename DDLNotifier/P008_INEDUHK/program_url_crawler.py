@@ -6,35 +6,29 @@ import os
 PROGRAM_DATA_EXCEL = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'programs.xlsx')
 
 def crawl():
-    # 发送GET请求并获取网页内容
     url = "https://www.ln.edu.hk/sgs/taught-postgraduate-programmes/programme-on-offer"
-    response = requests.get(url, verify=False)
-
-    # 使用BeautifulSoup解析网页内容
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+    }
+    response = requests.get(url, headers=headers, verify=False)
     soup = BeautifulSoup(response.text, "html.parser")
-
-    # 找到所有包含课程信息的div元素
-    course_elements = soup.find_all("div", class_="content-last")
-
-    # 创建一个空的DataFrame来存储课程信息
+    elements = soup.find_all("div", class_="box16 programe_row_1")
+    for index, elem in enumerate(elements[:5]):
+        print(f"Element {index + 1} HTML: {elem.prettify()}")
     data = {"ProgramName": [], "URL Link": []}
-
-    # 遍历每个课程元素并提取信息
-    for course_element in course_elements:
-        program_name = course_element.h5.get_text().strip() if course_element.h5 else None
-        link_element = course_element.find_parent("a", href=True)
-        if program_name and link_element:
+    for element in elements:
+        program_name_tag = element.find("h5")
+        link_element = element.find("a", href=True)
+        if program_name_tag and link_element:
+            program_name = program_name_tag.get_text().strip()
             url_link = "https://www.ln.edu.hk" + link_element["href"]
-            # 将信息添加到DataFrame中
+            # Print the program name and URL link for debugging
+            print(f"Program Name: {program_name}, URL: {url_link}")
+            # Add information to the DataFrame
             data["ProgramName"].append(program_name)
             data["URL Link"].append(url_link)
-
-    # 创建DataFrame
     df = pd.DataFrame(data)
-
-    # 将数据保存到Excel文件
     df.to_excel(PROGRAM_DATA_EXCEL, index=False)
 
-# 运行爬虫
 if __name__ == "__main__":
     crawl()
