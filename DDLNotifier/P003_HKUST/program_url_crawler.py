@@ -18,7 +18,9 @@ import os
 PROGRAM_DATA_EXCEL = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'programs.xlsx')
 def crawl():
     # 网页 URL
-    url = "https://prog-crs.hkust.edu.hk/pgprog/print_result.php?t=1703812719852&token_post=8551fa5718176bc683d62dbeaaf9f305&is_s=Y&keyword=&check-all-degree-option=undefined&check-allsub-degree-option1=undefined&check-allsub-degree-option2=Y&school[]=SSCI&school[]=SENG&school[]=SBM&school[]=SHSS&school[]=IPO&area[]=1&area[]=7&area[]=11&area[]=12&area[]=3&area[]=13&area[]=14&area[]=8&area[]=9&area[]=10&degree[]=DBA&degree[]=MBA&degree[]=MSC&degree[]=MA&degree[]=MPM&degree[]=MPP&degree[]=PGD&year=2024-25"
+    # url = "https://prog-crs.hkust.edu.hk/pgprog/print_result.php?t=1703812719852&token_post=8551fa5718176bc683d62dbeaaf9f305&is_s=Y&keyword=&check-all-degree-option=undefined&check-allsub-degree-option1=undefined&check-allsub-degree-option2=Y&school[]=SSCI&school[]=SENG&school[]=SBM&school[]=SHSS&school[]=IPO&area[]=1&area[]=7&area[]=11&area[]=12&area[]=3&area[]=13&area[]=14&area[]=8&area[]=9&area[]=10&degree[]=DBA&degree[]=MBA&degree[]=MSC&degree[]=MA&degree[]=MPM&degree[]=MPP&degree[]=PGD&year=2024-25"
+    # url = "https://prog-crs.hkust.edu.hk/pgprog/2025-26?token_post=57b738b4f108fdc9e1b7b0dbf9344c36&is_s=Y&keyword=&school%5B%5D=SSCI&school%5B%5D=SENG&school%5B%5D=SBM&school%5B%5D=SHSS&school%5B%5D=IPO&area%5B%5D=1&area%5B%5D=7&area%5B%5D=11&area%5B%5D=12&area%5B%5D=3&area%5B%5D=13&area%5B%5D=14&area%5B%5D=8&area%5B%5D=9&area%5B%5D=10&check-allsub-degree-option2=Y&degree%5B%5D=DBA&degree%5B%5D=MBA&degree%5B%5D=MSC&degree%5B%5D=MA&degree%5B%5D=MPM&degree%5B%5D=MPP&degree%5B%5D=PGD&year=2025-26"
+    url = "https://prog-crs.hkust.edu.hk/pgprog/print_result.php?t=1725336874472&token_post=ab2772a59307c08748071513d6b6751f&is_s=Y&keyword=&check-all-degree-option=undefined&check-allsub-degree-option1=undefined&check-allsub-degree-option2=Y&school[]=SSCI&school[]=SENG&school[]=SBM&school[]=SHSS&school[]=IPO&area[]=1&area[]=7&area[]=11&area[]=12&area[]=3&area[]=13&area[]=14&area[]=8&area[]=9&area[]=10&degree[]=DBA&degree[]=MBA&degree[]=MSC&degree[]=MA&degree[]=MPM&degree[]=MPP&degree[]=PGD&year=2025-26"
 
     # 发送请求
     response = requests.get(url, verify=False)
@@ -41,3 +43,7 @@ def crawl():
 
     # 保存到 Excel 文件
     df.to_excel(PROGRAM_DATA_EXCEL, index=False)
+
+
+if __name__ == "__main__":
+    crawl()

@@ -1,7 +1,8 @@
 import requests
 from bs4 import BeautifulSoup
 
-url = 'https://prog-crs.hkust.edu.hk/pgprog/2024-25/mpm'  # 在这里填入你的目标URL
+# url = 'https://prog-crs.hkust.edu.hk/pgprog/2024-25/mpm'  # 在这里填入你的目标URL
+url = 'https://prog-crs.hkust.edu.hk/pgprog/2025-26/mpm'  # 在这里填入你的目标URL
 
 def get_deadline(url):
     # 发送GET请求
