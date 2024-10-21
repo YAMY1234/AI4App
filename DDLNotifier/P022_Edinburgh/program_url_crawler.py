@@ -45,9 +45,9 @@ def crawl(url="https://www.ed.ac.uk/studying/postgraduate/degrees/index.php?r=si
             continue  # 如果存在这个标签，跳过当前项
 
         # 提取课程名称和链接
-        program_name = course.text.strip()
-        program_link = urljoin(url, course['href'])
-
+        program_name = course.text.strip()  # https://postgraduate.degrees.ed.ac.uk/index.php
+        # program_link = urljoin(url, course['href'])
+        program_link = "https://postgraduate.degrees.ed.ac.uk" + course['href']
         # 将信息添加到DataFrame中
         data["ProgramName"].append(program_name)
         data["URL Link"].append(program_link)
