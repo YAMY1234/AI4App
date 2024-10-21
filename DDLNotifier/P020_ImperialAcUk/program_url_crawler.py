@@ -6,7 +6,7 @@ from urllib.parse import urljoin
 
 PROGRAM_DATA_EXCEL = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'programs.xlsx')
 
-def crawl(url="https://www.imperial.ac.uk/study/courses/?courseType=postgraduate+taught&courseStartDate=2024&page=100"):
+def crawl(url="https://www.imperial.ac.uk/study/courses/?courseType=postgraduate+taught&courseStartDate=2025&page=100"):
     # 发送GET请求并获取网页内容
     response = requests.get(url, verify=False)
 
