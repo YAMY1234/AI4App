@@ -74,8 +74,12 @@ def main():
     for index, row in current_program_data.iterrows():
         program_name = row['ProgramName']
         url_link = row['URL Link']
+        deadline_extracted = row['Deadline']
         try:
-            deadline_text = get_deadline(url_link)
+            if deadline_extracted:
+                deadline_text = deadline_extracted
+            else:
+                deadline_text = get_deadline(url_link)
             new_data_list.append(
                 {'Programme': program_name, 'Deadline': deadline_text})
             print(
