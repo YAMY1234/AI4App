@@ -24,8 +24,8 @@ def download_html_old(url):
     return response.text
 
 def download_html(url):
-    # 构建请求的 URL
-    url = 'https://www.polyu.edu.hk/study/views/ajax?_wrapper_format=drupal_ajax'
+    # 构建请求的 URL，之前是ajax，现在已经改成直接请求网页
+    # url = 'https://www.polyu.edu.hk/study/views/ajax?_wrapper_format=drupal_ajax'
 
     # 设置请求头（Headers）
     headers = {
@@ -64,10 +64,11 @@ def download_html(url):
     return response.text
 
 def parse_html(html):
-    # Parse the JSON string
-    data = json.loads(html)
-    # Assuming the HTML content is in the last 'data' element
-    html_content = unescape(data[-2]['data'])
+    # 之前需要从ajax的json中提取html，现在直接从html中提取
+    # data = json.loads(html)
+    # # Assuming the HTML content is in the last 'data' element
+    # html_content = unescape(data[-2]['data'])
+    html_content = html
 
     # Now that we have the HTML, we can use BeautifulSoup to parse it
     soup = BeautifulSoup(html_content, 'html.parser')
