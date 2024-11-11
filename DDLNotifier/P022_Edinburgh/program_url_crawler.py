@@ -56,7 +56,7 @@ def crawl(url="https://www.ed.ac.uk/studying/postgraduate/degrees/index.php?r=si
     df = pd.DataFrame(data)
 
     # 将数据保存到Excel文件
-    df.to_excel("programs.xlsx", index=False)
+    df.to_excel(PROGRAM_DATA_EXCEL, index=False)
 
 
 
