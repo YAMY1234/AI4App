@@ -9,7 +9,7 @@ import os
 from DDLNotifier.email_sender import send_email
 from DDLNotifier.config import CONFIG  # Replace with your actual email module
 from DDLNotifier.P027_Warwick.program_url_crawler import crawl
-from DDLNotifier.utils.compare_and_notify import compare_and_notify
+from DDLNotifier.utils.compare_and_notify import compare_and_notify, update_error_urls_with_old_data
 
 # Constants
 BASE_PATH = os.path.dirname(os.path.abspath(__file__))
@@ -94,6 +94,7 @@ def main():
 
     # If old data is not empty, compare and notify
     if not old_data.empty:
+        new_data = update_error_urls_with_old_data(new_data=new_data, old_data=old_data)
         compare_and_notify(old_data, new_data, log_file, school_name)
 
     # Save the new data for future comparisons
