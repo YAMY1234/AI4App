@@ -10,6 +10,7 @@ from DDLNotifier.email_sender import send_email
 from DDLNotifier.config import CONFIG  # Replace with your actual email module
 from DDLNotifier.P027_Warwick.program_url_crawler import crawl
 from DDLNotifier.utils.compare_and_notify import compare_and_notify, update_error_urls_with_old_data
+import time
 
 # Constants
 BASE_PATH = os.path.dirname(os.path.abspath(__file__))
@@ -33,33 +34,54 @@ python /root/AI4App/DDLNotifier/notifier_routine.py
 '''
 
 
-def get_deadline(url):
-    try:
-        response = requests.get(url)
-        soup = BeautifulSoup(response.text, 'html.parser')
+def get_deadline(url, max_retries=3, backoff_factor=1):
+    """
+    获取指定URL页面中的申请截止日期信息，带有重试机制。
 
-        # First attempt to find the 'How to apply' section
-        how_to_apply_section = soup.find("h2", string="How to apply")
-        if how_to_apply_section:
-            next_p = how_to_apply_section.find_next("p")
-            if next_p and "open on" in next_p.text:
-                return next_p.text.strip()
+    参数：
+        url (str): 目标网页的URL。
+        max_retries (int): 最大重试次数（默认3次）。
+        backoff_factor (int or float): 重试前的等待时间基数，采用指数退避策略（默认1秒）。
 
-        # Second attempt: Directly search for known phrases
-        paragraphs = soup.find_all("p")
-        for p in paragraphs:
-            if "applications will close" in p.text.lower() or "open on" in p.text.lower():
-                return p.text.strip()
+    返回：
+        str: 截止日期信息或错误信息。
+    """
+    attempt = 0
+    while attempt < max_retries:
+        try:
+            response = requests.get(url, timeout=10)  # 设置超时时间为10秒
+            response.raise_for_status()  # 如果响应状态码不是200，将引发HTTPError
+            soup = BeautifulSoup(response.text, 'html.parser')
 
-        # Third attempt: Check for any paragraph under 'How to apply'
-        if how_to_apply_section:
-            for p in how_to_apply_section.find_next_siblings("p"):
-                if "open on" in p.text or "applications close" in p.text:
+            # 第一次尝试：查找 'How to apply' 部分
+            how_to_apply_section = soup.find("h2", string="How to apply")
+            if how_to_apply_section:
+                next_p = how_to_apply_section.find_next("p")
+                if next_p and "open on" in next_p.text.lower():
+                    return next_p.text.strip()
+
+            # 第二次尝试：直接搜索已知短语
+            paragraphs = soup.find_all("p")
+            for p in paragraphs:
+                if "applications will close" in p.text.lower() or "open on" in p.text.lower():
                     return p.text.strip()
 
-        return "Deadline section not found"
-    except Exception as e:
-        return f"Error processing the page: {e}"
+            # 第三次尝试：检查 'How to apply' 下的任何段落
+            if how_to_apply_section:
+                for p in how_to_apply_section.find_next_siblings("p"):
+                    if "open on" in p.text.lower() or "applications close" in p.text.lower():
+                        return p.text.strip()
+
+            return "Deadline section not found"
+
+        except Exception as e:
+            attempt += 1
+            if attempt < max_retries:
+                wait = backoff_factor * (2 ** (attempt - 1))  # 指数退避策略
+                print(f"尝试 {attempt} 失败，等待 {wait} 秒后重试...")
+                time.sleep(wait)
+            else:
+                return f"Error processing the page: after {max_retries} attempts: {e}"
 
 
 def get_current_programs_and_urls():

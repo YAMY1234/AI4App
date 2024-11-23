@@ -10,6 +10,7 @@ from DDLNotifier.email_sender import send_email
 from DDLNotifier.config import CONFIG  # Replace with your actual email module
 from DDLNotifier.P026_Bristol.program_url_crawler import crawl
 from DDLNotifier.utils.compare_and_notify import compare_and_notify, update_error_urls_with_old_data
+import time
 
 # Constants
 BASE_PATH = os.path.dirname(os.path.abspath(__file__))
@@ -33,24 +34,34 @@ python /root/AI4App/DDLNotifier/notifier_routine.py
 '''
 
 
-def get_deadline(url):
-    try:
-        response = requests.get(url, verify=False)  # Turn off SSL verification for simplicity in this example
-        soup = BeautifulSoup(response.text, 'html.parser')
+def get_deadline(url, max_retries=3, backoff_factor=1):
+    attempt = 0
+    while attempt < max_retries:
+        try:
+            response = requests.get(url, verify=False, timeout=10)  # 设置超时时间
+            response.raise_for_status()  # 如果响应状态码不是200，将引发HTTPError
+            soup = BeautifulSoup(response.text, 'html.parser')
 
-        # Find the 'Application deadline' dt tag and then navigate to its dd tag
-        deadline_dt = soup.find("dt", string="Application deadline")
-        if deadline_dt:
-            deadline_dd = deadline_dt.find_next("dd")
-            if deadline_dd:
-                # Extract text from the following p tag, which contains the deadline details
-                deadline_p = deadline_dd.find_next("p")
-                if deadline_p:
-                    return deadline_p.get_text(strip=True).replace("Overseas applicants:", "Overseas:").replace(
-                        "Home applicants:", "Home:")
-        return "Deadline section not found"
-    except Exception as e:
-        return f"Error processing the page: {e}"
+            # 查找 'Application deadline' dt 标签，然后导航到其 dd 标签
+            deadline_dt = soup.find("dt", string="Application deadline")
+            if deadline_dt:
+                deadline_dd = deadline_dt.find_next("dd")
+                if deadline_dd:
+                    # 从下一个 p 标签中提取文本，包含截止日期详情
+                    deadline_p = deadline_dd.find_next("p")
+                    if deadline_p:
+                        return deadline_p.get_text(strip=True).replace("Overseas applicants:",
+                                                                       "Overseas:").replace(
+                            "Home applicants:", "Home:")
+            return "Deadline section not found"
+        except Exception as e:
+            attempt += 1
+            if attempt < max_retries:
+                wait = backoff_factor * (2 ** (attempt - 1))  # 指数退避策略
+                print(f"尝试 {attempt} 失败，等待 {wait} 秒后重试...")
+                time.sleep(wait)
+            else:
+                return f"Error processing the page: after {max_retries} attempts: {e}"
 
 
 def get_current_programs_and_urls():
