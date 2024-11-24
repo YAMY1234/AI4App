@@ -10,6 +10,33 @@ from filelock import FileLock
 recipient_email = CONFIG.RECIPEINT_EMAIL
 
 
+def update_error_urls_with_old_data(new_data, old_data):
+    """
+    Update URLs in new_data that start with 'Error processing the page:'
+    with corresponding URLs from old_data if available.
+
+    :param new_data: DataFrame with new program data
+    :param old_data: DataFrame with old program data
+    :return: Updated new_data DataFrame
+    """
+    for index, row in new_data.iterrows():
+        program_name = row['Programme']
+        url_link = row['Deadline']
+
+        if isinstance(url_link, str) and url_link.startswith("Error processing the page:"):
+            # Find the matching ProgramName in old_data
+            old_row = old_data[old_data['Programme'] == program_name]
+
+            if not old_row.empty:
+                # Replace with the URL Link from old_data if it exists
+                old_url = old_row.iloc[0]['Deadline']
+                new_data.at[index, 'Deadline'] = old_url
+            else:
+                # Keep the original 'Error processing the page:' content
+                print(f"No matching ProgramName in old data for {program_name}. Keeping original error message.")
+
+    return new_data
+
 def compare_and_notify(old_data, new_data, log_path, school_name):
     """
     Compare old and new data, and log differences.
