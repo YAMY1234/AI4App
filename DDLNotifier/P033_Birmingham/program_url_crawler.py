@@ -68,6 +68,8 @@ def crawl():
         for course in courses:
             program_name = course.get('title', '')
             program_link = course.get('url', '')
+            if "www.birmingham.ac.uk" not in program_link:  # prefix need to be added
+                program_link = "https://www.birmingham.ac.uk" + program_link
             if program_name and program_link:
                 data["ProgramName"].append(program_name)
                 data["URL Link"].append(program_link)
