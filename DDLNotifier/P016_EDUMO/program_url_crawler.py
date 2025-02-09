@@ -48,7 +48,7 @@ def crawl(url="https://grs.um.edu.mo/index.php/prospective-students/master-postg
         print("无法获取网页内容，HTTP状态码:", response.status_code)
 
     df = pd.DataFrame(data)
-    df.to_excel("programs.xlsx", index=False)
+    df.to_excel(PROGRAM_DATA_EXCEL, index=False)
 
 
 # 运行爬虫
