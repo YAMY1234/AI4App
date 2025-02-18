@@ -42,18 +42,32 @@ def crawl(url="https://www.southampton.ac.uk/courses/postgraduate?keyword_filter
     # 检查是否有提取到数据并保存到Excel
     if data['ProgramName']:
         try:
+            # 创建DataFrame
+            df = pd.DataFrame(data)
+
+            # 对DataFrame做额外处理：
+            # 对于相同的ProgramName，如果存在多个项目，则只保留URL Link以"msc"结尾的那一项（如果存在多个，则保留第一个）
+            def choose_row(group):
+                msc_rows = group[group['URL Link'].str.endswith('msc')]
+                if not msc_rows.empty:
+                    return msc_rows.iloc[[0]]  # 只保留第一个满足条件的项目
+                return group.iloc[[0]]  # 如果没有符合条件的，则保留该组中的第一个项目
+
+            df_filtered = df.groupby('ProgramName', as_index=False, group_keys=False).apply(choose_row).reset_index(
+                drop=True)
+
             # 定义Excel文件的保存路径
             PROGRAM_DATA_EXCEL = os.path.join(os.path.dirname(os.path.abspath(__file__)),
                                               'programs.xlsx')
 
-            # 创建DataFrame并保存为Excel文件
-            df = pd.DataFrame(data)
-            df.to_excel(PROGRAM_DATA_EXCEL, index=False)
-            print(f"数据已成功保存到Excel。总共找到的项目数量: {len(data['ProgramName'])}")
+            # 保存处理后的DataFrame到Excel文件
+            df_filtered.to_excel(PROGRAM_DATA_EXCEL, index=False)
+            print(f"数据已成功保存到Excel。总共找到的项目数量: {len(df_filtered)}")
         except Exception as e:
             print(f"保存到Excel时出错: {e}")
     else:
         print("未提取到任何数据。请检查选择器和页面结构。")
+
 
 if __name__ == '__main__':
     crawl()

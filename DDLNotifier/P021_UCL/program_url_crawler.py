@@ -26,7 +26,9 @@ def crawl(url="https://www.ucl.ac.uk/prospective-students/graduate/taught-degree
         if link_element:
             program_name = link_element.text.strip()
             program_link = urljoin(url, link_element['href'])
-
+            # 如果链接中包含"2024"，则跳过
+            if program_link.endswith("2024"):
+                continue
             # 将信息添加到DataFrame中
             data["ProgramName"].append(program_name)
             data["URL Link"].append(program_link)
