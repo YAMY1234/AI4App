@@ -6,6 +6,7 @@ import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 import os
+import re
 from DDLNotifier.email_sender import send_email
 from DDLNotifier.config import CONFIG  # Replace with your actual email module
 from DDLNotifier.P033_Birmingham.program_url_crawler import crawl
@@ -27,22 +28,42 @@ log_file = os.path.join(BASE_PATH, "notification_log.txt")
 
 
 def get_deadline(url):
-    # 发送GET请求并获取网页内容
-    response = requests.get(url, verify=False)
+    try:
+        response = requests.get(url, verify=False)
+    except Exception as e:
+        return f"Error fetching URL: {e}"
 
-    # 使用BeautifulSoup解析网页内容
     soup = BeautifulSoup(response.text, "html.parser")
 
-    # 首先查找“Application deadlines”后的第一个p标签并提取所有文本
-    deadlines_tag = soup.find("h3", string="Application deadlines")
-    if not deadlines_tag:
-        deadlines_tag = soup.find("h2", string="Application deadlines")
-    if deadlines_tag:
-        next_p = deadlines_tag.find_next("p")
-        if next_p:
-            return next_p.text.strip()
+    # 尝试从包含 fact-boxes 的区块中查找 deadline 信息
+    fact_sections = soup.find_all(lambda tag: tag.name in ["section", "div"] and
+                                              tag.has_attr("class") and
+                                              any("fact-boxes" in cls for cls in tag["class"]))
 
-    # 如果没有找到“Application deadlines”，则查找包含"How To Apply"文本的h2标签
+    for section in fact_sections:
+        # 在区块中查找 article 标签，包含 card-fact 的可能就是我们需要的信息
+        articles = section.find_all(lambda tag: tag.name == "article" and
+                                                tag.has_attr("class") and
+                                                any("card-fact" in cls for cls in tag["class"]))
+        for article in articles:
+            # 获取描述信息并检查是否包含"deadline"关键词（忽略大小写）
+            desc = article.find(lambda tag: tag.has_attr("class") and
+                                            any("card-fact__description" in cls for cls in tag["class"]))
+            if desc and re.search(r'\bdeadline\b', desc.get_text(), re.IGNORECASE):
+                stat = article.find(lambda tag: tag.has_attr("class") and
+                                                any("card-fact__stat" in cls for cls in tag["class"]))
+                if stat:
+                    return stat.get_text(strip=True)
+
+    # 如果没有从 fact-boxes 中找到，则尝试查找标题中包含 "Application deadlines" 的h2/h3标签
+    deadline_heading = soup.find(lambda tag: tag.name in ["h2", "h3"] and
+                                             "Application deadlines" in tag.get_text())
+    if deadline_heading:
+        next_p = deadline_heading.find_next("p")
+        if next_p:
+            return next_p.get_text(strip=True)
+
+    # 兜底方法：查找 "How To Apply" 相关信息
     apply_tags = soup.find_all("h2", class_="accordion__title")
     for tag in apply_tags:
         if "How To Apply" in tag.get_text(strip=True):
@@ -55,7 +76,6 @@ def get_deadline(url):
             if content:
                 return "\n".join(content)
 
-    # 如果两种方法都找不到有效信息，返回特定字符串
     return "No deadline information found"
 
 
