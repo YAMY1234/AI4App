@@ -73,9 +73,10 @@ def main():
     for index, row in current_program_data.iterrows():
         program_name = row['ProgramName']
         url_link = row['URL Link']
+        overseas = row['Overseas']
         try:
             deadline_text = get_deadline(url_link)
-            new_data_list.append({'Programme': program_name, 'Deadline': deadline_text})
+            new_data_list.append({'Programme': program_name, 'Deadline': overseas + " | " + deadline_text})
             print(f"Retrieved deadlines for {program_name}, deadline_text: {deadline_text}")
         except Exception as e:
             print(f"Error retrieving deadlines for {program_name}: {e}")
