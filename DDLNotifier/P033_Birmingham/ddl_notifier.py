@@ -27,7 +27,7 @@ SAVE_PATH_NEW_XLSX = os.path.join(BASE_PATH, SAVE_PATH_NEW_XLSX)  # Save path fo
 log_file = os.path.join(BASE_PATH, "notification_log.txt")
 
 
-def get_deadline(url):
+def get_deadline_old(url):
     try:
         response = requests.get(url, verify=False)
     except Exception as e:
@@ -77,6 +77,34 @@ def get_deadline(url):
                 return "\n".join(content)
 
     return "No deadline information found"
+
+def get_deadline(url):
+    SEARCH_RANGE = 300  # 从关键词后往后抓多少字符
+    try:
+        response = requests.get(url, timeout=10, verify=False)
+        html_text = response.text
+    except Exception as e:
+        return f"Error fetching URL: {e}"
+
+    # 1. 找到 "internationalApplicationProcessComposer" 的位置
+    marker = '"internationalApplicationProcessComposer"'
+    index = html_text.find(marker)
+    if index == -1:
+        return "No 'internationalApplicationProcessComposer' keyword found in page."
+
+    # 2. 取从该位置开始, 往后 SEARCH_RANGE 个字符的片段
+    end_index = index + SEARCH_RANGE
+    snippet = html_text[index:end_index]
+
+    # 3. 用一个宽松的日期正则, 匹配 "12 May 2025" 之类的格式 (日 + 英文月份 + 20xx)
+    #    允许 1~2位日, 再加空白, 再加 3~10位英文字母(比如 January ~ September), 再加空白, 再加 20开头的4位年
+    date_pattern = re.compile(r"(\d{1,2}\s+[A-Za-z]{3,10}\s+20\d{2})")
+
+    match = date_pattern.search(snippet)
+    if match:
+        return match.group(1).strip()
+    else:
+        return "No date found near 'internationalApplicationProcessComposer'."
 
 
 def get_current_programs_and_urls():
