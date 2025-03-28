@@ -182,6 +182,7 @@ def parse_html(html):
 
         # 将标题和副标题合并作为完整的课程名称
         programme_name = f"{title} {subtitle}".strip()
+        programme_name = f"{programme_code} - {programme_name}"
 
         # 调试输出
         print(f"Code: {programme_code}, Programme: {programme_name}, Deadline: {deadline}")
