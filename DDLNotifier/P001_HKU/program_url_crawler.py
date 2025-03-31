@@ -28,7 +28,9 @@ def crawl(
     for item in data_json.get("data", []):
         attributes = item.get("Attributes", {})
         program_name = attributes.get("hkutgp_name")
-        seofriendlyname = attributes.get("hkutgp_seofriendlyname")
+        # seofriendlyname = attributes.get("hkutgp_seofriendlyname")
+        seofriendlyname = attributes.get("hkutgp_seofriendlyname") or attributes.get("rootprogramme.hkutgp_name",
+                                                                                     {}).get("Value")
 
         if program_name and seofriendlyname:
             # 构建新的URL
