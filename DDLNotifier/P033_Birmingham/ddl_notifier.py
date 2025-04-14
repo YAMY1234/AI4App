@@ -1,4 +1,5 @@
 from datetime import datetime
+import time
 
 from urllib.parse import urljoin
 
@@ -78,13 +79,21 @@ def get_deadline_old(url):
 
     return "No deadline information found"
 
-def get_deadline(url):
+
+def get_deadline(url, retries=3, delay=5):
     SEARCH_RANGE = 300  # 从关键词后往后抓多少字符
-    try:
-        response = requests.get(url, timeout=30, verify=False)
-        html_text = response.text
-    except Exception as e:
-        return f"Error fetching URL: {e}"
+    for attempt in range(1, retries + 1):
+        try:
+            response = requests.get(url, timeout=30, verify=False)
+            html_text = response.text
+            return html_text  # 或继续你的后续逻辑
+        except requests.exceptions.RequestException as e:
+            print(f"Attempt {attempt} failed: {e}")
+            if attempt < retries:
+                print(f"Retrying in {delay} seconds...")
+                time.sleep(delay)
+            else:
+                return f"Error fetching URL after {retries} attempts: {e}"
 
     # 1. 找到 "internationalApplicationProcessComposer" 的位置
     marker = '"internationalApplicationProcessComposer"'
@@ -109,6 +118,7 @@ def get_deadline(url):
 
 def get_current_programs_and_urls():
     return pd.read_excel(PROGRAM_DATA_EXCEL)
+
 
 def main():
     crawl()
