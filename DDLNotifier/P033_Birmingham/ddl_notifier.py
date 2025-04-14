@@ -81,7 +81,7 @@ def get_deadline_old(url):
 def get_deadline(url):
     SEARCH_RANGE = 300  # 从关键词后往后抓多少字符
     try:
-        response = requests.get(url, timeout=10, verify=False)
+        response = requests.get(url, timeout=30, verify=False)
         html_text = response.text
     except Exception as e:
         return f"Error fetching URL: {e}"
