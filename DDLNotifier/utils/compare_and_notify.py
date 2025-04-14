@@ -70,11 +70,18 @@ def compare_and_notify(old_data, new_data, log_path, school_name):
 
             # If the row exists, check for deadline changes
             if not old_row.empty:
-                if old_row['Deadline'].values[0] != new_row['Deadline']:
+                old_deadline = old_row['Deadline'].values[0]
+                new_deadline = new_row['Deadline']
+
+                if (pd.isna(old_deadline) and (new_deadline == "" or pd.isna(new_deadline))) or \
+                        (pd.isna(new_deadline) and (old_deadline == "" or pd.isna(old_deadline))):
+                    continue
+
+                if old_deadline != new_deadline:
                     changes_detected.append({
                         'Programme': new_row['Programme'],
-                        'Old Deadline': old_row['Deadline'].values[0],
-                        'New Deadline': new_row['Deadline']
+                        'Old Deadline': old_deadline,
+                        'New Deadline': new_deadline
                     })
             else:
                 # If the row does not exist in old data, it's a new addition
