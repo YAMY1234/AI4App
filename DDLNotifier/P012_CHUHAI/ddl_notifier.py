@@ -92,7 +92,15 @@ def get_deadline(url: str, *, verify_ssl: bool = True, timeout: int = 10) -> str
         if text:
             lines.append(text)
 
-    return "\n".join(lines) or "No date info found"
+    # —— 3. 去重（保持原顺序） ——
+    seen = set()
+    unique_lines = []
+    for line in lines:
+        if line not in seen:
+            seen.add(line)
+            unique_lines.append(line)
+
+    return "\n".join(unique_lines) or "No date info found"
 
 def get_current_programs_and_urls():
     return pd.read_excel(PROGRAM_DATA_EXCEL)
