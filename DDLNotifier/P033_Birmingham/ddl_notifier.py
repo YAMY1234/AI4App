@@ -86,7 +86,7 @@ def get_deadline(url, retries=3, delay=5):
         try:
             response = requests.get(url, timeout=30, verify=False)
             html_text = response.text
-            return html_text  # 或继续你的后续逻辑
+            # return html_text  # 或继续你的后续逻辑
         except requests.exceptions.RequestException as e:
             print(f"Attempt {attempt} failed: {e}")
             if attempt < retries:
