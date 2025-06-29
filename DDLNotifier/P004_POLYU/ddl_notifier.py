@@ -1,5 +1,4 @@
 import os
-import json
 from bs4 import BeautifulSoup
 import requests
 import pandas as pd
@@ -65,131 +64,80 @@ def download_html_old(url):
 
 
 
-def download_html(url):
-    # 请求 URL
-    url = "https://www.polyu.edu.hk/study/views/ajax?_wrapper_format=drupal_ajax"
-
-    # 请求头（部分请求头可根据实际情况调整）
-    headers = {
-        "Accept": "application/json, text/javascript, */*; q=0.01",
-        "Accept-Encoding": "gzip, deflate, br, zstd",
-        "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8",
-        "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
-        "X-Requested-With": "XMLHttpRequest"
-    }
-
-    # 表单数据
-    payload = {
-        "pg_programmes_semester_term_value": "2609",
+def download_html(url, year_value="2634"):
+    """直接 GET 完整页面，避免 AJAX 的不稳定字段"""
+    params = {
+        "pg_programmes_semester_term_value": year_value,
         "pg_programmes_faculty_school_target_id_verf": "All",
-        "combine": "",
-        "view_name": "pg_programmes",
-        "view_display_id": "programme_listing",
-        "view_args": "",
-        "view_path": "/node/91",
-        "view_base_path": "",
-        "view_dom_id": "a2ab1a29db24f5f2a077fe57e8ca6636d7bd0a15c8f4d7fd465ee54c7caa0b41",
-        "pager_element": "0",
-        "_drupal_ajax": "1",
-        "ajax_page_state[theme]": "polyu_theme",
-        "ajax_page_state[theme_token]": "",
-        "ajax_page_state[libraries]": (
-            "better_exposed_filters/general,chosen/drupal.chosen,chosen_lib/chosen.css,extlink/drupal.extlink,"
-            "google_tag/gtag,google_tag/gtag.ajax,lazy/lazy,paragraphs/drupal.paragraphs.unpublished,"
-            "polyu_programme_page/translate,polyu_theme/block--config-pages--footer-configuration,"
-            "polyu_theme/block--config-pages--header-configuration,polyu_theme/block--polyu-quick-access,"
-            "polyu_theme/block--polyu-search-block--top,polyu_theme/block--polyu-theme-content,"
-            "polyu_theme/paragraph--basic-info-block,polyu_theme/paragraph--dates-with-text,"
-            "polyu_theme/paragraph--faq-standard-links,polyu_theme/paragraph--jupas-overview-block,"
-            "polyu_theme/paragraph--key-dates,polyu_theme/paragraph--overview-expand-block,"
-            "polyu_theme/paragraph--standard-banner,polyu_theme/paragraph--sub-footer-highlight-links,"
-            "polyu_theme/pattern-uni-text,polyu_theme/styling,select2_all/drupal.select2,system/base,"
-            "uni/fontawesome,uni/html,uni/really,uni/swiper,uni_theme/uni-card,uni_theme/uni-modal,"
-            "views/views.module,views_infinite_scroll/views-infinite-scroll"
-        )
+        "combine": ""
     }
-
-    # 发送 POST 请求
-    response = requests.post(url, headers=headers, data=payload)
-    data = json.loads(response.text)
-
-    # 遍历查找包含 HTML 的部分
-    html_part = None
-    for item in data:
-        # 判断 item 中是否有 data 字段，并且数据不为空
-        if item.get("data") and item.get("data").strip().startswith("<"):
-            html_part = item["data"]
-            break
-
-    if html_part:
-        print("提取到的 HTML 部分：")
-        print(html_part)
-    else:
-        print("未找到 HTML 部分。")
-    return html_part
+    
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+    }
+    
+    # 使用 GET 请求获取完整页面
+    response = requests.get(url, headers=headers, params=params, timeout=30)
+    response.raise_for_status()
+    
+    print(f"成功获取页面，学期参数: {year_value}")
+    return response.text
 
 
-def parse_html(html):
-    # 直接使用传入的 HTML 内容
-    html_content = html
-
-    # 使用 BeautifulSoup 解析 HTML 内容
-    soup = BeautifulSoup(html_content, 'html.parser')
-
-    # 查找所有 programme 区块，通常每个区块为一个 div.views-row
-    programme_blocks = soup.find_all('div', class_='views-row')
+def parse_html(html: str) -> pd.DataFrame:
+    """解析 HTML 内容，提取课程信息"""
+    soup = BeautifulSoup(html, "html.parser")
     programmes_data = []
-
-    for block in programme_blocks:
-        # 获取学习模式与时长信息，如果没有则跳过
-        study_mode_elem = block.find('div', class_='study-mode-and-duration')
-        if not study_mode_elem:
+    
+    # 使用 CSS 选择器查找所有课程区块
+    for block in soup.select("div.views-row"):
+        # 1) 检查学习模式 - Full-time / Mixed-Mode 兼容
+        study_elem = block.select_one(".study-mode-and-duration")
+        if not study_elem or "Full-time" not in study_elem.get_text():
             continue
-
-        study_mode_text = study_mode_elem.get_text(strip=True)
-        # 如果不包含 "Full-time" 则跳过
-        if "Full-time" not in study_mode_text:
-            continue
-
-        # 获取 programme code 部分，并取 '|' 前面的部分
-        code_elem = block.find('div', class_='programmes-code-and-entry-description')
+        
+        # 2) 获取课程代码
+        code_elem = block.select_one(".programmes-code-and-entry-description")
         if not code_elem:
             continue
-        programme_code = code_elem.get_text(strip=True).split('|')[0].strip()
-
-        # 获取标题和副标题，如果不存在则设为空字符串
-        title_elem = block.find('div', class_='title')
+        programme_code = code_elem.get_text(strip=True).split("|")[0].strip()
+        
+        # 3) 获取标题和副标题
+        title_elem = block.select_one(".title")
         title = title_elem.get_text(strip=True) if title_elem else ""
-        subtitle_elem = block.find('div', class_='subtitle')
+        subtitle_elem = block.select_one(".subtitle")
         subtitle = subtitle_elem.get_text(strip=True) if subtitle_elem else ""
-
+        
         # 如果标题或副标题中含有 "doctor" 则跳过（不处理博士级别课程）
         if 'doctor' in title.lower() or 'doctor' in subtitle.lower():
             continue
-
-        # 提取 deadline 部分，这里假定第一个 early-deadline 为本地申请截止，第二个为非本地申请截止
-        deadlines_divs = block.find_all('div', class_='early-deadline')
-        if len(deadlines_divs) >= 2:
-            # 尝试获取 time 标签中的文本
-            local_time = deadlines_divs[0].find('time')
-            local_deadline = local_time.get_text(strip=True) if local_time else deadlines_divs[0].get_text(strip=True).replace('Application Deadline:', '').strip()
-            non_local_time = deadlines_divs[1].find('time')
-            non_local_deadline = non_local_time.get_text(strip=True) if non_local_time else deadlines_divs[1].get_text(strip=True).replace('Non Local Application Deadline:', '').strip()
-            deadline = f"local: {local_deadline}, non-local: {non_local_deadline}"
-        else:
-            deadline = "empty"
-
-        # 将标题和副标题合并作为完整的课程名称
+        
+        # 4) 提取 deadline 信息 - 允许只有一行或包含 Closed 的情况
+        deadline_elements = block.select(".deadline-section .early-deadline")
+        if not deadline_elements:
+            # 兼容旧的结构
+            deadline_elements = block.select(".early-deadline")
+        
+        deadlines = []
+        for elem in deadline_elements:
+            deadline_text = elem.get_text(strip=True)
+            # 清理文本
+            deadline_text = deadline_text.replace('Application Deadline:', '').replace('Non Local Application Deadline:', '').strip()
+            if deadline_text:
+                deadlines.append(deadline_text)
+        
+        deadline_str = " | ".join(deadlines) if deadlines else "empty"
+        
+        # 5) 构建完整课程名称
         programme_name = f"{title} {subtitle}".strip()
-        programme_name = f"{programme_code} - {programme_name}"
-
+        full_programme_name = f"{programme_code} - {programme_name}"
+        
         # 调试输出
-        print(f"Code: {programme_code}, Programme: {programme_name}, Deadline: {deadline}")
-
-        programmes_data.append([programme_code, programme_name, deadline])
-
-    return pd.DataFrame(programmes_data, columns=['Code', 'Programme', 'Deadline'])
+        print(f"Code: {programme_code}, Programme: {full_programme_name}, Deadline: {deadline_str}")
+        
+        programmes_data.append([programme_code, full_programme_name, deadline_str])
+    
+    return pd.DataFrame(programmes_data, columns=["Code", "Programme", "Deadline"])
 
 
 def main():
