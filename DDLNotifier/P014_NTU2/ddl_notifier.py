@@ -1,80 +1,112 @@
 from datetime import datetime
+import os
+import warnings
 
+import pandas as pd
 import requests
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup            # 备用
 from DDLNotifier.email_sender import send_email
 from DDLNotifier.config import CONFIG
-import pandas as pd
-import os
 from DDLNotifier.utils.compare_and_notify import compare_and_notify
 
+# ---------------------------------------------------------------------------
 # Constants
-URL = 'https://wis.ntu.edu.sg/webexe/owa/pgr$adm_main.notice'
+# ---------------------------------------------------------------------------
+URL = "https://www.ntu.edu.sg/admissions/graduate/cwadmissionguide/apply-now"
 BASE_PATH = os.path.dirname(os.path.abspath(__file__))
-
-SAVE_PATH_EXCEL = os.path.join(BASE_PATH, 'programme_data.xlsx')  # Save path for the CSV
+SAVE_PATH_EXCEL = os.path.join(BASE_PATH, "programme_data.xlsx")
 # recipient_email = CONFIG.RECIPEINT_EMAIL
-recipient_email = 'yamy12344@gmail.com'
+recipient_email = "yamy12344@gmail.com"
 
-school_name = BASE_PATH.split('_')[-1]
+school_name = BASE_PATH.split("_")[-1]
+log_file = os.path.join(BASE_PATH, "notification_log.txt")
 
-log_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "notification_log.txt")
-
-def download_html(url):
-    # headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'}
-    headers = None
-    response = requests.get(url, headers=headers)
+# ---------------------------------------------------------------------------
+# Helpers
+# ---------------------------------------------------------------------------
+def download_html(url: str) -> str:
+    """
+    Fetch raw HTML from target URL.
+    """
+    # 可按需设置 headers
+    response = requests.get(url, headers=None, timeout=30, verify=False)
     response.raise_for_status()
     return response.text
 
 
-def parse_html(html):
-    # 解析 HTML
-    soup = BeautifulSoup(html, 'html.parser')
-    rows = soup.find_all('tr')
+def _extract_programme_table(html: str) -> pd.DataFrame:
+    """
+    从页面里挑出包含 “Programme Name” 的那张表。带 DEBUG 打印。
+    """
+    warnings.filterwarnings("ignore", category=UserWarning, module="pandas")
 
-    # 用于存储提取的数据
-    programmes_data = []
+    # header=0 让第一行作为列名
+    candidate_tables = pd.read_html(html, flavor="lxml", header=0)
+    print(f"[DEBUG] 共解析出 {len(candidate_tables)} 张 <table>")
 
-    # 遍历每一行
-    for row in rows:
-        columns = row.find_all('td')
-        if len(columns) == 7:
-            # 提取所需数据
-            program_name = columns[1].get_text(strip=True)
-            local_opening_date = columns[2].get_text(strip=True)
-            local_closing_date = columns[3].get_text(strip=True)
-            overseas_opening_date = columns[4].get_text(strip=True)
-            overseas_closing_date = columns[5].get_text(strip=True)
-            deadline = f"Local: {local_opening_date} to {local_closing_date}, " \
-                       f"Overseas: {overseas_opening_date} to {overseas_closing_date}"
+    for idx, tbl in enumerate(candidate_tables):
+        print(f"[DEBUG] 表 {idx} 列名: {list(tbl.columns)}")
+        if "Programme Name" in tbl.columns and "Opening Date" in tbl.columns:
+            print(f"[DEBUG] 选用表 {idx} 作为目标表")
+            print(tbl.head(3))            # 打印样例行
+            return tbl
 
-            # 添加到列表
-            programmes_data.append([program_name, deadline])
+    print("[DEBUG] 未找到包含 'Programme Name' 的表")
+    return pd.DataFrame()
 
-    # 创建 DataFrame
-    return pd.DataFrame(programmes_data, columns=['Programme', 'Deadline'])
 
-def main():
-    # Download HTML
+def parse_html(html: str) -> pd.DataFrame:
+    """
+    解析 HTML，返回 [Programme, Deadline] 两列。
+    Deadline 格式: 'Opening Date to Closing Date'
+    """
+    df = _extract_programme_table(html)
+    if df.empty:
+        return df
+
+    # 修补 rowspan 产生的 NaN
+    if "Admission Year & Intake" in df.columns:
+        df["Admission Year & Intake"].ffill(inplace=True)
+
+    # 去掉无效行
+    df = df[df["Programme Name"].notna() & df["Opening Date"].notna()]
+
+    # 标准化字符串
+    df["Opening Date"] = df["Opening Date"].astype(str).str.strip()
+    df["Closing Date"] = df["Closing Date"].astype(str).str.strip()
+
+    df["Deadline"] = df["Opening Date"] + " to " + df["Closing Date"]
+    result = df[["Programme Name", "Deadline"]].copy()
+    result.columns = ["Programme", "Deadline"]
+
+    print("[DEBUG] 解析完成的 DataFrame：")
+    print(result.head())
+
+    return result
+
+
+# ---------------------------------------------------------------------------
+# Main flow
+# ---------------------------------------------------------------------------
+def main() -> None:
     print("Downloading HTML...")
     new_html = download_html(URL)
 
     print("Parsing HTML...")
-    # Parse new HTML to get data
     new_data = parse_html(new_html)
 
-    # Read old data if it exists
+    if new_data.empty:
+        print("⚠️  未解析到任何可用数据，可能页面结构再次改变。")
+        return
+
     if os.path.exists(SAVE_PATH_EXCEL):
         old_data = pd.read_excel(SAVE_PATH_EXCEL)
     else:
         old_data = pd.DataFrame()
 
-    print("Comparing old and new data...")
-    # Compare and notify
     compare_and_notify(old_data, new_data, log_file, school_name)
-
     new_data.to_excel(SAVE_PATH_EXCEL, index=False)
+    print(f"✅  数据已更新并保存至 {SAVE_PATH_EXCEL}")
 
 
 if __name__ == "__main__":
